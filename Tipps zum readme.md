@@ -1,4 +1,6 @@
-#Was gehört ins readme?
+# Was gehört ins readme?
+Diese folgenden Tipps sind eine Zusammenfassung der Seite https://guides.github.com/features/wikis/#Formatting-a-readme.
+
 ## Projektname
 ## Projektbeschreibung
 Kurz, klar und bringt es auf den Punkt. Projekt beschreiben. Worum geht es und wozu?
@@ -14,4 +16,3 @@ Grössere Projekte Regeln hier die Mitarbeit oder verweisen auf ein Dokument wel
 ## Lizenz
 Lizenz für Projekt mitteilen, mehr zu Lizenzen unter GitHub’s Lizenzenanleitungen.
 
-Diese Tpps stammen von der Seite https://guides.github.com/features/wikis/#Formatting-a-readme
