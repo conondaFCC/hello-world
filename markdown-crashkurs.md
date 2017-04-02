@@ -14,9 +14,8 @@ Task Listen
 - [ ] Task1: Task Felder werden mit `- [Leerzeichen]`erstellt.
 - [x] Task2
 
-    Code kann als Code angezeigt werden wenn entweder vier Leerzeichen am Anfang der Zeile gemacht werden oder mit  vier speziellen Anführungszeichen ´´´´ JAVA, also gefolgt vom Code Namen. Auf meiner Tastatur mit zweimal AltGr+? ergibt eines dieser speziellen Anführungszeichen.
+    Code wird als Code angezeigt wenn vier Leerzeichen am Anfang der Zeile verwendet werden `   Code wird ...`. Soll noch die Sprache erkannt werden mit Syntaxmarkierung, dann die Zeile mit drei Backticks beginnen gefolgt vom Namen der Sprache ` Java` als Beispiel.
     
 ``` Java
-int a = 0;
+int a = 0; // Java Beispiel
 ```
-Oder ein ganzer Codeblock lässt sich mit drei Backticks am Anfang und Ende formatieren.
