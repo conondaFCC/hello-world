@@ -1,6 +1,6 @@
 # Markdown Crashkurs
 ## Was ist Markdown?
-Ein Sprache um Text einfach zu erweitern. Mit Markdown lässt sich Text durch Zeichen und Symbole formatieren. Markdown kann bei github in Gists, Kommentaren und Files mit .md oder .markdown verwendet werden.
+Ein Sprache um Text einfach zu erweitern. Mit Markdown lässt sich Text durch Zeichen und Symbole formatieren. Markdown kann bei github in Gists, Kommentaren und Files mit `.md` oder `.markdown` verwendet werden.
  
  ## Beispiele Textformatierung
  ### Fett, Kursiv und Links
