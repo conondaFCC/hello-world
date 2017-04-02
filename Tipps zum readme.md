@@ -1,18 +1,18 @@
 # Was gehört ins readme?
 Diese folgenden Tipps sind eine Zusammenfassung der Seite https://guides.github.com/features/wikis/#Formatting-a-readme.
 
-## Projektname
-## Projektbeschreibung
+## 1. Projektname
+## 2. Projektbeschreibung
 Kurz, klar und bringt es auf den Punkt. Projekt beschreiben. Worum geht es und wozu?
-## Inhaltsverzeichnis [TOC]
+## 3. Inhaltsverzeichnis [TOC]
 Optional, wenn das README etwas länger ausfällt.
-## Installation
+## 4. Installation
 Installationsanweisungen. Optional mit Bildern zum Beispiel gif, damit schnell klar ist was gemeint ist.
-## Anleitung
+## 5. Anleitung
 Aufzeigen wie das Produkt verwendet werden soll. Screenshots sind dafür geeignet.
-## Mitmachen
+## 6. Mitmachen
 Grössere Projekte Regeln hier die Mitarbeit oder verweisen auf ein Dokument welches dies erklärt. Gute Anleitung dazu unter https://help.github.com/articles/setting-guidelines-for-repository-contributors/
-## Kredit Danksagung
-## Lizenz
+## 7. Kredit Danksagung
+## 8. Lizenz
 Lizenz für Projekt mitteilen, mehr zu Lizenzen unter GitHub’s Lizenzenanleitungen.
 
