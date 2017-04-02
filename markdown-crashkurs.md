@@ -8,7 +8,7 @@ Ein Sprache um Text einfach zu erweitern. Mit Markdown lässt sich Text durch Ze
 - *Kursiv* ist `*das Geliche mit einem Stern*`. 
 - Links sind entweder die URL direkt abgeschrieben oder `[Linkname](URL)` [Name Link **gefolgt** von einer URL](http://bsp.com) 
  
- Weiter können Listen, Bilder, Überschriften und Zitate, Code und Extras eingebunden werden. Das Tutorial dazu ist unter https://guides.github.com/features/mastering-markdown/ erreichbar.
+ Weiter können Listen, Bilder, Überschriften und Zitate, Code und Extras eingebunden werden. Eine Anleitung ist unter https://guides.github.com/features/mastering-markdown/ einsehbar.
  
 ## Interessante Textformatierungen
 ### Backticks
