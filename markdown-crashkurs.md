@@ -12,7 +12,7 @@ Ein Sprache um Text einfach zu erweitern. Mit Markdown lässt sich Text durch Ze
  
 ## Interessante Textformatierungen
 ### Text ohne Formatierung anzeigen, Markup ausschalten?
-Um eine \*Textformatierung\* von Markup zu umgeben wird vor **jedem** Zeichen ein Backslash eingeführt. Beispiel `\*nicht Fett\*`. 
+Um eine \*Textformatierung\* von Markup zu umgehen wird vor **jedem** Zeichen ein Backslash eingeführt. Beispiel `\*nicht Fett\*`. 
 
 ### Backticks
 Backticks `erstellen diese Formatierung` ein Backtick wird auf meiner Tastur mit `Shift + ^` erstellt.
