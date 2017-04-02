@@ -8,13 +8,20 @@ Ein Sprache um Text einfach zu erweitern. Mit Markdown lässt sich Text durch Ze
  Weiter können Listen, Bilder, Überschriften und Zitate, Code und Extras eingebunden werden. Das Tutorial dazu ist unter https://guides.github.com/features/mastering-markdown/ erreichbar.
  
 ## Interessante Textformatierungen
+### Backticks
 Backticks `erstellen diese Formatierung` ein Backtick wird auf meiner Tastur mit `Shift + ^` erstellt.
 
+### Liste
 Task Listen
 - [ ] Task1: Task Felder werden mit `- [Leerzeichen]`erstellt.
 - [x] Task2
 
-    Code wird als Code angezeigt wenn vier Leerzeichen am Anfang der Zeile verwendet werden `   Code wird ...`. Soll noch die Sprache erkannt werden mit Syntaxmarkierung, dann die Zeile mit drei Backticks beginnen gefolgt vom Namen der Sprache ` Java` als Beispiel.
+### Code
+Code wird als Code angezeigt wenn vier Leerzeichen am Anfang der Zeile verwendet werden `   Code wird ...`.
+    
+    Vier Leerzeichen
+    
+Soll noch die Sprache erkannt werden mit Syntaxmarkierung, dann die Zeile mit drei Backticks beginnen gefolgt vom Namen der Sprache ` Java` als Beispiel.
     
 ``` Java
 int a = 0; // Java Beispiel
