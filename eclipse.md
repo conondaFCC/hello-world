@@ -43,6 +43,8 @@ Ctrl+r          |While debugging => run to line (ingnore other breaks!)
 F8              |jump to next break, while in debugging mode
 Alt+Shift+T     |Refactor Options with according code bits selected ex. Variable to Convert Local Variable to Field or whole code bit to Extract Method from it
  .jpage         | Instead of .java .jpage for code snippets aka Scrapbook pages (to run code without main Methods)
+ Ctrl+-         | Zoom in
+ Ctrl+Shift+1   | Zoom out (Ctrl++)
 
 ### EMACS or other Controls
 Via Windows > Preferences > General > Keys > Schema:

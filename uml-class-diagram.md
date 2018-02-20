@@ -255,26 +255,3 @@ Describes what you can do with Modelio and what you should not! Most noteworthy:
 * design phase focuses on realization, building productive models that concentrate on the main  architectural themes and essential system classes.
 * The  coding/detailed  design  phase  completes  the  general  design  model  in  roundtrip mode,  by using the features of the Eclipse/Java environment and by permanently synchronizing the model
 copied from: https://www.modelio.org/download/send/5-white-papers/1-improve-your-java-development-efficiency-en.html
-
-### Backup/export a modelio project?
-In the modelio main screen aka workspace view, right click the project, then select export.
-
-### create UML class diagram with or without JAVA code
-Use the Modelio software which is based on Eclipse. https://www.modelio.org
-In Modelio a Java project can be imported and turned into a UML class diagram or the other way round a diagram can be made into JAVA code!
-
-1. open modelio and create new project (Ctrl+N)
-2. Set project to **java project** on creation!!!
-3. on the created project in the tree view click import a model
-4. on the last new folder click > Java designer > Reverse > reverse Java from source
-5. select src folder (Eclipse workspace > package)
-6. select .java files hit reverse
-7. right click the package > create diagram > choose one (for UML class diagram its package structure diagram automatic)
-8. adjust display setting of class to show attributes and operations by default (Configuration > Diagram themes > default > class > Attributes and Operations enable show)
-9. update diagram (in Model Browser window via right-click > Automatic Diagram > update automatic diagram)
-
-### create Java code with an existing UML class diagram
-In Modelio there is the option to right click a package or a class then select Java designer > Generate. This will create the .java class files for the selected class or package in the Modelio workspace folder.
-#### Hints:
-* make sure the packages have the same name!!
-* to not have remarks on the code go conf > modules > java designer > general > generation > release

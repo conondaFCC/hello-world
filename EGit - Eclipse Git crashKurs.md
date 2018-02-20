@@ -1,6 +1,14 @@
 # EGit - Eclipse Git crashKurs.md
 * According to guide http://wiki.eclipse.org/EGit/User_Guide
 * Own guide see Git project JAV-ZF-II README.md which shows an integration of Eclipse project into GitHub.
+* Understanding of creating a git version Repository
+* Understanding of creating a Eclipse Java project
+* Does the Understanding of Git and Eclipse results to best practice?
+
+## Understand Git, creating a git Repository
+see git.md for this.
+
+
 ## Create a GIT branch inside Eclipse
 * Goto GIT perspective
 * Open GIT Repository project under GIT three
