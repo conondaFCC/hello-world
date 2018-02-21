@@ -5,7 +5,18 @@ Git can track changes in files and folders, take snapshots, branch and merge dif
 A deeper look at git: https://git-scm.com/book/en/v1/Git-Internals-Plumbing-and-Porcelain
 
 ## git Tutorial and help
-To understand git, do the git tutorial and the git daily from here: https://git-scm.com/docs/git
+To understand git, go throuhg these 3 links:
+* Don't just read it, **do the examples in it, then you know how to use git!**
+* Read the chapter 'description' on this link: https://git-scm.com/docs/git That one is easy!
+* do the git tutorial: https://git-scm.com/docs/gittutorial
+* do the git daily: https://git-scm.com/docs/giteveryday
+* at the very least do some of git tutorial and fly over git daily!
+
+## **switching from a branch to another, implications**
+Be aware that switching from a branch to another branch, inside a git project, will change the files and folders to it's current state. It will physically alter files according to the branch's state. This might sound normal and logical or not, but it is true and important to know.
+
+## content of this document
+mostly this is a recapitulation of the git tutorial with some comments.
 
 ## git cheatcheat
 PDF: https://education.github.com/git-cheat-sheet-education.pdf
@@ -18,6 +29,7 @@ On windows use the Git Shell from the GitHub Client via PowerShell. Very good CL
 ~\Desktop\testGit [experimental +1 ~1 -0 !]> git add .
 ~\Desktop\testGit [experimental +1 ~1 -0 ~]>
 ```
+* NOTE: File and folder Path on Windows is with backslash \ whereas inside git, for example branches it will be 'git merge bob/master' with a normal slash.
 
 ## Get help on a git command
 How to understand a command like 'git log --graph'?
@@ -74,9 +86,6 @@ $ git branch // shows branches, the * one is the current
 $ git checkout experimental // change working branch to experimental, co = checkout
 ```
 
-## **changing branches and implications**
-The changing of a branch has physical implications on the file system and files. Changing from one branch to another will revert the folders and files back or forward to the branches state! Tested this on Windows and Linux!
-
 ## git log - show history
 ``` PowerShell
 $ git log // shows git commit history on branch
@@ -92,6 +101,7 @@ $ git diff // shows details about conflicting files
 // resolve those conflicts, then do git commit -a
 $ gitk // shows a graphical result of the history
 ```
+* more on merge follow git remote, fetch and merge below
 
 ## git delete branch
 ``` PowerShell
@@ -130,11 +140,64 @@ After Bob has made some changes to his clone and commited them Alice can pull:
 ```
 NOTE '..' is not = '...' see: https://git-scm.com/docs/gittutorial#_using_git_for_collaboration
 
-  This will show what files have differencies. For more info on the differencies:
+  This will show what files have differences. For more info on the differences:
   ``` PowerShell
   $ gitk HEAD..FETCH_HEAD // or
   $ gitk HEAD...FETCH_HEAD
   ```
+
+[ ]* save stash, pull then unstash over the pull.. explanation needed
+
+## define remote repository, fetch and merge on remote
+Define a remote repository by giving it a short name and the project path.
+``` PowerShell
+alice$ git remote add bob /home/bob/myrepo
+// bob = give remote repository a name
+// /home/bob/myrepo = remote sourcePath
+```
+Fetch a set remote by short name. This will make a new branch! -> (remoteName/branchName)
+``` PowerShell
+~\git\alice [master]> git fetch bob
+From ..\bob
+ * [new branch]      master     -> bob/master
+```
+compare the local branch with the remote branch
+``` PowerShell
+alice$ git log -p master..bob/master
+alice$ git log -p HEAD..FETCH_HEAD // same result
+```
+merge the two Branches, two almost identical options:
+``` PowerShell
+alice$ git merge bob/master
+alice$ git pull . remotes/bob/master
+```
+** WARNING ** git pull = will merge in current branch, even if told otherwise in CLI!!
+
+## remarks for cloned repositories
+* a cloned repository has a set remote
+* therefore a 'git pull' command can be given without defining a remote to pull from
+* the clone keeps a copy of the remote/master
+``` PowerShell
+bob$ git branch -r
+>>> origin/HEAD -> origin/master
+>>> origin/master
+```
+
+## git push
+git push is meant to push to remote repository aka clones or defined remotes. Pushing to an origin might give an error. Mostly because the branch to push to is checked out. There are different solutions to this:
+1. send pull request to origin or pull directly from origin
+2. work around the error, see git pull --help or web, **only do this if clear what you are doing!**
+
+## exploration of history
+More details on exploring the history of commits under: https://git-scm.com/docs/gittutorial#_exploring_history
+Some topics there are:
+* this will show the tag system as well, tag a commit with a own String.
+Example: ''$ git tag v2.5 1b2e1d63ff'
+* git reset is shown
+* 'git log stable..master' not = 'git log master..stable'!!
+* git log has weaknesses, gitk might do a better job
+
+
 
 ## git create a new repository
 what does it mean create a new version controlled system? It means creating a folder with some hidden files in it. Inside the new folder there will be a .git folder containing mostly all files needed to handle a git Repository. One example is the 'config' file, which tells what the kind of git Repository it is. From Git Man Page:
