@@ -186,7 +186,7 @@ bob$ git branch -r
 ## git push
 git push is meant to push to remote repository aka clones or defined remotes. Pushing to an origin might give an error. Mostly because the branch to push to is checked out. There are different solutions to this:
 1. send pull request to origin or pull directly from origin
-2. work around the error, see git pull --help or web, **only do this if clear what you are doing!**
+2. work around the error, see git pull --help or web, **only do this if clear what you are doing!** in origin detach branch 'git commit --detach branchName'
 
 ## exploration of history
 More details on exploring the history of commits under: https://git-scm.com/docs/gittutorial#_exploring_history
