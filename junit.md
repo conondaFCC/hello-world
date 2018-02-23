@@ -4,12 +4,15 @@ Order of these Notes is based on knowledge, Basic knowledge on top, each new top
 ## What is JUnit?
 A java framework, to test java code. The framework is written in java. The framework can be used for existing code but also allows to write code with the 'extreme programming' approach. Meaning to write the tests before writting the code. Aka think about the class, then write the ClassTest with the test for the methods first, then write the actual Class. Also this makes thinking about classes with their testablility in mind first, that those tests will be easier to run. Imagine instead writting the test cases after all the code exists, it's a lot harder to figure out all the needed test cases.
 
-## JUnit 5 - Junit.org
+### JUnit quick references
+* One good quick summary of JUnit as a refresher with most commands and basic workflow (7 pages in German, PDF) https://homepages.thm.de/~hg11260/mat/junit.pdf
+
+### JUnit 5 - Junit.org
 * Junit = Java framework to write and run automatet unit tests.
 * Units = methods, classes or components
 * Junit5 = Java8
 
-### JUnit.org website content
+#### JUnit.org website content
 ```
       JUnit.org
         |
@@ -22,7 +25,7 @@ userguide   git   Javadoc   Q&A
 * Javadoc = see yourself
 * Q&A = come here for common question
 
-### JUnit framework setup
+#### JUnit framework setup
 ```
       JUnit
         |
@@ -34,12 +37,6 @@ platform   jupiter      vintage
 * platform: links to JVM, Maven | Gradle
 * **jupiter**: write and run **Junit5**
 * vintage: run Junit3+4 code
-
-### JUnit and Eclipse
-Junit user guide links to: https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-support
-* Junit Jupiter is already part of the Eclipse Java EE
-* **to create a JUnit test case**, select the class to make test class of, right click, say new > Junit test case > select methods to create, add Junit lib to project, write code. More info see link above.
-* best way to import JUnit5 lib, create testclass with @Test, Ctrl+1 over @Test, import will be suggested.
 
 ## JUnit Syntax
 Example of a Testclass. Naming convention ClassnameTest.
@@ -74,9 +71,15 @@ Explanation to these terms:
 * equivalent classes - imagine  a black box, the program. It has input and output. We look at the results of the output according to the input. All the values that accomplish the same output can by grouped in an equivalent class. According to the statement: 'Testing of an equivalent class value, equals testing of all the equivalent class values, exept the boundaries'. Often equivalent classes are divided in valid and invalid ones: customernumber is valid from 1000 to 9999. valid equivalent class 1000-9999, invalid equivalent class >1000 and <9999
 * boundaries - testing is focused on the boundaries of values, the three tests to make are inside, outside and at the boundaries. Are the results as expected.
 
-## Junit with eclipse
+## JUnit and Eclipse
+Junit user guide links to: https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-support
+* Junit Jupiter is already part of the Eclipse Java EE
+* if no previous code exists, which is the standard way to go, when writing code in the extreme programming style, create a new class "JUnit test case" and write tests first. Explained in more detail below.
+* **to create a JUnit test case**, select the class to make test class of, right click, say new > Junit test case > select methods to create, add Junit lib to project, write code. More info see link above.
+* best way to import JUnit5 lib, create testclass with @Test, Ctrl+1 over @Test, import will be suggested.
+
 ### write testcase first then autogenerate class
-As shown in the example of F. Westfahl, http://www.frankwestphal.de/UnitTestingmitJUnit.html, write the tests first. The code can then be generated from that with ease.
+Ideal approch to new code and projects. As shown in the example of F. Westfahl, http://www.frankwestphal.de/UnitTestingmitJUnit.html, write the tests first. The code can then be generated from that with ease.
 
 * Generate eclipse project
 * Generate new Junit test case via new wizzard
