@@ -39,6 +39,7 @@ platform   jupiter      vintage
 Junit user guide links to: https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-support
 * Junit Jupiter is already part of the Eclipse Java EE
 * **to create a JUnit test case**, select the class to make test class of, right click, say new > Junit test case > select methods to create, add Junit lib to project, write code. More info see link above.
+* best way to import JUnit5 lib, create testclass with @Test, Ctrl+1 over @Test, import will be suggested.
 
 ## JUnit Syntax
 Example of a Testclass. Naming convention ClassnameTest.

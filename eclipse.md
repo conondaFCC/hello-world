@@ -49,6 +49,9 @@ Alt+Shift+T     |Refactor Options with according code bits selected ex. Variable
 ### EMACS or other Controls
 Via Windows > Preferences > General > Keys > Schema:
 
+## Eclipse projects (related data)
+To understand where eclipse stores data on projects. Most of the data will be stored in the project folder in the files .classpath and .project. Also if the project is not in the default workspace some information (likely the path to the project) will be stored in 'workspace/.metadata'.
+
 ## Basic Eclipse Functionality
 * **.jpage** to run code snippets (Scrapbook pages) instead of writing a class with a main method just use .jpage. How to use it? Highligt the code inside the .jpage then right click it for options on inspect, run, etc.
 * **Help with F1** - open it in a new window once a topic is selected with the corresponding icon.

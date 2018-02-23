@@ -35,7 +35,7 @@ In the modelio main screen aka workspace view, right click the project, then sel
 ## tips
 ### create UML class diagram with or without JAVA code
 Use the Modelio software which is based on Eclipse. https://www.modelio.org
-In Modelio a Java project can be imported and turned into a UML class diagram or the other way round a diagram can be made into JAVA code! (This will not set the generate path back to the source .java files, only onyway setup Eclipse to Modelio! See roundtrip for both ways setup)
+In Modelio a Java project can be imported and turned into a UML class diagram or the other way round a diagram can be made into JAVA code! (This will not set the generate path back to the source .java files, only one way setup Eclipse to Modelio! See roundtrip for both ways setup)
 
 1. open modelio and create new project (Ctrl+N)
 2. Set project to **java project** on creation!!!

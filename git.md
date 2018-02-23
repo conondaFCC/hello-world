@@ -10,7 +10,7 @@ To understand git, go throuhg these 3 links:
 * Read the chapter 'description' on this link: https://git-scm.com/docs/git That one is easy!
 * do the git tutorial: https://git-scm.com/docs/gittutorial
 * do the git daily: https://git-scm.com/docs/giteveryday
-* at the very least do some of git tutorial and fly over git daily!
+* at the very least do some of git tutorial and fly over git daily and read this paragraph https://git-scm.com/docs/gitworkflows#_separate_changes!
 
 ## **switching from a branch to another, implications**
 Be aware that switching from a branch to another branch, inside a git project, will change the files and folders to it's current state. It will physically alter files according to the branch's state. This might sound normal and logical or not, but it is true and important to know.
@@ -191,10 +191,12 @@ git push is meant to push to remote repository aka clones or defined remotes. Pu
 ## exploration of history
 More details on exploring the history of commits under: https://git-scm.com/docs/gittutorial#_exploring_history
 Some topics there are:
-* this will show the tag system as well, tag a commit with a own String.
+* $ git show HEAD		# the tip of the current branch with diff
+* $ git branch -r		# list remote-tracking branches
+* tag system, tag a commit with a String.
 Example: ''$ git tag v2.5 1b2e1d63ff'
 * git reset is shown
-* 'git log stable..master' not = 'git log master..stable'!!
+* 'git log stable..master' not = 'git log master...stable'!!
 * git log has weaknesses, gitk might do a better job
 
 
