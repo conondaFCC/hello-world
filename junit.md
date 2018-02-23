@@ -47,7 +47,7 @@ public class ApartementTest {
   private Apartment apartment;
 
   //before each testrun
-  @Before
+  @BeforeEach
   public void setUp() {
     apartment = new Apartment (renter, 1035.50);
   }
@@ -78,15 +78,16 @@ Junit user guide links to: https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-
 * **to create a JUnit test case**, select the class to make test class of, right click, say new > Junit test case > select methods to create, add Junit lib to project, write code. More info see link above.
 * best way to import JUnit5 lib, create testclass with @Test, Ctrl+1 over @Test, import will be suggested.
 
-### write testcase first then autogenerate class
+### workflow for JUnit test in Eclpise
+#### write testcase first, then autogenerate class and methods, then run test
 Ideal approch to new code and projects. As shown in the example of F. Westfahl, http://www.frankwestphal.de/UnitTestingmitJUnit.html, write the tests first. The code can then be generated from that with ease.
 
 * Generate eclipse project
 * Generate new Junit test case via new wizzard
 * write test case
 * generate class and method from testcase
-* write method in class
-* run testclass
+* write method behaviour in class
+* run testclass as JUnit test (via Run as command)
 * iterate for new classes and methods
 
 Example of testcase:
@@ -107,3 +108,115 @@ class EuroTest {
 }
 ```
 At this point the class Euro and the method getAmount() was not made, but can be made via autosuggestion very quickly.
+''' Java
+public class Euro {
+  private double amount;
+
+  public Euro(double amount) {
+    this.amount = amount; // almost all that needs to written by hand
+  }
+
+  public double getAmount() {
+    return this.amount;// almost all that needs to written by hand
+  }
+}
+'''
+
+## Annotations and Assert methods
+Excerpts only!
+### Annotations
+For classes:
+@RunWith(... .class) // use with SuiteClasses
+@Suite.SuiteClasses({...
+.class, ...}) // used to test multiple classes at the same time, see the example chapter for details
+
+For methods:
+@Test // defines a test to be run
+@Test(expected=. . . Exception.class) // test fails when other exeption is thrown than defined
+@Test(timeout =. . . ms ) // test fails when taking longer as defined
+@Ignore("comment ") // will disable method, give reason in comment
+
+### Assert methods
+assertEquals(Object exp, Object act)
+assertEquals(float exp, float act,
+float delta)
+assertFalse(boolean condition)
+assertNotNull(Object object)
+assertNotSame(Object unexp, Object act)
+assertNull(Object object)
+assertSame(Object exp, Object act)
+assertTrue(boolean condition)
+
+## Examples of JUnit test cases
+### Example of WohnungTest and the use of @BeforeEach|BeforeAll
+''' Java
+public class WohnungTest {
+  private Mieter mieter = new Mieter ("Hugo", "Hungerbühler", "12345");
+  private Wohnung wohnung;
+
+  //vor jedem Testlauf:
+  @BeforeEach
+  public void setUp() {
+    wohnung = new Wohnung (mieter, 1035.50);
+  }
+  
+  @Test
+  public void testErhoeheMiete() {
+    assertEquals(1035.5, wohnung.getMiete(), 0);
+    wohnung.erhoeheMiete(100);
+    assertEquals(1135.5, wohnung.getMiete(), 0);
+    wohnung.erhoeheMiete(100);
+    assertEquals(1235.5, wohnung.getMiete(), 0);
+  }
+…
+}
+
+// created class Euro and its methods
+public class Euro {
+  private double amount;
+
+  public Euro(double amount) {
+    this.amount = amount;
+  }
+
+  public double getAmount() {
+    return this.amount;
+  }
+}
+'''
+
+''' Java
+public class Wohnung {
+	private Mieter bewohner;
+	private double miete;
+	private double nebenkosten;
+	
+	public Wohnung(Mieter bewohner, double miete) {
+		this. bewohner = bewohner;
+		this. miete = miete;
+	}
+	
+	public void erhoeheMiete(double betrag) {
+		miete += betrag;
+	}
+	
+	public double getMiete() {
+		return miete;
+	}
+}
+'''
+
+### SuiteClasses, testing multiple classes at the same time
+''' Java
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+import org.junit.runner.RunWith;
+
+@RunWith(Suite.class)
+@SuiteClasses( {
+	EuroTest.class,
+	//list all test classes comma separated
+})
+public class AllTest {
+}
+'''
