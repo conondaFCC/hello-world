@@ -205,6 +205,10 @@ push to origin is rejected, try git fetch origin, then git merge origin currentB
 or both in one step, git pull origin currentBranch
 Solution: https://help.github.com/articles/dealing-with-non-fast-forward-errors/
 
+### git push -  ! [remote rejected] master -> master (branch is currently checked out)
+Problem: both origin and remote are referencing to the same HEAD (Is this accurate?)
+Solution: goto origin and checkout origin with --detach currentBranch, then switch back to remote and try push again, or pull instead of push from origin
+
 ## OLD NOTES, NEEDS REVISION:
 ## git create a new repository
 what does it mean create a new version controlled system? It means creating a folder with some hidden files in it. Inside the new folder there will be a .git folder containing mostly all files needed to handle a git Repository. One example is the 'config' file, which tells what the kind of git Repository it is. From Git Man Page:
