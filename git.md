@@ -199,8 +199,13 @@ Example: ''$ git tag v2.5 1b2e1d63ff'
 * 'git log stable..master' not = 'git log master...stable'!!
 * git log has weaknesses, gitk might do a better job
 
+## git problems and solutions
+### git push -  ! [rejected]        master -> master (non-fast-forward)
+push to origin is rejected, try git fetch origin, then git merge origin currentBranch
+or both in one step, git pull origin currentBranch
+Solution: https://help.github.com/articles/dealing-with-non-fast-forward-errors/
 
-
+## OLD NOTES, NEEDS REVISION:
 ## git create a new repository
 what does it mean create a new version controlled system? It means creating a folder with some hidden files in it. Inside the new folder there will be a .git folder containing mostly all files needed to handle a git Repository. One example is the 'config' file, which tells what the kind of git Repository it is. From Git Man Page:
 * bare
