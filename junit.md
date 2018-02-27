@@ -65,11 +65,19 @@ public class ApartementTest {
 
 ```
 
-## Testing based on: Intuition, create equivalent classes or boundaries (Intuition, Aequivalenzklassenbildung oder Grenzwertanalyse)
+## How to write test cases?
+There are different approches on how to write test cases. It is not obvious how detailed test cases should be (expecially on projects where code exists, in contrast to starting a new project based on the principle test first, then write code). I try to describe what is needed in writing tests as detailed as I can. On the bases of examples and experiance.
+* One approch is to **test every function the program has to do**. This is a **good approach when no code exists**, as described by the good introduction from F. Westfahl (Junit example with no prior code http://www.frankwestphal.de/XPueberdieSchultergeschaut.html ). 
+* If **code already exists another option might be write test cases similar to use cases** where the user does or wants something so the result is clear and can be tested. For example the user input will be tested, this means the constructor of the class which tests the user input can be tested. Lets say the class was called 'InputValidator', this would give us the test of the constructor and its functions in test cases called: testInputValidatorCorrectEntry() as one test, and other cases for testInputValidatorTooLongEntry(), ...TooShortEntry(),...WrongCharacters(),... etc.
+
+### Testing based on: Intuition, create equivalent classes or boundaries (Intuition, Aequivalenzklassenbildung oder Grenzwertanalyse)
 Explanation to these terms:
 * Intuition - the test methods are written mostly on the experience of the tester where he thinks problems and errors will occur in the code.
 * equivalent classes - imagine  a black box, the program. It has input and output. We look at the results of the output according to the input. All the values that accomplish the same output can by grouped in an equivalent class. According to the statement: 'Testing of an equivalent class value, equals testing of all the equivalent class values, exept the boundaries'. Often equivalent classes are divided in valid and invalid ones: customernumber is valid from 1000 to 9999. valid equivalent class 1000-9999, invalid equivalent class >1000 and <9999
 * boundaries - testing is focused on the boundaries of values, the three tests to make are inside, outside and at the boundaries. Are the results as expected.
+
+### more on equivalent class testing
+For example we want to test the Mastermind game color options, the test would be Test(classname)correctInput {}, if we have 6 colors but only 4 at one time can be put in then we don't need to test every combination. But we should test at least every color of those six in at least one combination is valid. So we would make two test's to check the 6 colors so every color is tested once. Another example of this would be if the clientnumber from the example above where the equivalten class was first introduced. Say the clientnumber runs from 1-9999, then it would be good not only to check one number but maybe every digit combination from 1-4, like (4,32,546,7345) and make sure those four combinations are valid. Does the logic come across?
 
 ## JUnit and Eclipse
 Junit user guide links to: https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-support
@@ -80,7 +88,7 @@ Junit user guide links to: https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-
 
 ### workflow for JUnit test in Eclpise
 #### write testcase first, then autogenerate class and methods, then run test
-Ideal approch to new code and projects. As shown in the example of F. Westfahl, http://www.frankwestphal.de/UnitTestingmitJUnit.html, write the tests first. The code can then be generated from that with ease.
+Ideal approch to new code and projects. As shown in the example of F. Westfahl, http://www.frankwestphal.de/UnitTestingmitJUnit.html , write the tests first. The code can then be generated from that with ease.
 
 * Generate eclipse project
 * Generate new Junit test case via new wizzard
