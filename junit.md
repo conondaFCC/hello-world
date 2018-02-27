@@ -66,6 +66,8 @@ public class ApartementTest {
 ```
 
 ## How to write test cases?
+Should test cases cover and test every aspect, every method, of the program? ATM I tend to say yes, where is the point other wise to make test runs if not the entire program is tested?
+
 There are different approches on how to write test cases. It is not obvious how detailed test cases should be (expecially on projects where code exists, in contrast to starting a new project based on the principle test first, then write code). I try to describe what is needed in writing tests as detailed as I can. On the bases of examples and experiance.
 * One approch is to **test every function the program has to do**. This is a **good approach when no code exists**, as described by the good introduction from F. Westfahl (Junit example with no prior code http://www.frankwestphal.de/XPueberdieSchultergeschaut.html ). 
 * If **code already exists another option might be write test cases similar to use cases** where the user does or wants something so the result is clear and can be tested. For example the user input will be tested, this means the constructor of the class which tests the user input can be tested. Lets say the class was called 'InputValidator', this would give us the test of the constructor and its functions in test cases called: testInputValidatorCorrectEntry() as one test, and other cases for testInputValidatorTooLongEntry(), ...TooShortEntry(),...WrongCharacters(),... etc.
