@@ -209,6 +209,10 @@ Solution: https://help.github.com/articles/dealing-with-non-fast-forward-errors/
 Problem: both origin and remote are referencing to the same HEAD (Is this accurate?)
 Solution: goto origin and checkout origin with --detach currentBranch, then switch back to remote and try push again, or pull instead of push from origin
 
+### git commit, but made some changes again but the commit message is still valid
+Problem: changes have been added and commited only localy, then some more changes where made that still belong thematically to the last commit.
+Solution: Instead of creating a new commit -m "minor changes, belong to last commit". The changes can be added to the last commit! The Commands are 'git add .' for adding the changes and 'git commit --amend --no-edit' as listed in 'git commit --help'. This will add the new changes to the last commit without changing the commit message. **BEWARE** 'You should understand the implications of rewriting history if you amend a commit that has already been published. (See the "RECOVERING FROM UPSTREAM REBASE" section in git-rebase(1).)'
+
 ## OLD NOTES, NEEDS REVISION:
 ## git create a new repository
 what does it mean create a new version controlled system? It means creating a folder with some hidden files in it. Inside the new folder there will be a .git folder containing mostly all files needed to handle a git Repository. One example is the 'config' file, which tells what the kind of git Repository it is. From Git Man Page:
