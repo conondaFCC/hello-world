@@ -90,6 +90,7 @@ $ git checkout experimental // change working branch to experimental, co = check
 ``` PowerShell
 $ git log // shows git commit history on branch
 $ git log -p // with max details
+$ git log -p -1 // with max details but just the last change
 $ git log --stat --summary // with details
 ```
 
@@ -212,6 +213,9 @@ Solution: goto origin and checkout origin with --detach currentBranch, then swit
 ### git commit, but made some changes again but the commit message is still valid
 Problem: changes have been added and commited only localy, then some more changes where made that still belong thematically to the last commit.
 Solution: Instead of creating a new commit -m "minor changes, belong to last commit". The changes can be added to the last commit! The Commands are 'git add .' for adding the changes and 'git commit --amend --no-edit' as listed in 'git commit --help'. This will add the new changes to the last commit without changing the commit message. **BEWARE** 'You should understand the implications of rewriting history if you amend a commit that has already been published. (See the "RECOVERING FROM UPSTREAM REBASE" section in git-rebase(1).)'
+
+### how to display changes made
+Since this is a huge topic, a good place to start is: https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History
 
 ## OLD NOTES, NEEDS REVISION:
 ## git create a new repository
