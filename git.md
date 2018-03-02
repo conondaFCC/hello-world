@@ -70,10 +70,11 @@ $ git add . // add all files from this folder, take snapshot of current state
 $ git commit // commit current state, all added to index
 $ git add file1 file2 file3 // add specific files for commit, add to index!
 $ git diff --cached // Without --cached, git diff will show you any changes made but not yet added to the index.
+$ git diff // will show changes not added to index
 $ git commit -a // commit all modified, **but not new files**
 $ git commit -m "commit text"
 $ git commit -m "next commit" -m " " -m "more details on 3rd line" // -m " " empty line by convention
-$ git diff // will show
+$ git commit --amend --no-edit // add new added changes to last commit! **BEWARE** Don't do this to remote repositories while working with others!
 ```
 a lot more commands are explained under: https://git-scm.com/docs/gittutorial
 
@@ -90,7 +91,7 @@ $ git checkout experimental // change working branch to experimental, co = check
 ``` PowerShell
 $ git log // shows git commit history on branch
 $ git log -p // with max details
-$ git log -p -1 // with max details but just the last change
+$ git log -p -1 // (-one not letter) with max details but just the last change
 $ git log --stat --summary // with details
 ```
 

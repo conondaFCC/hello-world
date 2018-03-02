@@ -197,3 +197,42 @@ Am Ende auf die Programmierepisode zurückblicken und die Arbeit reflektieren. I
 Am Ende sollte der Code hochgeladen werden wenn mehrere Leute damit arbeiten. Und die Tests für den gesamten Code durchgeführt werden (Wenn dies nur ein Teil eines Projekts war). Und die aktuellen Veränderungen mit einem Kommentar einchecken.
 
 ## Kap 3 Unit Tests mit JUnit
+### Unit Tests Definition
+* Unit Test = kleinere Programmteile in Isolation von anderen Teilen
+* Unit Test = einzelne Methoden, Klassen bis Komponenten
+* Unit Test = White-Box-Test, kennt die Impletmentiereungsdetails
+
+### JUnit Geschichte
+Kern von Kent Beck und Erich Gamma.
+
+### Frameworks für andere Sprachen?
+?
+
+### Installation
+Da bereits ein eigene aktuelle Beschreibung dazu besteht, siehe dazu JUnit.md.
+
+### Erstes Beispiel - Euroklasse
+* Genügt nicht der Finanzwirtschaft aber für KMU ok. 
+* Referenzobjekt vs. Wertobjekt, Wertobjekt wird bei jeder Interaktion neu erstellt, Bsp. add 2.- Euro = new, kein Setzen der Attribute Wert! Wei bei String. (Im Code bedeudet dies, der Konstruktor ist private, wird im Buch unter TestCase kurz beschrieben.)
+
+### Klasse testen - bietet Möglichkeiten
+Test schreiben = Gelegenheit über öffentliche Schnittstelle nachzudenken.
+Was erwarten wir von der Klasse?
+
+### JUnit Source Code
+Wie kann dieser in Eclipse nachträglich installiert werden? Antwort evlt. verschieben zu Eclipse oder Junit.md.
+
+### Assertions
+Werden hier nicht nochmal behandelt, siehe JUnit.md.
+
+### AssertionFailedError
+Bei einem Fehler wird abgebrochen und auf die Test Methode inkl. Zeile verwiesen. Mehr sonst unter Kap 3.8 im PDF-Buch.
+
+Empfehlung im Code gleich eine Fehlermeldung mitgeben:
+''' Java
+assertEquals("amount not rounded", 2.00, rounded.getAmount(), 0.001); // Fehlermeldung innerhalb der ""
+'''
+
+### TestCase, der Testfall
+* 
+
