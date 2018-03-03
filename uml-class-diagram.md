@@ -233,6 +233,21 @@ In this case car uses accelerate. If accelerate is changed car has to be tested 
 Many other dependencys can exist. The main identifier is the word in the << tag >> between the brackets.
 Often only the most important dependencys get depicted in the diagram for readability.
 
+## Object representation
+The Object in UML is like the class as it is drawn in a box with its name in the first row. The difference to a class is **the name is underlined**. Also Attributes are shown like in classes but not Methods, since they are inherited from the class.
+- ***objectName*** if objectName is enough to identify it and class is obvious from contents
+- ***objectName:className*** if object shall be accessed over objectName
+- ***:className*** an anonym object
+- ***:***to model an unknown object from an unknown class
+
+'''
+-------------------------------------------------------------------------
+| objectName    |   ***objectName:className***  |   :class      |   :   | 
+| ----------    |   --------------------------  |   ------      |   -   |
+----------------|-------------------------------|---------------|--------
+'''
+
+
 ## create UML class diagram with JAVA code via eclipse
 Follow this short video: https://www.youtube.com/watch?v=0Zlh56mTS6c
 Steps are:

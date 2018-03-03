@@ -62,14 +62,14 @@ An Array is a defined List of memory space for a defined data type and a defined
 It is possible to make a multi dimensional Array.
 
 ### Array vs ArrayList
-| Array 											| ArrayList     																|
-| :---------------------------| :-------------------------------------------- |
-| limited items, fixed length	| unlimited items, auto expands									|
-| over limit = error					| over limit = auto expands											|
-| one data type								| all kind of data or one defined class as type |
-| data type primitive or class| data type String or defined class or classes*	|
-| faster											| slower																				|
-| initialized with base values| can be initialized without content (empty) 		|
+| Array 						| ArrayList     								|
+| :----------------------------	| :-------------------------------------------- |
+| limited items, fixed length	| unlimited items, auto expands					|
+| over limit = error			| over limit = auto expands						|
+| one data type					| all kind of data or one defined class as type |
+| data type primitive or class	| data type String or defined class or classes*	|
+| faster						| slower										|
+| initialized with base values	| can be initialized without content (empty) 	|
 
 \* primitive types can be converted to objects via wrapper classes
 (Double, Integer, etc.), each primitive type has its own wrapper class.
@@ -679,7 +679,7 @@ Variables are local in a Method when created, used and discarded within one meth
 Final local variable = constant; initialized with value then can not be reasigned within the method.
 
 #### Methods this reference
-this means the actual object. Ex.
+this means the actual object. The this is used to distinguish the one class attriute with the same name form the method attribute or parameter with the same name. Ex.
 
 ``` JAVA
 pubic void setAccountnumber (int Accountnumber) {
