@@ -233,6 +233,31 @@ Empfehlung im Code gleich eine Fehlermeldung mitgeben:
 assertEquals("amount not rounded", 2.00, rounded.getAmount(), 0.001); // Fehlermeldung innerhalb der ""
 '''
 
-### TestCase, der Testfall
-* 
+### TestCase, der Testfall, setUp() & tearDown()
+* Gedanken immer sofort notieren, Bsp. als // TODO Kommentar in der Testklasse
+* Übergang von Einzelnen Tests zu Test Gruppen -> gleiche Inhalte mit @BeforeEach zusammenfassen
+* Organisiere Testklassen um gemeinsame Testfälle, nicht um die getestete Klasse
 
+Zusammenfassung einzelner Testfälle
+Testfälle welche die gleichen Voraussetzungen erfordern bzw. die gleichen Objekte instanzieren als Test setUp() aufsetzen. Wobei die Instanzvariable vor dem setUp() steht, die Initialisierung in der setUp() Methode geschiet. In der tearDown() Methode werden vor allem Netz- und Datenbankverbindungen freigegeben.
+''' Java
+public class EuroTest...
+	private Euro two;
+	protected void setUp() {
+		two = new Euro(2.00);
+	}
+...
+
+### Testablauf verstehen
+Wie läufen die Tests von JUnit ab? Alle mit @Test bezeichneten Methoden bezeichnen ein Testobjekt. Ablauf Testobjekt setUp(), testMethode(), tearDown(), nächstes Objekt. Somit besteht zwischen den Testobjekten keine Verbindung!
+Anders gesagt aus der Testfallklasse entsteht pro Testmethode (@Test) ein Testobjekt:Testklasse bzw. anonyme Testobjekte.
+'''
+                    --------------
+                    | :EuroTest  |                         --------------
+                    --------------                         | :EuroTest  | 
+            setUp()  -->  |                                --------------  
+@Test testMethode1() -->  |                           setUp() -->  |   
+         tearDown()  -->  |              @Test testMethode2() -->  | 
+                          X                        tearDown() -->  |
+                                                                   X
+'''
