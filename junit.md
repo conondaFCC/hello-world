@@ -217,16 +217,64 @@ public class Wohnung {
 '''
 
 ### SuiteClasses, testing multiple classes at the same time
+JUnit5 style
 ''' Java
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+// see https://junit.org/junit5/docs/current/user-guide/#writing-tests-standard
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+class StandardTests {
+
+    @BeforeAll
+    static void initAll() {
+    }
+
+    @BeforeEach
+    void init() {
+    }
+
+    @Test
+    void succeedingTest() {
+    }
+
+    @Test
+    void failingTest() {
+        fail("a failing test");
+    }
+
+    @Test
+    @Disabled("for demonstration purposes")
+    void skippedTest() {
+        // not executed
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+    }
+
+}
+
+// AllTests
+// from https://junit.org/junit5/docs/current/user-guide/#running-tests-junit-platform-runner-test-suite
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.SuiteDisplayName;
 import org.junit.runner.RunWith;
 
-@RunWith(Suite.class)
-@SuiteClasses( {
-	EuroTest.class,
-	//list all test classes comma separated
-})
-public class AllTest {
+@RunWith(JUnitPlatform.class)
+@SuiteDisplayName("JUnit 4 Suite Demo")
+@SelectPackages("example") // add more package with ', "package 2"'
+public class AllTests {
 }
 '''
+

@@ -261,3 +261,42 @@ Anders gesagt aus der Testfallklasse entsteht pro Testmethode (@Test) ein Testob
                           X                        tearDown() -->  |
                                                                    X
 '''
+
+### TestSuite
+Zusammenfassung mehrer TestCase in eine Suite. Ziel neuer Code auf alle Zusammenhänge hin testen. Möglichst in kurzen Abständen.
+* Als Zusammefassende Klasse für TestCase kann eine Klasse 'AllTests' erstellt werden.
+* In Eclipse mit dem erstell 'Wizzard' -> neue TestSuite erstellen!
+''' Java
+public class AllTests {
+ public static Test suite() { // Methode zum Zusammenfassen
+ TestSuite suite = new TestSuite();
+ suite.addTestSuite(CustomerTest.class); // addTestSuite zum Hinzufügen von Klassen
+ suite.addTestSuite(EuroTest.class);
+ suite.addTestSuite(MovieTest.class);
+ return suite;
+ }
+ '''
+          -----------------    *
+          | <<interface>> |   <---------------
+          |     Test      |                  |
+          -----------------                  |
+                 / \                         |
+<<impelements>>   |                          |
+                  |                          |
+             -------------------             |
+             |                 |             |
+       -------------    --------------       |		  
+       |  TestCase |    | Testsuite  | <>--- |
+       -------------    --------------  
+'''
+* Test abstrahiert von Testfällen und Testsuiten.
+* TestSuite führt eine Reihe von Tests zusammen aus.
+
+Umgang mit Paketen? ***Eins zu eins Kopei aus dem Buch, Bedeutung unklar***
+Momentan liegen alle Klassen einfach im Default-Package. In der
+Regel verteilen wir unsere Klassen natürlich über verschiedene Pakete
+und müssen das Package beim Bündeln der Testsuite mit spezifizieren.
+In den meisten Fällen ist es ohnehin praktisch, pro Package eine
+Testsuiteklasse zu definieren. Nach diesem Muster können Sie dann
+auch Hierarchien von Hierarchien von Testsuiten bilden:
+suite.addTest(other.AllTests.suite());
