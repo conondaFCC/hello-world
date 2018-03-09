@@ -136,15 +136,28 @@ public class Euro {
 Excerpts only!
 ### Annotations
 For classes:
+JUnit5 style
+@DisplayName(value="MyDisplayTextHere")
+''' Java
+@DisplayName("A special test case")
+class DisplayNameDemo {
+
+    @Test
+    @DisplayName("Custom test name containing spaces")
+    void testWithDisplayNameContainingSpaces() {
+    }
+}
+'''
+~Old Annotations: DELETE
 @RunWith(... .class) // use with SuiteClasses
 @Suite.SuiteClasses({...
-.class, ...}) // used to test multiple classes at the same time, see the example chapter for details
+.class, ...}) // used to test multiple classes at the same time, see the example chapter for details~
 
 For methods:
 @Test // defines a test to be run
 @Test(expected=. . . Exception.class) // test fails when other exeption is thrown than defined
 @Test(timeout =. . . ms ) // test fails when taking longer as defined
-@Ignore("comment ") // will disable method, give reason in comment
+@Disabled("comment ") // will disable method, give reason in comment
 
 ### Assert methods
 assertEquals(Object exp, Object act)
@@ -216,10 +229,18 @@ public class Wohnung {
 }
 '''
 
-### SuiteClasses, testing multiple classes at the same time
-JUnit5 style
+### Testing multiple classes at the same time
+#### JUnit5 style
+How to run all @Test Methods at once?
+1. create as many TestCases.java as needed
+2. create one more TestCase called AllTest.java (this is optional). And delete the sample test.
+3. Run the last TestCase at least once. Run as > JUnit test case 
+4. Under the Menu: Run > run configurations... change the setting form run single test to Run package or project, then select accordingly
+
+This info is based on: https://junit.org/junit5/docs/current/user-guide/#running-tests-ide-eclipse
+which links to: https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-support
+
 ''' Java
-// see https://junit.org/junit5/docs/current/user-guide/#writing-tests-standard
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.AfterAll;
@@ -264,17 +285,9 @@ class StandardTests {
 
 }
 
-// AllTests
-// from https://junit.org/junit5/docs/current/user-guide/#running-tests-junit-platform-runner-test-suite
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.platform.suite.api.SelectPackages;
-import org.junit.platform.suite.api.SuiteDisplayName;
-import org.junit.runner.RunWith;
+// AllTest Example
+package test;
+class AllTest {} // No Method needed here! It all done in the Eclipse Menu > Run ...
 
-@RunWith(JUnitPlatform.class)
-@SuiteDisplayName("JUnit 4 Suite Demo")
-@SelectPackages("example") // add more package with ', "package 2"'
-public class AllTests {
-}
 '''
 

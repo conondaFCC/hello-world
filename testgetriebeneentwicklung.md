@@ -300,3 +300,58 @@ In den meisten Fällen ist es ohnehin praktisch, pro Package eine
 Testsuiteklasse zu definieren. Nach diesem Muster können Sie dann
 auch Hierarchien von Hierarchien von Testsuiten bilden:
 suite.addTest(other.AllTests.suite());
+
+### Testen ohne IDE (Eclipse)
+Es ist möglich JUnit nur via CLI auszuführen. Details auf der Webseite JUnit.org. Auch eine GUI-Variante existiert ohne IDE.
+
+### Testen von Exeptions
+Gemäss Westphal ist zu Unterscheiden vorhersehbare Exceptions und unvorhersehbare. Gemäss JUnit5 Handbuch gibt es nur einen winzigen Eintrag zu Exception Handling welche ich nicht verstehe. Ergo dieses Thema muss noch vertieft werden.
+Auszug Westphal JUnit3:
+''' java
+// vorhersehbare Exceptions
+public class EuroTest...
+ public void testNegativeAmount() {
+ try {
+ final double NEGATIVE_AMOUNT = -2.00;
+ new Euro(NEGATIVE_AMOUNT);
+ fail("amount must not be negative");
+ } catch (IllegalArgumentException expected) {
+ }
+ }
+}
+
+public class Euro...
+ public Euro(double euro) {
+ if (euro < 0)
+ throw new IllegalArgumentException("negative amount");
+ cents = Math.round(euro * 100.0);
+ }
+}
+'''
+
+
+ ## Kap 4 Testgetriebene Programmierung
+ Testgetrieben Entwicklung ist:
+ * testgetriebene Programmierung
+ * Refactoring
+ * häufige Integration (Code zusammenführen)
+ 
+ 1. testgetriebene Entwicklung
+ * Bevor wir neuen Code schreiben, schreiben wir neue Tests. 
+ * Bevor wir bestehenden Code ändern, ändern wir bestehende Tests. 
+ * Bevor wir einen Fehler im Code suchen und reparieren, suchen und reparieren wir das dafür verantwortliche Loch in den Tests.
+ 
+ Zyklus
+ * grün -> rot; neue Tests werden erstellt.
+ * rot -> grün; Test wird im Code erfüllt.
+ * grün -> grün; Code vereinfachen. 
+ 
+ ### Testepisode 4.4
+ Bsp. RegularPrice: Tip auch neue Klassen im Prinzip grün -> rot einfügen, d.h. nach erstellen soll die Klasse zB. in der Testsuite() als Fehler gemeldet werden weil zwar in der suite hinzugefügt aber noch keine testmethode definiert.
+ 
+
+
+ 
+
+
+
