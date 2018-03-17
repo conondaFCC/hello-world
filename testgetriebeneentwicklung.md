@@ -329,29 +329,79 @@ public class Euro...
 }
 '''
 
+## Kap 4 Testgetriebene Programmierung
+Testgetrieben Entwicklung ist:
+* testgetriebene Programmierung
+* Refactoring
+* häufige Integration (Code zusammenführen)
 
- ## Kap 4 Testgetriebene Programmierung
- Testgetrieben Entwicklung ist:
- * testgetriebene Programmierung
- * Refactoring
- * häufige Integration (Code zusammenführen)
- 
- 1. testgetriebene Entwicklung
- * Bevor wir neuen Code schreiben, schreiben wir neue Tests. 
- * Bevor wir bestehenden Code ändern, ändern wir bestehende Tests. 
- * Bevor wir einen Fehler im Code suchen und reparieren, suchen und reparieren wir das dafür verantwortliche Loch in den Tests.
- 
- Zyklus
- * grün -> rot; neue Tests werden erstellt.
- * rot -> grün; Test wird im Code erfüllt.
- * grün -> grün; Code vereinfachen. 
- 
- ### Testepisode 4.4
- Bsp. RegularPrice: Tip auch neue Klassen im Prinzip grün -> rot einfügen, d.h. nach erstellen soll die Klasse zB. in der Testsuite() als Fehler gemeldet werden weil zwar in der suite hinzugefügt aber noch keine testmethode definiert.
- 
+1. testgetriebene Entwicklung
+* Bevor wir neuen Code schreiben, schreiben wir neue Tests. 
+* Bevor wir bestehenden Code ändern, ändern wir bestehende Tests. 
+* Bevor wir einen Fehler im Code suchen und reparieren, suchen und reparieren wir das dafür verantwortliche Loch in den Tests.
+
+Zyklus
+* grün -> rot; neue Tests werden erstellt. 
+* rot -> grün; Test wird im Code erfüllt.
+* grün -> grün; Code vereinfachen. 
+
+### Testepisode 4.4
+Es geht darum neu erstellte Test Klassen nicht zu vergessen. Wird bestimmt durch die Vorgehensweise. Mit JUnit5 sollte dies kein Problem sein wenn ein Test besteht welcher allte Testklassen erkennt und auswertet. Zudem sollten Tests mit dem Tag @DisplayName(value = "TagName") gekennzeichnet werden. Dieser Tag kann dann beim Testlauf gesucht werden. Zum überprüfen das die neuen Tests auch ausgewertet werden.
+Bsp. RegularPrice für JUnit4: Tip auch neue Klassen im Prinzip grün -> rot einfügen, d.h. nach erstellen soll die Klasse zB. in der Testsuite() als Fehler gemeldet werden weil zwar in der suite hinzugefügt aber noch keine testmethode definiert. 
+
+### Testplan - Analyse
+Bsp. neue Preise - zwei Faktoren:
+1. Filme kosten neu 1.50 Euro für die ersten 3 Tage.
+2. für jeden weiteren Tag 1.50 Euro zusätzlich.
+
+Welche Werte sind also zu testen, bzw. welche Ausleihtage müssen überprüft werden?
+Es macht Sinn die Methode abzufragen für die Tage 1, 3, 4, 5. Aber der Tag zwei z.Bsp. macht keinen Sinn. Grund Grenzwerte testen.
+
+### Test fehlschlagen sehen, weshalb?
+Jeder kleine Schritt testen. Das schlimmste ist wenn der Code nicht das macht was man denkt. Wenn eine Klasse schon besteht und eine neue an einem anderen Ort erstellt wird wäre dies sehr schlecht. Eclipse hilft hier deshalb wenn mit Eclipse ist dies nicht ein sehr grosses Problem aber ohne Eclipse müsste wirklich jeder Schritt einzeln gestestet werden.
+Auch die Rückgabe 'Return Null' testen obwohl die Rückgabe Euro erwartet wird. Neuer Code wird in dieser Phase nur geschrieben wenn der Test fehlgeschlagen hat.
+**Zudem soll der Test beim ersten mal auch Fehlschlagen, damit klar ersichtlich ist das der Test auch etwas Wert hat. D.h. der Test nicht von alleine auf grün stellt!**
+
+### Test erfüllen
+#### Nur soviel Code schreiben das alle Tests laufen
+**Wiederholung:** Beim Schreiben des Codes z.B. return Wert nicht definieren und Testen. Obwohl die Erwartung klar ist das der Test fehlschlagen sollte muss dies getest werden!! Also 'Return Null' auch testen. Siehe auch vorderes Kaptiel. Bevor der Test dann erfüllt wird.
+Immer den einfachsten Weg nehmen, auch wenn klar ist das dieser evtl. später nicht mehr ausreicht. Es geht nur darum den aktuellen Test zu erfüllen.
+Ist der Test durch den Code erfüllt wissen wir nun dieser Teil des Codes stimmt. Erfolg. Bleibt er rot wissen wir auch dieser Teil stimmt noch nicht.
+
+### Zusammenspiel von Test- und Programmcode
+Schreibe immer nur einen Testfall und dann den Code dazu. Um nötige Testfälle zu notieren und nicht zu vergessen benutze ein System, z.B. TODO Liste oder Notizzettel.
+* Ein fehlgeschlagener Test weisst an welchen Code als nächstes geschrieben werden muss.
+* Aus dem bestehenden Code wird der nächste Test hergeleitet und treibt das Design voran.
+
+Begründung weshalb kein Code ohne Test geschrieben werden sollte: Wenn der Code mehr kann als der Testfall besteht die Gefahr das Teile davon in keinem Test gesichert sind. Deshalb wird das Sicherheitsnetz der Tests beim Refactoring kleiner und Fehler können eher unbemerkt bleiben.
+
+### Ausnahmebehandlung, Exception
+1. Schreiben Sie einen Test, der zunächst fehlschlagen sollte.
+2. Schreiben Sie gerade so viel Code, dass der Test fehlschlägt.
+3. Schreiben Sie gerade so viel Code, dass alle Tests laufen.
+
+Ausnahmen:
+2a. Unerwartet Erfolg: grün -> grün: Der Test sollte fehlschlagen. Warum läuft er nur?
+3a. rot -> rot: Der Test sollte laufen. Warum schlägt er jetzt fehl?
+3b. rot -> ???: Der Test sollte sich in relativ kurzer Zeit mit relativ
+wenig Aufwand erfüllen lassen. Wie kommen wir dort hin?
+
+### 4.11 Unerwarteter Erfolg
+Eigentlich sollte der intelligente Test den Code auf unterschiedliche Gegebenheite prüfen. D.h. der nächste Test sollte den nächsten programmier Schritt einleiten. Manchmal prüft läuft der 2., 3. Test schon auf anhieb. Wieso? Es gibt nur zwei Möglichkeiten:
+* Der Code erfüllt die Anforderungen bereits
+* Der Test enthält einen Fehler
+#### Test enthält den Fehler
+Prüfe den Test, allenfalls mit einem bekannten Fehler einbau zum Checken ob noch alles wie es sein sollte.
+#### Code erfüllt Anforderungen
+Liegt es nicht am Test selbst, sagt dies etwas über unseren Testprozess aus. Reflektiere:
+* mehr Code geschrieben, als unbedingt notwendig wäre? (Beim letzten Test)
+* Dieser Testfall schon anderswo mitgetestet? Vielleicht nur indirekt? Wie stark unterscheiden sich die Tests? Können wir sie geeignet zusammenfassen?
+* Duplizieren wir gerade Testcode und wissen es vielleicht nicht?
+* Haben die Tests zu wenig »Kick« dafür, dass sie interessante neue Entwurfsentscheidungen aufwerfen? Könnten wir solche Tests zukünftig ans Ende der Episode stellen? Ist es dann überhaupt noch notwendig, sie zu schreiben?
 
 
- 
+
+
 
 
 
