@@ -398,10 +398,132 @@ Liegt es nicht am Test selbst, sagt dies etwas über unseren Testprozess aus. Re
 * Dieser Testfall schon anderswo mitgetestet? Vielleicht nur indirekt? Wie stark unterscheiden sich die Tests? Können wir sie geeignet zusammenfassen?
 * Duplizieren wir gerade Testcode und wissen es vielleicht nicht?
 * Haben die Tests zu wenig »Kick« dafür, dass sie interessante neue Entwurfsentscheidungen aufwerfen? Könnten wir solche Tests zukünftig ans Ende der Episode stellen? Ist es dann überhaupt noch notwendig, sie zu schreiben?
+In unserem Fall Videoverleih haben wir quasi die Falsche Route gewählt. Es wäre besser gewesen erst 4 und 5 Tage zu testen und dann noch 3.
+* Merke: Falls das schreiben der Test mehr mühe bereitet als schreiben des Codes, Tests vereinfachen, Testdesign überprüfen.
 
+### 4.12 Unerwarteter Fehlschlag
+#### 3a. Fehlschlag, sollte eigentlich laufen
+Hier wird ein Beispiel genommen welches davon ausgeht das wir entweder den Code nicht in der einfachsten Form belassen, da wir wissen das die komplexität nicht der realität entspricht. Ausleihe 4 Tage = Preis Standard + Preis zusatz Tag, wenn wir in der Methode nur gib Preis 3 bei mehr als drei Tagen zurückgeben fehlt etwas an komplexität. Eigentlich ist doch das ein Widerspruch zum vorherigen Statment nur den Code zu schreiben der funktioniert, nicht mehr..
+Jedenfalls, dadurch wird dann die Methode add aus der klasse Euro so verwendet das das Resultat den Test fehlschlägen lässt.
+''' Java
+public class RegularPrice {
 
+	public Euro getCharge(int daysRented) {
+//		new Code fails from book
+		//		Euro result = new Euro(1.50);
+//		if (daysRented == 4) result.add(new Euro(1.50));
+//		return result;
+		
+////		this is not considered good, cause it does not represent the complexity
+////		of having a base price and an increment
+////		so in the example it gets changed with code further below
+//		if (daysRented <= 3) return new Euro(1.50);
+//		return new Euro(3.00);
+		
+		if (daysRented <= 3) return new Euro(1.50);
+		return new Euro(1.50).add(new Euro(1.50));
+	}
 
+}
+'''
+Nebenbei ist der neue if Abschnitt verdächtig weil drei mal new Euro(1.50) vorkommt. Folgende Gedanken dazu:
+* Wieso 3x?
+* Was bedeuten die? Funktion ist nicht klar ersichtlich..
+* Zusammenfassn möglich? Sind es separate Elemente oder lassen sie sich zusammenfassen?
 
+Aber zuerst: Wieso geht nun die add-Operation im Vergleich zur result.add? Dies kommt daher wie die add Methode aufgbaut ist. Siehe dazu EuroTest:
+''' Java
+	@Test
+	@DisplayName("testAdding, test the add Method")
+	void testsAdding() {
+		Euro sum = two.add(two);
+		assertEquals(4.00, sum.getAmount(), 0.001);
+		assertEquals(2.00, two.getAmount(), 0.001);
+	}
+'''
+Vermutlich hat der Name add uns in die Irre geführt. Deshalb wir der zum Refactoring Kandidat. Notiz in aktuellem Test Case -> TODO refactoring rename Euro.add to Euro.plus
+* Führe ein Refactoring durch, wenn du etwas gelernt hast. Und dieses Wissen Bestandteil des Programms sein sollte.
 
+Beheben der drei new Euro(1.50) in drei Schritten:
+* Umwandeln von drei Elementen in Konstanten, d.h. Konstanten wo möglich benennen!
+* nach jedem Schritt Test laufen lassen
+''' Java
+public class RegularPrice...
+ private static final Euro PRICE_PER_DAY = new Euro(1.50);
+ public Euro getCharge(int daysRented) {
+ if (daysRented <= 3) return BASEPRICE;
+ return BASEPRICE.add(PRICE_PER_DAY);
+ }
+}
+
+public class RegularPrice...
+ private static final Euro PRICE_PER_DAY = new Euro(1.50);
+ public Euro getCharge(int daysRented) {
+ if (daysRented <= 3) return BASEPRICE;
+ return BASEPRICE.add(PRICE_PER_DAY);
+ }
+}
+
+public class RegularPrice... 
+ private static final int DAYS_DISCOUNTED = 3;
+ public Euro getCharge(int daysRented) {
+ if (daysRented <= DAYS_DISCOUNTED) return BASEPRICE;
+ return BASEPRICE.add(PRICE_PER_DAY);
+ }
+}
+'''
+
+Rückschritt für den Fortschritt
+Bei Problemen wie weit zurück gehen? Dies hängt von der Schwierigkeit des Problems ab.
+* Als erstes meist zurück zum Code welcher vor dem neuen Test noch gültig war, sprich einfach den neuen Code verwerfen und neu beginnen
+* Falls das erfüllen des Tests zu viel Code fordert und allenfalls nicht mehr weiterkommen, auch den Test rückgängig machen und vom grünen Balken an neu beginnen.
+Rückschritte können durch IDE einfach bewerkstelligt werden mit der Historie und können sogar wiederhergestellt werden. Bsp. Eclipse > compare with > local history
+
+### 4.13 Vorprogrammierte Schwierigkeiten
+3b. Test erfordert neue Methoden und damit weitere Tests
+Wenn der Code kompliziert wird, heisst dies meist etwas mit unserem Code stimmt nicht! Im Beispiel fehlt der Klasse Euro, die Funktion Geldbeträge zu vervielfachen.
+''' Java
+public class RegularPrice...
+ public Euro getCharge(int daysRented) {
+ if (daysRented <= DAYS_DISCOUNTED) return BASEPRICE;
+ int additionalDays = daysRented - DAYS_DISCOUNTED;
+ return BASEPRICE.add(new Euro(PRICE_PER_DAY.getAmount()
+ * additionalDays)); // Hint to problem =)
+ }
+}
+'''
+Trotzdem muss dieser hässliche Weg gewählt werden und der Test erfüllt werden!
+Nur ein grüner Balken ist eine seriöse Grundlage fürs Refactoring. **Achtung:** Hier ist Disziplin gefragt. Obwohl es scheint ja nur schnell die Klasse anzupassen muss dies auf später verschoben werden. Nie den richtigen Weg verlassen!
+**Refactoring nur mit einem grünen Balken.** 
+* Nie an mehreren Enden gleichzeitig arbeiten.
+* Probleme immer nacheinander lösen.
+* Probleme in kleinere aufbrechen und jeden Schritt testen.
+
+Bsp. neue Methode einfügen
+* Test in entsprechender Testklasse schreiben
+* Test laufen lassen
+* Methode gemäss Test intialisieren
+* Test laufen lassen
+* Methode Funktion schreiben
+* Test laufen lassen, jetzt sollte er grün sein
+
+''' Java
+// from EuroTest Class
+	...
+	@Test
+	@DisplayName("test multiply")
+	void testMultiplying() {
+		Euro result = two.times(7);
+		assertEquals(14, result.getAmount());
+		assertEquals(2, two.getAmount());
+	}
+	...
+// from Euro Class
+	...
+	public Euro times(int factor) {
+		return new Euro(cents * factor);
+	}
+	...
+'''
 
 
