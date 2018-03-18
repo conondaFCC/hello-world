@@ -58,6 +58,7 @@ To understand where eclipse stores data on projects. Most of the data will be st
 * **TODO handling** - default view is Resource - to see only TODO from one file > Tasks > 'Triangle' > Show > TODO's instead of show all (all open projects!). The TODO complete option only works for UI generated Tasks! **Must be in corresponding perspectives!! Aka Java perspective.**
 * **No Task View?** Open Tasks view via Windows > Show Views > Tasks
 * **FIXME and XXX** and DONE > FIXME = bad code not working, XXX = bad code but working, DONE = change tags to when done. Needs to be added by hand via Windows > Preferences > Java -> Compiler -> Task Tags.
+* **rename a Method in multiple files?** Use the integrated rename tool with Ctrl+1, then use rename in Workspace so Eclipse will handle all the dependencies.
 
 ## Compile .java to run in cmd
 1. Export file as runnable .jar

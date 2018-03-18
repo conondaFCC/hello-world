@@ -630,3 +630,45 @@ Design hat die einfache Form, wenn der Code:
 Refactoring sollte sich wie ein Lauffeuer über weite Systemteile verbreiten. Im Idealfall wird eine Änderung an einer Klasse sich auf den abhängigen Code übertragen. Refactoringziel muss durch eine Folge kleiner Schritte erreichbar sein. Sonst geht Code in Flammen auf. D.h. Disziplin und Voraussicht. Strategie Refactoring halbieren:
 * **Implementierungssubstitution** berührt die Implementierungsdetails einer Klasse. Tests und Verwender bleiben unbetroffen.
 * **Schnittstellenevolution** berührt primär öffentliche Schnittstelle. Tests und Verwender sind betroffen.
+
+#### Beispiele aus bisherigen Beispielen
+##### Euro:add in plus umbennen
+Keine grosse Erklärung, mit guten IDE's einfach, wähle 'rename in Workspace', von Hand Tricky da additionalDays nicht ersetzt werden sollte mit plus.
+
+Die nächsten drei Beispiele werden in den nächsten Kapiteln 5.7 und folgende behandelt.
+
+### 5.7 Substitution einer Implementierung
+#### Customer und Movie auf Euro umstellen
+Code Smell: - primitive Obsession, aus dem Buch von Herr Fowler.
+Anstatt primitive Datentypen zu verwenden, verwenden wir Objekte.
+''' Java
+//Alter Code:
+public class Movie {
+ private static final double BASE_PRICE = 2.00; // Euro
+ private static final double PRICE_PER_DAY = 1.75; // Euro
+ private static final int DAYS_DISCOUNTED = 2;
+ public static double getCharge(int daysRented) {
+ double result = BASE_PRICE;
+ if (daysRented > DAYS_DISCOUNTED) {
+ result += (daysRented - DAYS_DISCOUNTED) * PRICE_PER_DAY;
+ }
+ return result;
+ }
+ // Neuer Code:
+ public class Movie {
+ private static final Euro BASE_PRICE = new Euro(2.00);
+ private static final Euro PRICE_PER_DAY = new Euro(1.75);
+ private static final int DAYS_DISCOUNTED = 2;
+ public static double getCharge(int daysRented) {
+ Euro result = BASE_PRICE;
+ if (daysRented > DAYS_DISCOUNTED) {
+ int additionalDays = daysRented - DAYS_DISCOUNTED;
+ result = result.plus(PRICE_PER_DAY.times(additionalDays));
+ }
+ return result.getAmount();
+ }
+}
+'''
+Dabei konnte der Kommentar 'Euro' entfernt werden und die Methode zur Berechnung der Kosten gemäss Bsp. RegularPrice angepasst. Nun haben wir doch aber ein Duplikat?
+
+### 5.8
