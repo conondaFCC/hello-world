@@ -30,6 +30,9 @@ Bsp. sind auch auf der Webseite vorhanden:
 ### Konkrete Teststrategien finden
 Buch von Johannes Link [li05]
 
+### 1. Direktive - Jede Änderung via automatisierten Test
+Motiviere jede Änderung des Programmverhaltens durch einen automatisierten Test.
+
 ## Kap 2 - Phylosophie und Basistechniken
 Wie bereits in JUnit.md beschrieben beginnt die Testgetriebene Entwicklung mit einem Test-Framework welches zur verwendeten Entwicklungsumgebung eingesetzt werden kann. Danach wird eine neue Funktionalität erst als Test geschrieben und dann der Code zum Testfall geschrieben. Damit wird nach und nach das ganze Program mit  alles umfassenden Testreihen aufgebaut, welche es erlauben die Funktionalität aller Teile zu garantieren.
 
@@ -480,6 +483,7 @@ Bei Problemen wie weit zurück gehen? Dies hängt von der Schwierigkeit des Prob
 Rückschritte können durch IDE einfach bewerkstelligt werden mit der Historie und können sogar wiederhergestellt werden. Bsp. Eclipse > compare with > local history
 
 ### 4.13 Vorprogrammierte Schwierigkeiten
+#### von neuen Methoden während dem Testen
 3b. Test erfordert neue Methoden und damit weitere Tests
 Wenn der Code kompliziert wird, heisst dies meist etwas mit unserem Code stimmt nicht! Im Beispiel fehlt der Klasse Euro, die Funktion Geldbeträge zu vervielfachen.
 ''' Java
@@ -526,4 +530,103 @@ Bsp. neue Methode einfügen
 	...
 '''
 
+Nun lässt sich der Code für getCharge mit der neuen times Methode vereinfachen:
+''' Java
+public class RegularPrice {
+...
+	public Euro getCharge(int daysRented) {
+		if (daysRented <= DAYS_DISCOUNTED) return BASERPICE;
+		int additionalDays = daysRented - DAYS_DISCOUNTED;
+		return BASERPICE.add(PRICE_PER_DAY.times(additionalDays));
+	}
+}
+'''
 
+Weshalb die Methode times nicht direkt mitenwickelt wurde? Da wir sonst für die times Methode nicht einen eigenen Test hätten schreiben können im Sinne nur ein aktiver Testfall.
+
+#### offene Tests ein Zeichen für Murks
+Bleibt ein Test oder soll ein zweiter eröffnet werden, d.h. der erste würde offne bleiben über einen längeren Zeitraum ist dies ein Zeichen das die Zerlegun der Aufgabe in Testfälle schlecht ungeschickt.
+
+Nun kann es die Situation geben wo wir meinen es gäbe keinen einfacheren Weg als direkt eine neue Klasse / Methode zu schreiben. Obwohl der Autor Westphal meint es gäbe immer die möglichkeit wie obenbeschrieben im aktuellen Test die Mehtode erst umständlich auszuformuieren bis der Test läuft! Trotzdem soll hier zu diesem Ansatz etwas stehen: gem. S. 71 im Buch. Vorsicht beim Top-down design und der Bottom-up implementierung insofern, dass es gefährlich wird sich am Ziel vorbeizuarbeiten.
+
+#### Zwei offene Tests, einer zu viel
+Grund der einzelne Test bekommt seinen Wert dadurch das er alleine also nur für eine Sache zuständig ist. Bei zwei roten Balken geht diese Vorteil verloren. Code wird nicht mehr minimal geschrieben.
+
+### 4.14 Kleine Schritte gehen
+Heisst dies alles muss in winzigen Schritten getestet werden? Nein, es heisst das dies ein gutes Beispiel war wie klein die Schrite sein können. Das Tempo bzw. die grösse der Schritte kann ich selber wählen anhand meinem Gefühl. Um sein eigenes Tempo zu finden braucht es Erfahrung, Erfahrung heisst auch sich zu überschätzen und dabei zu lernen.
+
+#### Füsse trocken halten
+Ziel Fluss mit trockenen Schuhen überqueren, also von Stein zu Stein gehen oder weiter entfernte Steine springen. Am Ende die Schuhe vergleichen. =)
+
+## Refactoring
+Was heisst Refactoring?
+Ziel ist Code verbessern, d.h. verständlicher und einfacher änderbar machen, ohne das Verahlten zu verändern. Refactoring ist eine Investition in die Zukunft des Codes.
+In einem Satz: Allzeit sauberer Code.
+
+### 5.1 Die zweite Direktive
+Die zweite Direktive besagt:
+**Bringe deinen Code immer in die Einfache Form.**
+Diese Regel sagt und, wann Refactoring ins Spiel kommt. Wir wollen sauberen Code, der funktioniert.
+Weshalb? Sonst wird Code schwer lesbar und damit zeitintensiv.
+
+Zwei Ansätze wie Refactoring Code schreiben vereinfacht:
+* Zum erfüllen des Test, bringen wir Code vorher in Form. (Optional, Kürteil)
+* Nach dem der Test läuft, wird refaktorisiert und der Code in die Einfache Form gebracht. (Pflichtteil)
+
+### 5.2 Die Refactoringzüge
+Refactoring in Kürze:
+1. Spüre schlecht riechenden Code auf.
+2. Plane Refactoringroute, um Design zu verbessern.
+3. Refaktorisiere in kleinen Schritten und teste oft.
+
+Notizen: Wenn eine Möglichkeit zur Vereinfachung auffält notieren bevor sie verloren geht. Augen offen halten für verbesserungswürdigen Code.
+
+Refaktorisiere erst wenn die Erkenntnis für neue Desing klar ist. Ansonsten nur die Notiz machen.
+
+Code als etwas Organisches begreifen, knetbar und formbar. Hinweise: "Ich bin hässlich!", "Ich werde zu fett!", "Niemand versteht mich!". Code will strukturiert werden.
+
+### 5.3 Von übel riechendem Code
+#### Schrit 1: Aufspüren
+Halte dich an die Designprinzipien und Entwurfsmuster welche hier vorgestellt werden. Schlechter Code finden mit eigener Intuition.
+
+Kent Beck und Marin Fowler beschreiben im Refactoringbuch [fo99] über zwanzig 'Code Smells' welche beste Ansätze liefern:
+* **duplizierte Logik** - Nummer 1. der Gestankliga und oft Problemverursacher. Kopien, bewusst oder unbewusst beginnen ein eigenleben.
+* **grosse Klassen und lange Methoden** - verschlechtern Mobilität, Lokalisation, Verwendung und Dokumentation und sind Nährboden für Duplikation.
+* **schlechte Namen und unpassende Codestrukturen** - erhöhen Lernkurve
+* **spekulative Verallgemeinerungen** - Designelemente die nur im Weg stehen
+* **Kommentare** - oft das Deodorant von schlecht riechendem Code. Nach gutem Refactoring überflüssig. Nicht entbehrlich, Entwurfsentscheidungen, veröffentliche Schnittstellen in Javadoc oder Literaturhinweise.
+
+### 5.4 über den Refactoringkatalog
+#### Schritt 2. Plane die Refactoringroute um das Design zu verbessern
+Design ist etwas Organisches. Entscheidungen von gestern können heute veraltet sein.
+
+Merke: Jede Entwurfsentscheidung ist umkehrbar.
+Software ist änderbar. Ohne die Semantik, das Verhalten, zu verändern, kann ich:
+* Klassen teilen oder zusammenführen,
+* Methoden und Attribute in andere Klassen verschieben,
+* Klassen, Methoden, Paramter und Variablen umbenennen,
+* Methoden extrahieren oder integrieren, (verschieben oder an Ort implemtieren)
+* Vererbung durch Delegatin ersetzen oder umgekehrt sowie
+* Schnittstellen einziehen.
+
+Refactoringroute wählen, wenn die Sachen grösser wird, Restrukturierung ist auch nur Refaktorisierung in kleinen Schritten, bewegen wir uns auf die Welt der Design Patterns zu, da dort die besten Lösunge für bekannte Probleme sind.
+
+Ein Ansatz Lösungen zu finden wäre Martin Fowler's Buch welches auch 70 Refactoring detailiert beschreibt und zeigt welche Risiken bestehen.
+
+Auch der Onlinekatalog mag einen Blick Wert sein: www.refactoring.com
+
+#### Was-wäre-wenn-Betrachtung
+Hilfreich ist die Was-wäre-wenn-Betrachtung um Entwurfsalternativen in Erwägung zu ziehen. Stell dir vor wie ein Refactoring das Design beinflusst.
+
+### 5.5 zur Einfachen Form
+#### Schritt 3: Refaktorisiere oft in kleinen Schritten und teste
+Design hat die einfache Form, wenn der Code:
+1. alle Tests efüllt. Nur Code mit guten Testfällen kann mit Vertrauen refaktorisiert werden. **Achtung!** Missglücktes Refactoring kann Stunden vernichten. Evlt. erst bremsen und mehr Tests schreiben.
+2. seine Intention klar ausdrückt. Es ist meine Aufgabe alle Ideen durch den Code zu kommunizieren. Code wird öfter gelesen und geändert als geschrieben! Deshalb sind verständliche Namen für kleinste Codeteile wichtig. Drücke in den Namen immer nur die Intention aus, nicht die Implementierung selbst. Dadurch lässt sich Code schreiben der sich selbst dokumentiert.
+3. keine duplizierte Logik enthält. Schreibe nie die gleiche Zeile Code zweimal! Selbst kleine Codeduplikate riechen übel! Duplikationen sind Lernerlebnise, eine neue Abstraktion wartet darauf entdeckt und belebt zu werden.
+4. möglichst wenig Klassen und Methoden umfasst. Keine Schweizertaschenmesser programmieren. Sondern viele kleine Klasssen mit vielen kurzen Methoden. Der einzige Weg zu weniger Klassen und Methoden zu kommen ist unnötige Designelemente entfernen: Es gibt eine Grauzone, wo eine grössere Methode die Absicht besser vermittelt als zwei kleinere Methoden oder wo eine Abstraktion die Intention verbirgt und Duplikation ok ist.
+
+### 5.6 Überlegungen zur Refactoringroute
+Refactoring sollte sich wie ein Lauffeuer über weite Systemteile verbreiten. Im Idealfall wird eine Änderung an einer Klasse sich auf den abhängigen Code übertragen. Refactoringziel muss durch eine Folge kleiner Schritte erreichbar sein. Sonst geht Code in Flammen auf. D.h. Disziplin und Voraussicht. Strategie Refactoring halbieren:
+* **Implementierungssubstitution** berührt die Implementierungsdetails einer Klasse. Tests und Verwender bleiben unbetroffen.
+* **Schnittstellenevolution** berührt primär öffentliche Schnittstelle. Tests und Verwender sind betroffen.
