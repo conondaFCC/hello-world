@@ -671,4 +671,54 @@ public class Movie {
 '''
 Dabei konnte der Kommentar 'Euro' entfernt werden und die Methode zur Berechnung der Kosten gemäss Bsp. RegularPrice angepasst. Nun haben wir doch aber ein Duplikat?
 
-### 5.8
+### 5.8 Evolution einer Schnittstelle
+#### Schnittstellen und wichtige Gedanken dazu
+* Eine Änderung an den Schnittstellen wirkt sich auf alle abhängigen Systemteile aus. Dies ist ein zwei schneidiges Schwert. Wir wollen diesen Effekt und wir fürchten ihn. Oft sind die Aufwände dazu hoch. Dadurch hat sich die Kultur entwickelt,Schnitstellen möglichst wenig zu ändern und abwärtskompatibel zu sein. Dies gilt aber nur wenn wir den Quellcode nicht haben oder die Schnittstellen veröffentlichen!
+* In allen anderen Fällen sind auch Schnittstellen leicht veränderbar.
+
+Für die Refactoringroutenplanung nehme ich mit ein Refactoringschritt sollte:
+* Schnitstellen möglichst wenig ändern
+* bei Änderungen abwärtskompatibel sein
+
+#### Refactoringroute à la Tamo Freese via tmpMethode
+Jeder Schritt bleibt via JUnit testbar!
+Alte Methode extrahieren ohne return statement mit der Refactoring Methode von Eclipse. Bewirkt das Eclipse automatisch die Zeile hinzugefügt: ' Euro result = tmpCharge(daysRented);'
+''' Java
+	public static double getCharge(int daysRented) {
+		Euro result = BASE_PRICE; // Extrahierter Teil von
+		if (daysRented > DAYS_DISCOUNTED) {
+			int additionalDays = daysRented - DAYS_DISCOUNTED;
+			result = result.plus(PRICE_PER_DAY.times(additionalDays));
+		} // bis HIER!!
+		return result.getAmount();
+	}
+'''
+Mit Exclipse > Refactor > extract Method -> neuer Name für Methode geben
+''' Java
+	public static double getCharge(int daysRented) {
+		Euro result = tmpCharge(daysRented);
+		return result.getAmount();
+	}
+
+	public static Euro tmpCharge(int daysRented) {
+		Euro result = BASE_PRICE;
+		if (daysRented > DAYS_DISCOUNTED) {
+			int additionalDays = daysRented - DAYS_DISCOUNTED;
+			result = result.plus(PRICE_PER_DAY.times(additionalDays));
+		}
+		return result;
+	}
+'''
+
+Schritt zwei: Variable in getCharge ersetzen mit dem Ausdruck selbst! Adapterfunktion um abwärtskompatibel zu sein.
+''' Java
+public class Movie... 
+ public static double getCharge(int daysRented) {
+ return tmpCharge(daysRented).getAmount();
+ }
+}
+'''
+
+
+
+

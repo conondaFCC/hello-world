@@ -28,7 +28,7 @@ Ctrl+Shift+G    |create getter an setter?
 Alt+Shift+J     |add JavaDoc comment
 Ctrl+7          |Line comment on/off  
 Ctrl+O          |quick outline class or twice Ctrl+O all classes in package? Note: Ctrl+O always opens the outline for the current Java editor. Press Ctrl+F3 to open the quick outline for the currently selected type.
-Shift+Alt+A     |Block selection aka multiline edit
+Shift+Alt+A     |Block selection aka multiline edit (as on Oxygen.2 Release (4.7.2) this is still not very extendet like in atom, see github stars for project on it)
 Shift+Alt+S     |access Source commands like create getter and setter etc.
 toString()      |from Source get all fields toString
 Ctrl+Shift+Mouse|Ingore warning and show Javadoc anyway
