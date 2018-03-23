@@ -648,9 +648,9 @@ public class Movie {
  private static final double PRICE_PER_DAY = 1.75; // Euro
  private static final int DAYS_DISCOUNTED = 2;
  public static double getCharge(int daysRented) {
- double result = BASE_PRICE;
- if (daysRented > DAYS_DISCOUNTED) {
- result += (daysRented - DAYS_DISCOUNTED) * PRICE_PER_DAY;
+  double result = BASE_PRICE;
+  if (daysRented > DAYS_DISCOUNTED) {
+  result += (daysRented - DAYS_DISCOUNTED) * PRICE_PER_DAY;
  }
  return result;
  }
@@ -660,11 +660,11 @@ public class Movie {
  private static final Euro PRICE_PER_DAY = new Euro(1.75);
  private static final int DAYS_DISCOUNTED = 2;
  public static double getCharge(int daysRented) {
- Euro result = BASE_PRICE;
- if (daysRented > DAYS_DISCOUNTED) {
- int additionalDays = daysRented - DAYS_DISCOUNTED;
- result = result.plus(PRICE_PER_DAY.times(additionalDays));
- }
+  Euro result = BASE_PRICE;
+  if (daysRented > DAYS_DISCOUNTED) {
+  int additionalDays = daysRented - DAYS_DISCOUNTED;
+  result = result.plus(PRICE_PER_DAY.times(additionalDays));
+  }
  return result.getAmount();
  }
 }
@@ -718,6 +718,31 @@ public class Movie...
  }
 }
 '''
+Schritt drei: alle alten Methodenaufrufe in Tests und anderen Klassen anpassen
+Ein Weg dies zu machen, damit kein Aufruf vergessen geht ist mit der Eclipse rename in Workspace funktion auf der Methode selbst. Dann einfach die Methode wieder umbennen nachdem alle auf die tmp umgestellt wurden. Ziel die Methode 'getCharge' soll von nirgends mehr verwendet werden.
+''' Java
+public class MovieTest extends TestCase { JUnit: OK
+ public void testBasePrice() {
+ assertEquals(2.00, Movie.tmpCharge(1).getAmount(), 0.001);
+ assertEquals(2.00, Movie.tmpCharge(2).getAmount(), 0.001);
+ }
+ public void testPricePerDay() {
+ assertEquals(3.75, Movie.tmpCharge(3).getAmount(), 0.001);
+ assertEquals(5.50, Movie.tmpCharge(4).getAmount(), 0.001);
+ }
+}
+public class Customer...
+ public void rentMovie(int daysRented) {
+ totalCharge += Movie.tmpCharge(daysRented).getAmount();
+ }
+}
+'''
+Dank den Tests habe ich hier dann einen Fehler gefunden und dieser kann einfach behoben werden. Klasse CustomerTest verlangt 'assertEquals(2, customer.getTotalCharge(), 0.001);', also musste bei der Klasse Customer die Methode rentMovie neben der Anpassung mit tmpCharge auch noch mit .getAmount() ergänzt werden. Dank dem wird dies dann klar!
+
+Schritt vier: Wenn alle Tests grün sind und alle Beziehungen angepasst sind, macht es Sinn die alte Methode in OLD umzubenennen. Damit ist klar das die Methode nicht mehr verwendet werden sollte. Test laufen lassen.
+
+Schritt fünf: tmpCharge in getCharge umbenennen
+Konkret wurde die Methode in Kap 5.7 so geändert das getCharge neu ein Euro Objekt zurückgibt anstatt eine Zahl, siehe Kap 5.7 und in 5.8 wird die Methode getCharge so refacotred, dass diese eben nicht den Betrag der Instanz Euro ausgibt sondern nur das Objekt übergibt. Der Test soll aber den Betrag prüfen und nicht das Objekt selber (Objekte vergleichen, kann ich ja nicht wenn es nicht die gleichen sind, Hashwert!), also die Methode getAmount verwenden. In einem Satz die Verwendung der getAmount Methode ausgelagert von der Klassenmethode getCharge direkt in die Testklasse. Alles klar? Zudem sollte klar sein das die Regel gilt: Um eine Klasse schöner zu machen, muss eine andere hässlicher werden! Jedenfalls im Schritt fünf.
 
 
 
