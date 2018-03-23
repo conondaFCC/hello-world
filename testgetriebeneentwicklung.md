@@ -744,6 +744,19 @@ Schritt vier: Wenn alle Tests grün sind und alle Beziehungen angepasst sind, ma
 Schritt fünf: tmpCharge in getCharge umbenennen
 Konkret wurde die Methode in Kap 5.7 so geändert das getCharge neu ein Euro Objekt zurückgibt anstatt eine Zahl, siehe Kap 5.7 und in 5.8 wird die Methode getCharge so refacotred, dass diese eben nicht den Betrag der Instanz Euro ausgibt sondern nur das Objekt übergibt. Der Test soll aber den Betrag prüfen und nicht das Objekt selber (Objekte vergleichen, kann ich ja nicht wenn es nicht die gleichen sind, Hashwert!), also die Methode getAmount verwenden. In einem Satz die Verwendung der getAmount Methode ausgelagert von der Klassenmethode getCharge direkt in die Testklasse. Alles klar? Zudem sollte klar sein das die Regel gilt: Um eine Klasse schöner zu machen, muss eine andere hässlicher werden! Jedenfalls im Schritt fünf.
 
+Schritt sechs: Nun die Testklasse anpassen. 
+''' Java
+public class MovieTest...
+ public void testBasePrice() {
+ assertEquals(new Euro(2.00), Movie.getCharge(1));
+ assertEquals(2.00, Movie.getCharge(2).getAmount(), 0.001);
+ }
+}
+'''
+Die geht mit JUnit 5 nicht mehr weil die Hash Werte von new Euro(2) und Movie.getCharge(1) nicht gleich sind und es somit nicht die gleichen Objekte sind. Darauf hin habe ich im Internet nach einer Lösung für dieses Problem gesucht. Die Antwort scheint zu sein. Es macht eigentlich keinen Sinn in einem Unit Test zwei Objekte zu vergleichen. Es sollten nur die Funktionen getestet werden und somit nur Werte oder Paramter von Objekten verglichen werden. Siehe: https://softwareengineering.stackexchange.com/questions/300345/ways-of-creating-expected-object-for-assert
 
-
+Deshalb scheint der einzige Weg die Test mit konform mit der neuen Methode zu schreiben kompliziert zu sein und den Test Code nicht zu vereinfachen.
+''' Java
+assertEquals(new Euro(2.00).getAmount(), Movie.getCharge(1).getAmount());
+'''
 
