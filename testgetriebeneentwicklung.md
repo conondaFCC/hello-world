@@ -638,8 +638,11 @@ Keine grosse Erklärung, mit guten IDE's einfach, wähle 'rename in Workspace', 
 Die nächsten drei Beispiele werden in den nächsten Kapiteln 5.7 und folgende behandelt.
 
 ### 5.7 Substitution einer Implementierung
+Was in Kaptile 5.7  5.8 behandelt wird ist unter https://refactoring.guru/replace-data-value-with-object einfach zum Nachschlagen beschrieben und enthält auch mehr Infos zum Hintergrund wieso dieser Refactoring Schritt gemacht werden sollte. Nebenbei die Seite refactoring.guru entspricht vom Inhalt her ziemlich genau dem Buch von Herr Fowler! http://my.safaribooksonline.com/0-201-485672/ch08lev1sec2
+
 #### Customer und Movie auf Euro umstellen
 Code Smell: - primitive Obsession, aus dem Buch von Herr Fowler.
+Mehr dazu auch unter: https://espeo.eu/blog/code-quality-primitive-obsession-code-smells/
 Anstatt primitive Datentypen zu verwenden, verwenden wir Objekte.
 ''' Java
 //Alter Code:
@@ -682,7 +685,8 @@ Für die Refactoringroutenplanung nehme ich mit ein Refactoringschritt sollte:
 
 #### Refactoringroute à la Tamo Freese via tmpMethode
 Jeder Schritt bleibt via JUnit testbar!
-Alte Methode extrahieren ohne return statement mit der Refactoring Methode von Eclipse. Bewirkt das Eclipse automatisch die Zeile hinzugefügt: ' Euro result = tmpCharge(daysRented);'
+Schritt eins: beachte Schritt 5.7 ist allenfalls vorher zu vollziehen!
+Alte Methode extrahieren ohne return statement mit der Refactoring Methode von Eclipse. Bewirkt das Eclipse automatisch die Zeile hinzugefügt: 'Euro result = tmpCharge(daysRented);'
 ''' Java
 	public static double getCharge(int daysRented) {
 		Euro result = BASE_PRICE; // Extrahierter Teil von
@@ -760,3 +764,6 @@ Deshalb scheint der einzige Weg die Test mit konform mit der neuen Methode zu sc
 assertEquals(new Euro(2.00).getAmount(), Movie.getCharge(1).getAmount());
 '''
 
+Im Buch geht es weiter mit Customer auf Euro umstellen gem. 5.7 und 5.8 CustomerTest auch.
+Beim Anpassen von Customer auf Euro als Klassenvariablen, Problem: zwei Euro Klassen zusammenzählen. Lösung wurde schon vorher erstellt, eine Methode welche zwei Euro Klassen zusammenzählen kann. Euro.plus(otherEuro).
+Klasse Customer und CustomerTest umgestellt. Wie bei Movie mit dem vorbehalt das Vergleich von Objekten nicht möglich ist und deshalb beide Euro Objekte dessen Werte verglichen werden mit getAmount.
