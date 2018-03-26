@@ -767,3 +767,111 @@ assertEquals(new Euro(2.00).getAmount(), Movie.getCharge(1).getAmount());
 Im Buch geht es weiter mit Customer auf Euro umstellen gem. 5.7 und 5.8 CustomerTest auch.
 Beim Anpassen von Customer auf Euro als Klassenvariablen, Problem: zwei Euro Klassen zusammenzählen. Lösung wurde schon vorher erstellt, eine Methode welche zwei Euro Klassen zusammenzählen kann. Euro.plus(otherEuro).
 Klasse Customer und CustomerTest umgestellt. Wie bei Movie mit dem vorbehalt das Vergleich von Objekten nicht möglich ist und deshalb beide Euro Objekte dessen Werte verglichen werden mit getAmount.
+
+### 5.9 Teilen von Klassen
+Wieso? Gründe kann es mehrere geben. Einer kann sein das der Code zu kompliziert ist und durch das aufteilen einer Klasse klarer wird. Kann auch den nächsten Schritt sichtbar machen, welcher sonst evtl. gar nicht sichtbar wäre.
+
+Siehe auch: https://refactoring.guru/extract-class
+
+Merke das Aufteilen der Klasse ist nur ein Schritt, weitere werden in den folgenden Unterkaptieln 5.10 usw. erklärt.
+
+Im Bsp. dupliziert die Klasse Movie die Regeln zu Berechnung der Ausleihgebühr. Grund ist das die Klasse eine andere Klasse in sich trägt.
+Neue Klasse erstellen, Schritt 1, Methode extrahieren:
+* in Eclipse, Methoden Inhalt selektieren, und via Refactor > Extract Method in neue Methode verschieben (tmpMethode)
+* die tmpMethode mit den Klassenvariablen in neue Klasse kopieren, wenn die Attribute nicht bestimmte Bezeichner besitzen lassen sich diese via Refactor > extract Class auswählen in Eclipse
+* der alten Methode return Wert an neue Klasse anpassen (Klasse.tmpMethode mitgeben)
+
+#### Methode extrahieren
+''' Java
+public class Movie...
+ public static Euro getCharge(int daysRented) {
+ Euro result = BASE_PRICE;
+ if (daysRented > DAYS_DISCOUNTED) {
+ int additionalDays = daysRented - DAYS_DISCOUNTED;
+ result = result.plus(PRICE_PER_DAY.times(additionalDays));
+ }
+ return result;
+ }
+}
+// Ergibt:
+public class Movie... 
+ public static Euro getCharge(int daysRented) {
+ return tmpCharge(daysRented);
+ }
+ public static Euro tmpCharge(int daysRented) {
+ Euro result = BASE_PRICE;
+ if (daysRented > DAYS_DISCOUNTED) {
+ int additionalDays = daysRented - DAYS_DISCOUNTED;
+ result = result.plus(PRICE_PER_DAY.times(additionalDays));
+ }
+ return result;
+ }
+}
+'''
+
+JUnit Test machen.
+
+#### Transfer Logik zu neuer Klasse
+Methode und Variablen kopieren in die neu erstellte Klasse:
+''' Java
+public class NewReleasePrice {
+
+	private static final Euro BASE_PRICE = new Euro(2.00); // Euro
+	private static final Euro PRICE_PER_DAY = new Euro(1.75); // Euro
+	private static final int DAYS_DISCOUNTED = 2;
+
+	public static Euro tmpCharge(int daysRented) {
+		Euro result = BASE_PRICE;
+		if (daysRented > DAYS_DISCOUNTED) {
+			int additionalDays = daysRented - DAYS_DISCOUNTED;
+			result = result.plus(PRICE_PER_DAY.times(additionalDays));
+		}
+		return result;
+	}
+}
+'''
+
+Im Buch steht der Test sollte immer noch laufen, bei mir musste aber auf den Ort der Methode verwiesen werden *return **NewReleasePrice**.tmpCharge(daysRented);*.
+''' Java
+public class Movie {
+
+	public static double getCharge_OLD(int daysRented) {
+		return getCharge(daysRented).getAmount();
+	}
+
+	public static Euro getCharge(int daysRented) {
+		return NewReleasePrice.tmpCharge(daysRented);
+	}
+}
+'''
+
+#### Methoden verweise bzw. Zugriffe anpassen
+Nun die Methode wieder zurückbenennen:
+* am besten mit Rename in Workspace, sollte dann auch die aktiv genutzten Methoden umbennen.
+''' Java
+public class NewReleasePrice...
+ public static Euro getCharge(int daysRented)...
+}
+// Und auch:
+public class Movie {
+ public static Euro getCharge(int daysRented) {
+ return NewReleasePrice.getCharge(daysRented);
+ }
+}
+'''
+Weshalb lassen wir diesen Code Teil in der Klasse Movie stehen? Es dient der Erklärung der Intention des Codes. Auch wenn dadruch es so aussieht als ob eine Klasse zu viel zwischen Code und Methode liegt.
+
+
+### 5.10 Verschieben von Tests
+Wandert Code von einer Klasse zur Anderen, wandern die Tests mit. Klassen ohne eigene Tests sind schlecht Klassen. Versuche nicht die Abkürzung mehere Klassen, auch kleinere in einer Klasse zu testen. Zudem wird oft eine neue Klasse erstellt gerade will die Tests für die alte nur schwer zu formuliern waren. Oder die Klasse schlecht gestest war.
+
+Fragen beim Code verschieben:
+* Müssen relevante Tests nachziehen?
+* Müssen weitere Test für die neue Klasse hinzu?
+* Können zurückgebliebne Tests wegfallen?
+
+Das Thema wird nur angeschnitten auf einer Seite.
+
+### 5.11 Abstraktion statt Duplikation
+
+
