@@ -863,15 +863,18 @@ Weshalb lassen wir diesen Code Teil in der Klasse Movie stehen? Es dient der Erk
 
 
 ### 5.10 Verschieben von Tests
-Wandert Code von einer Klasse zur Anderen, wandern die Tests mit. Klassen ohne eigene Tests sind schlecht Klassen. Versuche nicht die Abkürzung mehere Klassen, auch kleinere in einer Klasse zu testen. Zudem wird oft eine neue Klasse erstellt gerade will die Tests für die alte nur schwer zu formuliern waren. Oder die Klasse schlecht gestest war.
+Wandert Code von einer Klasse zur Anderen, wandern die Tests mit. Klassen ohne eigene Tests sind schlecht Klassen. Versuche nicht die Abkürzung mehrere Klassen, auch kleinere, in einer Klasse zu testen. Zudem wird oft eine neue Klasse erstellt gerade weil die Tests für die alte nur schwer zu formuliern waren. Oder die Klasse schlecht gestest war.
 
 Fragen beim Code verschieben:
 * Müssen relevante Tests nachziehen?
 * Müssen weitere Test für die neue Klasse hinzu?
-* Können zurückgebliebne Tests wegfallen?
+* Können zurückgebliebene Tests wegfallen?
 
-Das Thema wird nur angeschnitten auf einer Seite.
+Das Thema wird nur angeschnitten auf einer Seite. Die alten Test kopieren in neue Test Klasse und die Klassenbeziehungen anpassen. Am alten Testort ein alter Test stehen lassen und entsprechend beschriften.
 
 ### 5.11 Abstraktion statt Duplikation
+#### Substitute Algorithm
+Mehrfaches Vorkommen von gleichen oder änlicher Codeteile ist ein Indiz für Cade Vereinheitlichung, evtl. fehlt noch die passende Idee.
+Vergleich der beiden Klassen NewReleasePrice und RegularPrice und Unterschiede herauslesen.
 
 
