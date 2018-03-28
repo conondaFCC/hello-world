@@ -876,5 +876,90 @@ Das Thema wird nur angeschnitten auf einer Seite. Die alten Test kopieren in neu
 #### Substitute Algorithm
 Mehrfaches Vorkommen von gleichen oder änlicher Codeteile ist ein Indiz für Cade Vereinheitlichung, evtl. fehlt noch die passende Idee.
 Vergleich der beiden Klassen NewReleasePrice und RegularPrice und Unterschiede herauslesen.
+Test JUnit grün.
 
+Schritt 1: Gleiche Teile vereinheitlichen.
+Schritt 2: Superklasse extrahieren, child mit extends versehen
+Schritt 3: Superklasse methode anpassen wenn nötig, umbenennen usw.
+Schritt 4: Superklasse Konstruktor erstellen mit Parameter z.B.
+Schritt 5: Subklasse Konstruktor verwenden mit Klassen Parameter.
+Schritt 6: Auswirkungen auf andere Klassen anpassen. Verwendung von Klassen kann Anpassung beim Aufruf nötig machen.
+
+#### Extract Superclass
+Jede Idee sollte im Code nur einmal vorhanden sein. Befällt mich beim Code ein Déjà-vu-Erlebnis, finde den passenden Code und vereinheitliche bzw. führe zusammen. Dies führt zu vielen Klassen und einer Framework Struktur.
+
+Wenn die Klassen vereinheitlicht sind, kann mit dem Eclipse Befehl 'Extract Superclass', die Superklasse automatisch extrahiert werden. Dabei müssen nur noch alle Variablen und Methoden ausgewählt werden. Bei welcher Klasse dies gemacht wird spielt keine Rolle.
+''' Java
+public class Price {
+ private static final Euro BASEPRICE = new Euro(1.50);
+ private static final Euro PRICE_PER_DAY = new Euro(1.50);
+ private static final int DAYS_DISCOUNTED = 3;
+ 
+ public Euro getCharge(int daysRented) {
+ if (daysRented <= DAYS_DISCOUNTED) return BASEPRICE;
+ int additionalDays = daysRented - DAYS_DISCOUNTED;
+ return BASEPRICE.plus(PRICE_PER_DAY.times(additionalDays));
+ }
+}
+public class RegularPrice extends Price {
+}
+'''
+Test JUnit grün.
+
+Methode in die Superklasse? Wenn die selbe Methode von allen Subklassen verwendet wird macht es Sinn die Methode in der Superklasse zu schreiben.
+
+#### Variable Teile vs. fixe aka Template Method Pattern
+https://refactoring.guru/design-patterns/template-method
+
+Die static final Attribute ändern auf static und umbenennen in Klassenvariablen inkl. in den Methoden:
+'private static Euro basePrice; private static Euro pricePerDay; private static int  daysDiscounted;'
+
+Kostruktor für Subklassen erstellen
+Der Konstruktor nimmt die Paramter der Subklasse und erstellt somit die Unterschiedlichen Berechnungen.
+''' Java
+public class Price...
+ private Euro basePrice;
+ private Euro pricePerDay;
+ private int daysDiscounted;
+ 
+ Price(Euro basePrice, Euro pricePerDay, int daysDiscounted) {
+ this.basePrice = basePrice;
+ this.pricePerDay = pricePerDay;
+ this.daysDiscounted = daysDiscounted;
+ }
+ ...
+}
+'''
+
+Subklassen auf Kontruktor umstellen
+''' Java
+public class RegularPrice extends Price {
+ public RegularPrice() {
+ super(new Euro(1.50), new Euro(1.50), 3);
+ }
+}
+
+public class NewReleasePrice extends Price {
+ public NewReleasePrice() {
+ super(new Euro(2.00), new Euro(1.75), 2);
+ }
+}
+'''
+
+Abhängikeiten lösen:
+// alt:
+public class Movie { JUnit: OK
+ public static Euro getCharge(int daysRented) {
+ return NewReleasePrice.getCharge(daysRented);
+ }
+}
+// neu:
+public class Movie { JUnit: OK
+ public static Euro getCharge(int daysRented) {
+ return new NewReleasePrice().getCharge(daysRented);
+ }
+}
+'''
+
+### 5.12 Die letzte Durchsicht
 
