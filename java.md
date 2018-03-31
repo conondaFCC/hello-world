@@ -705,7 +705,7 @@ public int max(int a, int b, int c) {
 ```
 
 ### Static Attribute or operations
-Static for a variable makes sense if the variable is the same for all instances of the class. Ex. if for Students there is only one school this school would be static. Or for a counter the counter has to be the same for all instances then it should be static.
+Static for a variable makes sense if the variable is the same for all instances of the class. Ex. if for Students there is only one school this school would be static. Or for a counter the counter has to be the same for all instances then it should be static. NOTE: In one Example, TestgetriebeneEntwicklung, they told me to use two static variables bound to two constructor calls within the own class. These where creating two class instances and setting the class variables to different values. But the example suggested that these variables be static. Which made the 2nd Instance overwrite the first. It took me a while to figure this out.
 
 Nonstatic variable:
 ``` JAVA

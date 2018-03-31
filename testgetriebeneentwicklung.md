@@ -962,4 +962,70 @@ public class Movie { JUnit: OK
 '''
 
 ### 5.12 Die letzte Durchsicht
+Nach Refactoring alle Codeteile überprüfen. Kommunikation, keine Duplikation etc.
+
+Letzte Episode:
+* Lohnt sich Konzept RegualrPrice und NewReleasePrice als eigene Klassen?
+* Tests als eigene Klassen oder Superklasse testen?
+
+'''Java
+public class Movie {
+ public static Euro getCharge(int daysRented) {
+ return Price.NEWRELEASE.getCharge(daysRented);
+ }
+}
+JUnit: OK public class PriceTest extends TestCase {
+ public void testBasePrice() {
+ assertEquals(new Euro(2.00), Price.NEWRELEASE.getCharge(1));
+ assertEquals(new Euro(2.00), Price.NEWRELEASE.getCharge(2));
+ }
+ public void testPricePerDay() {
+ assertEquals(new Euro(3.75), Price.NEWRELEASE.getCharge(3));
+ assertEquals(new Euro(5.50), Price.NEWRELEASE.getCharge(4));
+ }
+}
+'''
+
+Der Umsturz auf die neuen Tests. Wird mir zu wenig detailiert erklärt.
+Die Klassen welche sich löschen lassen sind. RegularPrice und NewReleasePrice inkl. den zwei Testklassen davon.
+
+Was ist mit dem Test der Price REGULAR? Wird gar nicht mehr getestet!
+
+Probleme mit den Testergebnissen, nur wenn ich die Zeile Price REGLUAR Parameter auskommentiere laufen alle Tests. Diese Zeile überschreibt sonst alle Resultate. Fehler zwar gefunden aber erklären kann ich es nicht!
+Erklärung: da die Klassenattribute alle auf static sind können diese nur einmal für alle Instanzen gelten.
+Lösung: static bei Klassenattribute aufheben und bei den Methoden welche diese Attribute verwenden. Resultat: JUnit5 tests wieder grün.
+''' Java
+public class Price {
+
+	private Euro basePrice;
+	private Euro pricePerDay;
+	private int  daysDiscounted;
+	
+	public final static Price NEWRELEASE = new Price(new Euro(2.00), new Euro(1.75), 2);
+	public final static Price REGULAR = new Price(new Euro(1.50), new Euro(1.50), 3);
+
+	public Price(Euro basePrice, Euro pricePerDay, int  daysDiscounted) {
+		this.basePrice = basePrice;
+		this.pricePerDay = pricePerDay;
+		this.daysDiscounted = daysDiscounted;
+	}
+
+	public Euro getCharge(int daysRented) {
+		if (daysRented <= daysDiscounted) return basePrice;
+
+		int additionalDays = daysRented - daysDiscounted;
+		return basePrice.plus(pricePerDay.times(additionalDays));
+	}
+
+	public Price() {
+		super();
+	}
+
+	public Euro getBasePrice() {
+		return basePrice;
+	}
+	
+}
+'''
+
 
