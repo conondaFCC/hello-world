@@ -1028,4 +1028,32 @@ public class Price {
 }
 '''
 
+### 5.13 Ist Design tot?
+#### UML Design vs. evolution. Was ist besser?
+Wenn alles klar ist macht UML schon sinn, sonst eben evolution und richtiges E
+entdecken und lernen. Merke ohne Refactoring ist keine Rückkopplung zum UML, also fast keine Evolution möglich und damit die Beseitigung von 'code smells'.
+Argument, Designphase gilt nur am Anfang der Entstehung, danach wird bei einem schnellen release-feedback loop, die weitere Entwicklung durch die Bedürfnisse gesteuert, was sich so nicht voraus designen lässt.
+Siehe auch: Artikel »Is Design Dead?« [fo00] diskutiert Martin Fowler
+sehr lesenswert das Thema geplantes kontra evolutionäres Design.
 
+#### code-smell beheben aber wann?
+Argument sofort beim Erkennen. Grund, sonst wird es nie gemacht. Ein verschieben auf später heisst eigentlich eine Ablehnung. zweiter Grund, oft ist ein solcher code-smell ein Hineweis, hier wurde etwas gemacht von jemandem der nicht alles versteht und deshalb noch weitere Sachen nicht versteht und somit Fehler sich eingeschlichen haben. Gemäss Studie SIGSOFT-Papier sogar bewiesen in Linux code. Argument kleine Probleme lösen erspart und die grösseren Probleme.
+Die Lektion ist klar. Nichts ist zu klein, um behoben zu werden,
+und jedem Geruch, egal wie schwach, muss nachgegangen werden.
+
+konkretes vorgehen bei code smells:
+* dem code smell nachgehen, weshalb wurde die Nase aktiviert? Abklären.
+* Wenn möglich Problem sofort beheben.
+* Sonst: Code smell beschreiben mit Kommentar und taggen, Bsp. eigenes Tag verwenden. Habe hier bereits eines welches heisst Code läuft aber sollte angepasst werden '// XXX'.
+* Allenfalls: Zusicherung einfügen, wie Meldung bei Laufzeit, das dieser schadhafte Code ausgeführt wird, oder eine Meldung in die Logdatei schreibt, als Erinnerung Problem noch offen.
+* **Folge Probleme Suchen**, nach Behebung des code smells, ist nur die halbe Miete. Zeit nehmen und andere Teile Quellcode durchsuchen die den Fehler enthielt. Ausschau halten was nicht koscher ist. Probleme beheben.
+* Person welche Fehler gemacht hat, noch anderen Code verändert? Dort nach Fehlern suchen mit dem selben Fehlermuster.
+
+Bsp. code smell Autor:
+Serveranwendung Methode Liste von von Listen aktualisieren ohne 'synchronized' Modifizierer. Stellte sich heraus Entwickler wusste nicht wie in nebenläufigen Umgebungen zu programmieren. Viele Fehler gefunden bevor Produkt dem Kunden ausgeliefert wurde.
+
+Fazit: der Nase vertrauen, ein kleiner Duft kann zu einem Misthaufen führen.
+ Y. Xie and D. Engler: Using Redundancies to Find Errors. SIGSOFT
+2002/FSE-10.
+
+### 5.14 Richtungswechsel ...
