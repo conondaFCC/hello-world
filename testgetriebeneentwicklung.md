@@ -367,7 +367,7 @@ Auch die Rückgabe 'Return Null' testen obwohl die Rückgabe Euro erwartet wird.
 
 ### Test erfüllen
 #### Nur soviel Code schreiben das alle Tests laufen
-**Wiederholung:** Beim Schreiben des Codes z.B. return Wert nicht definieren und Testen. Obwohl die Erwartung klar ist das der Test fehlschlagen sollte muss dies getest werden!! Also 'Return Null' auch testen. Siehe auch vorderes Kaptiel. Bevor der Test dann erfüllt wird.
+**Wiederholung:** Beim Schreiben des Codes z.B. return Wert nicht definieren und Testen. Obwohl die Erwartung klar ist das der Test fehlschlagen sollte muss dies getest werden!! Also 'Return Null' auch testen. Siehe auch vorderes Kapitel. Bevor der Test dann erfüllt wird.
 Immer den einfachsten Weg nehmen, auch wenn klar ist das dieser evtl. später nicht mehr ausreicht. Es geht nur darum den aktuellen Test zu erfüllen.
 Ist der Test durch den Code erfüllt wissen wir nun dieser Teil des Codes stimmt. Erfolg. Bleibt er rot wissen wir auch dieser Teil stimmt noch nicht.
 
@@ -773,7 +773,7 @@ Wieso? Gründe kann es mehrere geben. Einer kann sein das der Code zu komplizier
 
 Siehe auch: https://refactoring.guru/extract-class
 
-Merke das Aufteilen der Klasse ist nur ein Schritt, weitere werden in den folgenden Unterkaptieln 5.10 usw. erklärt.
+Merke das Aufteilen der Klasse ist nur ein Schritt, weitere werden in den folgenden Unterkapiteln 5.10 usw. erklärt.
 
 Im Bsp. dupliziert die Klasse Movie die Regeln zu Berechnung der Ausleihgebühr. Grund ist das die Klasse eine andere Klasse in sich trägt.
 Neue Klasse erstellen, Schritt 1, Methode extrahieren:
@@ -1056,4 +1056,362 @@ Fazit: der Nase vertrauen, ein kleiner Duft kann zu einem Misthaufen führen.
  Y. Xie and D. Engler: Using Redundancies to Find Errors. SIGSOFT
 2002/FSE-10.
 
-### 5.14 Richtungswechsel ...
+### 5.14 Richtungswechsel ... = neue Anforderungen an System, Einführung
+Die nächsten Unterkapitel zeigen das Vorgehen bei der Weiterentwicklung des System mit neuen Vorgaben.
+
+Neue Vorgaben:
+* Rechnung erstellen
+* Rechnung mit Information, welcher Kunde welchen Film wie lange ausgliehen hat
+* Einzelposten, Gesamt Betrag
+* Besonderes: Preise für Filme ändern oft
+
+Nachster Schritt? Überlegungen:
+* Was ist unsere Aufgabe?
+* Wie passen die Anforderungen ins Gesamtbild?
+* Welche Systemteile werden wir berühren und anpassen müssen?
+* Wo liegen die interessanten Grenzfälle?
+* Welche Klassen und Methoden benötigen wir?
+* Wie werden die Klassen benutzt?
+* Wie können wir das testen?
+
+
+Fazit: Entwurf Klassenschnittstellen
+Tool: Code lesen oder UML des Codes oder mit Kollegen besprechen und Skizzieren
+
+Zwei Wege:
+* Top-down, von allgemeinen Klassen zu spezifischen Klassen vorarbeiten
+* Buttom-up, Teile erstellen bis zum Ganzen
+
+Testgetrieben Entwicklung geht welchen Weg? Kommt drauf an, aber immer vom Bekannten zum Unbekannten.
+
+### 5.15 ... und der wegweisende Test
+Meist eine Mischung Top-down und Buttom-up. Oft beginn mit Top-down die Anforderungen erfassen, im Test die Intention festhalten und dadurch die Klassen und Methoden finden. Top-down ist hilfreich damit nur implementiert wird was wirklich gebraucht wird.
+Oft geht es dann über zu Buttom-up. Um die übergeordneten Strukturen aufzubauen.
+
+Grosse Aufgabe braucht einen grossen Test. Der Test stellt sicher das die Aufgabe auch verstanden wurde. Stellt somit mein Verständnis auf die Probe und die Entwicklung erhält eine Richtung. Achtung dieser erste Test ist mehr Integrationstest als Unit Test. Bezieht sich also aufs Zusammenspiel mehrer Objekte.
+
+Test Bsp:
+''' Java
+class CustomerTest {
+	private Customer customer;
+	private Movie buffalo66, jungleBook, pulpFiction;
+	
+	@BeforeEach
+	public void setUp() {
+	customer = new Customer();  //Instanz mit Customerkonstruktor erstellen
+	buffalo66 = new Movie("Buffalo 66", Price.NEWRELEASE);
+	jungleBook = new Movie("Jungle Book", Price.REGULAR);
+	pulpFiction = new Movie("Pulp Fiction", Price.NEWRELEASE);
+	}
+	
+	@Test
+	@Description("testPrintingStatement")
+	public void testPrintingStatement() {
+		customer.rentMovie(buffalo66, 4);
+		customer.rentMovie(jungleBook, 1);
+		cusotmer.rentMovie(pulpFiction, 4);
+		
+		buffalo66.setPrice(Price.REGULAR);
+		
+		String actual = customer.printStatement();
+		String expected = "\tBuffalo 66\t3,00\n"
+				+ "\Jungle Book\t1,50\n"
+				+ "\tPulp Fiction\t5,50\n"
+				+ "Gesamt: 10,00\n";
+		asserEquals(expected, actual);
+	}
+	...
+}
+'''
+
+Was bringt dieser Test? Er ist ein nützliches Designwerkzeug. Er hilft Entwurfsentscheidungen zu treffen.
+* Umfang begrenzt, schreibe den Test so das klar ist was zu tun ist und was nicht
+* Startpunkt setzten, beginne mit ein oder zwei bekannten oder offensichtlichen Klassen
+* Kontext beachten, wichtig sind nur aktuelle Probleme von diesem Test, nicht was noch kommen könnte
+* Szenarien durchspielen, beginn mit Bekanntem, gehe später zu Was-wäre-wenn-Betrachtung zu Unbekanntem
+* Mitwirkende Objekte finden, Problem in Teilprobleme auflösen
+* Verantwortlichkeiten verteilen, auf vorhandene oder neue Klassen
+* Verhalten spezifizieren, Protokoll der Klassen definieren, via Eingabe zur Ausgabe im Test in Beziehung setzen
+
+Abgeleitetes Design:
+''' Java
+public class Movie... 
+ public Movie(String title, Price price) {
+ }
+ public void setPrice(Price price) {
+ }
+}
+public class Customer...
+ public void rentMovie(Movie movie, int daysRented) {
+ }
+ public String printStatement() {
+ return null;
+ }
+}
+'''
+JUnit Test: Schlägt fehl. Genau was erwartet wird.
+
+Fazit: Der Test bietet eine Lernumgebung, um im engen Feedbackzyklus mit dem Code mit altenativen Designideen zu experimentieren. => Fork mit Git machen.
+
+### 5.16 Fake it (’til you make it)
+Kent Beck ist der Gedankenverbreiter, Erwartung ausgeben und dann solange programieren bis Resultat der Ausgabe entspricht:
+''' Java
+public class Customer...
+ public String printStatement() {
+ return "\tBuffalo 66\t3,00\n"
+ + "\tJungle Book\t1,50\n"
+ + "\tPulp Fiction\t5,50\n"
+ + "Gesamt: 10,00\n";
+ }
+}
+'''
+Junit Test: grün! Nun lassen sich konstante Werte durch Objekte ausdrücken. Diese Technik erleichtert selbst komplizierte Aufgaben. Zudem stellt das Erfüllen des Tests mit Objekten sicher, das alle nötige programmiert wurde.
+
+Während dieser Generalisierung, erinnere dich dies ist eher ein Integrationstest, stossen wir auf Codestellen, für die wir weitere Unit Tests schreiben müssen. Wir treiben die Entwicklung der verallgemeinerten Lösung also durch neue Tests an, wo es sinnvoll ist.
+
+In diesem Fall leiten wir die Testliste aus dem geschriebenen Code ab, fast eins zu eins:
+* Movie: Filmtitel
+* Move: Berechnung verschiedener Preise
+* Movie: Reklassifizierung
+
+Die Preissummierung sollte wie gehabt funktionieren. (add oder plus Methode die schon besteht? Nein Customer.getTotalCharge)
+
+### 5.17 Vom Bekannten zum Unbekannten
+
+Die Reihenfolge der Testfälle ist entscheidend. Womit anfangen? Den Test *testTitle* ist überflüssig. Get- und set-Methoden oder Konstuktoren, die keine Logik enthalten werden nicht getestet.
+
+Movie getCharge Methode
+''' Java
+public class MovieTest extends TestCase { JUnit: OK
+ public void testUsingNewReleasePrice() {
+ Movie movie = new Movie("Fight Club", Price.NEWRELEASE);
+ assertEquals(new Euro(3.75), movie.getCharge(3));
+ }
+}
+'''
+Wer verwendet die getCharge Methode? Klasse Customer. Müsste an mehreren Stellen geändert werden, so wäre Schnittstellenevolution anzuwenden.
+
+Problem: Customer Objekt hat kein Movie Objekt als Argument und kennt weder Filmtitel noch -preis um es sich selbst zu erzeugen. Die rentMovie Methode haben wir bereits mit der Signatur überladen, die ist aber noch leer, Kap 5.15.
+
+Damit wir nicht noch eine Baustelle aufmachen, gehen wir den Weg rückwärts. Dies führt zu hässlichem Code, Notiz 'XXX Code bereinigen' nicht vergessen:
+''' Java
+public class Customer...
+ public void rentMovie(int daysRented) {
+ Movie movie = new Movie(null, null);
+ totalCharge = totalCharge.plus(movie.getCharge(daysRented));
+ }
+}
+getCharge in non static umwandeln:
+''' Java
+public class Movie...
+ public Euro getCharge(int daysRented) {
+ return Price.NEWRELEASE.getCharge(daysRented);
+ }
+}
+'''
+Beide rentMovie Methoden verbinden:
+''' Java
+public class Customer...
+ public void rentMovie(Movie movie, int daysRented) {
+ totalCharge = totalCharge.plus(movie.getCharge(daysRented));
+ }
+ public void rentMovie(int daysRented) {
+ Movie movie = new Movie(null, null);
+ rentMovie(movie, daysRented);
+ }
+}
+'''
+
+Jetzt lässt sich im Test ein Movie Objekt verwenden:
+''' Java
+public class CustomerTest...
+ public void testRentingOneMovie() {
+ customer.rentMovie(pulpFiction, 1);
+ assertEquals(new Euro(2.00), customer.getTotalCharge());
+ }
+}
+'''
+Sobald alle rentMovie Testfälle umgestellt sind, kann die hässliche rentMovie Methode entfernt werden.
+
+Wie weiter? Movie Objekt erhält Zustand 'title' und 'price':
+''' Java
+public class Movie... JUnit: OK
+ private Price price = Price.NEWRELEASE;
+ public Euro getCharge(int daysRented) {
+ return price.getCharge(daysRented);
+ }
+}
+'''
+
+So wurde die Price Instanz fest kodiert, deshalb muss erst ein Test entstehen welcher die andere Variante testet.
+''' Java
+public class MovieTest... JUnit: Failure
+ public void testUsingRegularPrice() {
+ Movie movie = new Movie("Brazil", Price.REGULAR);
+ assertEquals(new Euro(1.50), movie.getCharge(3));
+ }
+}
+'''
+Lösung:
+''' Java
+public class Movie... JUnit: OK
+ private Price price;
+ public Movie(String title, Price price) {
+ this.title = title;
+ this.price = price;
+ }
+}
+'''
+Nächster Test Preiswechsel bei einem Film:
+''' Java
+public class MovieTest... JUnit: Failure
+ public void testSettingNewPrice() {
+ Movie movie = new Movie("Brazil", Price.NEWRELEASE);
+ movie.setPrice(Price.REGULAR);
+ assertEquals(new Euro(1.50), movie.getCharge(3));
+ }
+}
+'''
+Dieser Test ist an und für sich sich keinen Test wert. Der Test ist aber wichtig weil er ausdrückt, dass ein Film seine priesklasse wechseln kann!
+Lösung:
+''' Java
+public class Movie...
+ public void setPrice(Price price) {
+ this.price = price;
+ }
+}
+'''
+
+Ausleihe speichern, damit der letzte Preis erscheint und nicht der aktuelle:
+''' Java
+import java.util.*;
+public class Customer...
+ private List rentals = new ArrayList();
+ public void rentMovie(Movie movie, int daysRented) {
+ totalCharge = totalCharge.plus(movie.getCharge(daysRented));
+ rentals.add(new Rental(movie, daysRented));
+ }
+}
+'''
+Daraus entsteht die Assoziationsklasse/-objekt Rental:
+''' Java
+public class Rental {
+ public Rental(Movie movie, int daysRented) {
+ }
+}
+'''
+Rental Test, testet wie lange ein Kunde welchen Film geliehen hat:
+''' Java
+public class RentalTest extends TestCase {
+ public void testUsingMovie() {
+ Movie movie = new Movie("Blow-Up", Price.NEWRELEASE);
+ Rental rental = new Rental(movie, 2);
+ assertEquals(new Euro(2.00), rental.getCharge());
+ }
+}
+public class Rental...
+ public Euro getCharge() {
+ return null;
+ }
+}
+'''
+
+Um die Kosten zu berechnen delegiert Rental an Movie:
+''' Java
+public class Rental { JUnit: OK
+ private Movie movie;
+ private int daysRented;
+ public Rental(Movie movie, int daysRented) {
+ this.movie = movie;
+ this.daysRented = daysRented;
+ }
+ public Euro getCharge() {
+ return movie.getCharge(daysRented);
+ }
+}
+'''
+
+Gesamtbetrag neu gemäss Liste von Rental Objekten:
+''' Java
+public class Customer... JUnit: OK
+ public Euro getTotalCharge() {
+ Euro result = new Euro(0);
+ for (Iterator i = rentals.iterator(); i.hasNext(); ) {
+ Rental rental = (Rental) i.next();
+ result = result.plus(rental.getCharge());
+ }
+ return result;
+ }
+ '''
+ 
+Fake Konstanten mit Variablen ersetzen:
+''' Java
+public class Customer... JUnit: Failure
+ public String printStatement() {
+ return "\tBuffalo 66\t3.00\n"
+ + "\tDas Dschungelbuch\t1.50\n"
+ + "\tPulp Fiction\t5.50\n"
+ + "Gesamt: " + getTotalCharge() + "\n";
+ }
+}
+'''
+JUnit: Fehler. Warum? Format stimmt eben nicht überein 10.00 vs. 10.0
+Lösung: Rückwärts programmieren, also so tun ob es die Funktion format schon gäbe.
+''' Java
+public class Customer...
+ public String printStatement() {
+ return "\tBuffalo 66\t3.00\n"
+ + "\tDas Dschungelbuch\t1.50\n"
+ + "\tPulp Fiction\t5.50\n"
+ + "Gesamt: " + getTotalCharge().format() + "\n";
+ }
+}
+...
+public class Euro...
+ public String format() {
+ return null;
+ }
+}
+...
+public class EuroTest...
+ public void testFormatting() {
+ assertEquals("2,00", two.format());
+ }
+}
+'''
+JUnit: zwei Fehler. Hier ist es ok zwei Tests auf einmal offen zu haben, weil wir genau wissen das diese zusammenhängen. Wenn einer läuft, läuft der andere:
+''' Java
+import java.text.NumberFormat; JUnit: OK
+public class Euro...
+ public String format() {
+ NumberFormat format = NumberFormat.getInstance();
+ format.setMinimumFractionDigits(2);
+ return format.format(getAmount());
+ }
+}
+'''
+JUnit: grün.
+Weiter mit Implementierung bei Customer printStatement:
+''' Java
+public class Customer...
+ public String printStatement() {
+ String result = "";
+ for (Iterator i = rentals.iterator(); i.hasNext(); ) {
+ Rental rental = (Rental) i.next();
+ result += "\t" + rental.getMovieTitle()
+ + "\t" + rental.getCharge().format() + "\n";
+ }
+ result += "Gesamt: " + getTotalCharge().format() + "\n";
+ return result;
+ }
+}
+...
+public class Rental... JUnit: OK
+ public String getMovieTitle() {
+ return movie.getTitle();
+ }
+}
+'''
+
+Noch weitermachen?
+
