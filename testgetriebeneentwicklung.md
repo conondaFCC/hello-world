@@ -1413,5 +1413,21 @@ public class Rental... JUnit: OK
 }
 '''
 
-Noch weitermachen?
+### 5.18 Retrospektive - JUnit-EKG
+Westphal hat Programm geschrieben welches die Zeiten der Testphasen auswertet. Wie lange es dauert bis ein neuer grüner Test erscheint, wie lange der Test rot bleibt, wie viele Tests neu erschaffen wurden, wie oft wurden die Tests ausgewertet, in welchen Zeitabschnitten usw. Diese Daten seien zur Selbstanalyse zu gebrauchen, zur Reflexion und Selbsbeurteilung.
 
+### 5.19 Tour de Design évolutionnaire
+Zusammenfassung der letzten Schritte zur printStatement Funktion der Klasse Customer. Aus diesem Test welcher mehr ein Integrationstest darstellt haben sich ableiten lassen, die Fake Methode printStatement bei Customer, der Movie Konstruktor (Title, Preiskategorie), die Price Instanz pro Movie, die Assoziationklasse Rental, welche die Filme und die Ausleihtage mit einem Kunde verbindet und welche die getCharge Methode welche dann das assozierte Movie Objekt befragt, also die Frage weitergibt bzw. delegiert. Dadurch wurde die getTotalCharge auf Rental umgeschwenkt. Dank der Liste rentals beim Customer werden die Ausleihvorgänge pro Kunde gespeichert und aus dieser Liste die Preise für alle Ausleivorgänge berechnet mit einem Loop. Daraufhin diese Funktion eingebaut in printStatement. Die format Methode noch zur Darstellung des Resultats. Die getMovieTitle um den Fake durch reale Funktionen komplett zu ersetzen.
+
+### 5.20 Durchbrüche erleben - dramatische Verbesserungen im Design
+Vom lokalen zum globalen Maximum. Evolutionäres Design birgt die Gefahr ein lokal Maximum zu Erreichen und von da zur nächsten Spitze muss durch Tal gegangen werden. Gleich erhebliche Umbauten. Erstz die kleinen Refactoring helfen solche Designs zu Erkennen. Mehr dazu siehe Buch von Eric Evans 2003.
+Pausen und Zeit helfen hier die nötigen Ideen reifen zu lassen.
+
+#### Grosse Refactorings
+Empfehlung Buch Stefan Roock und Martin Lippert, grosse Refactorings, 2004.
+
+## 6 Häufige Integration
+Hier geht es dann um die Integration, wie das Kapitel bereits mit Namen klar macht, Arbeitsweisen, Versionsverwaltung, Buildtool Ant, usw.
+
+## 7 Testfälle schreiben von A bis Z
+**** Eher interssant. Noch weitermachen?
