@@ -474,6 +474,27 @@ Example properties of a bank account:
 - The **balance can be checked** (Method)
 - The **interest rate will be applied** (Method)
 
+### How to find classes? And how to name them?
+Step by step quide from the school module 226-1_09:
+1. Check the 'Requirements' (aka 'Anforderungen') of a program and look for nouns that have context to the program. Then decide for each noun (aka substantive) if it is relevant and could become a class or an attribute, if so highlight it.
+2. List all highlighted nouns.
+3. Pick 3-4 that are likly to be an instance / object in the running progra and write for each of those a 2-3 phrase behavior description. This does not have to be perfect but be willing to adjust it once possible with better knowledge.
+4. If you need more than 2-3 sentences to describe the class, chances are your are not following the SRP, single responsibility principle.
+5. For those picked find their attributes, write them down with data types. If this causes problem try to make think of things the class could have as an attribute from the list in under number 2.
+6. Model the picks in a class model with attributes and data types. On paper or in Modelio.
+
+### How to find methods?
+double check not duplicate description?
+This continues the guide from above:
+7. go over your 'Requirements' again but this time look for verbs that relate to the found classes. Underline all those verbs.
+8. then write them down and think about what paramter they might have.
+9. model them in modelio or paper.
+ 
+Voilà classes or attributes found and named.
+
+What are good classes? //FIXME: Insert from: 'Was gute Klassen sind, wird am Ende des Arbeitsblattes zum Projekt Minesweeper (AB226A_09-1)!'
+
+
 ### Class description
 ``` JAVA
 // Standard Class:
@@ -843,3 +864,70 @@ private static int calc(int operand1, int operand2, int operator) {
 }
 ```
 Side Note: instead of break you could use return as far I tried it worked #recheckit
+
+## Java Input and Output or I/O
+This is to capture some of the knowledge gained using I/O in own programs, since this topic is pretty complex.
+
+Some base classes are provided in java.io check them out. In my attemps so far I mostly used the Scanner which is java.util based. So keep in mind there are diffrent ways to get the user input from console.The interessting part is that the 3 methods to get user input are very different and have pros and cons and evolved along the Java versions. You might wanna see 3 examples from: http://www.codejava.net/java-se/file-io/3-ways-for-reading-input-from-the-user-in-the-console
+
+### Reading Input from Console
+#### Other way to be documented
+#### Using Console Class
+Read userInput with 'System.Console.readLine()'. Note the example below is written as a JUnit test since Console class does not work live in an IDE console representation. To get a live input via console the System.console.readLine() method code needs a real CLI open, like CMD in Windows or terminal in Unix. Otherwise it will default to NullPointerExecption since it expects to find a active console.
+
+Some other thoughts on the Console class, and a way around when testing without an active console: http://illegalargumentexception.blogspot.ch/2010/09/java-systemconsole-ides-and-testing.html
+and the official jdk9 https://docs.oracle.com/javase/9/docs/api/java/io/Console.html
+
+**So it seems this would be the way to go, but it is the most difficult way to implement as a beginner.**
+
+**This test does not work!** See Eclipse Console output will be: "No console: non-interactive mode!". Why? Since JVM can't find an active console it will exit.
+How to fix this? This would need an abstraction and a switch when no console present use another input reading method. See Link above from illegalargumentexception.blogspot.ch
+''' Java
+@Test
+@DisplayName("testUseSystemConsoleOLD: learn NullPointerExecption has to be handeld with System.console.readLine()!")
+void testUseSystemConsoleOLD() {
+
+	// Console console = System.console(); // without 'if (console == null)' -> NullPointerExecption
+
+	Console console = System.console();
+	if (console == null) {
+		System.out.println("No console: non-interactive mode!");
+		System.exit(0);
+	}
+
+	System.out.print("Enter your username: ");
+	String username = console.readLine("TestUserName"); // This is where the readLine would actually get the User input
+
+	assertEquals("TestUserName", username);
+}
+'''
+
+## JavaDoc
+Insert know from chapter 12 ASAP!
+
+## Java, compile and run, in CLI mode and on what happens when loading a Java file
+### Compile a Java file to binary
+$javac myJavaFile.java
+Results in myJavaFile.class generated where the .java file is. Thi implies you need to be in the folder of the .java file. See help section of JVM for other destination.
+
+### Run a binary file aka class file
+$java myJavaBinary
+Note the file needs to be a class aka filename.class file.
+
+### Java CLI commands not working?
+Check your PATH file, links to correct JDK version? See poweshell.mdf for more on PATH. After setting this reboot?
+On the 'could not find main' error see official: https://docs.oracle.com/javase/tutorial/essential/environment/paths.html
+Also good read for CLASSPATH https://en.wikipedia.org/wiki/Classpath_(Java) or https://de.wikipedia.org/wiki/Klassenpfad
+Apart from PATH, OS variable to find program commands (.exe etc.), there is also the need for CLASSPATH, OS variable to find Java classes if not in the same directory. This problem can be avoided running the .jar file. More on this topic, how to run programs, see eclipse.md. In short creating a runnable .jar the whole setup is done by Eclipse.
+
+### Try and Error
+If the .java file does not have a package tag in it and does not import any other stuff and both .java and .class file are in the same directory. Run the program with '$java myMainfileName'. Note don't specify the .class or .java file just go with the plain Filename.
+If the .java file only has an import tag then it might depend what import it is according to Classloader see blow (standard import ok, custom might need path).
+Own test shows import of java.io.Console work on the fly but having a package declared in the .java file needs CLASSPATH correction (manually delete the package reference if not needed or really learn how to use CLASSPATH command or use Eclipse to make a .jar (fixes CLASSPATH issues for you)).
+
+### JAR file?
+Java Archive, is a zipped file containing .java, .class files and all needed libraries? roughly...
+
+### What happens when loading a .jar file or running $ java myProgram?
+This is well explained in the Java Classloader https://en.wikipedia.org/wiki/Java_Classloader
+Basically some parts or classes are loaded automatically some are not.

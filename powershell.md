@@ -23,3 +23,11 @@
 | rm folder -force   		| rm folder (hidden and read-only files)  |
 | rni oldname newname 		| rni = rename-item, renames file or folder  |
 
+## How to open PowerShell in this Folder from Explorer?
+Long answer: - Write a little script to get right click option, see: https://www.addictivetips.com/windows-tips/open-powershell-in-a-specific-location/
+Short answer: - Navigate to folder in Explorer then type powershell in path and hit enter.
+
+## How to diplay %PATH% - aka linked programs aka call program by exe name from anywhere
+$echo %PATH%
+### Where is this file under Windows?
+Find it via Windows-key 'Environment variables' under the tab advanced, find 'Environment variables'

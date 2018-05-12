@@ -14,8 +14,7 @@ http://forge.modelio.org/projects/modelio3-usermanual-english-300/wiki
 * Create new java project in Modelio, *don't give it the same name like an possible package name in Eclipse (com.dontusethatname.java)*
 * set path to Eclipse package (this will be the source for the .java files), go to Configuration > Modules >  Java Designer, select directories > code generation path to location of Eclipse project > package
 * synchronise package folder (see more detailed explanation below when unclear)
-* model classes with attributes, constructors and methods
- (Configuration > modules > Java Designer > directories > code generation path)
+* model classes with attributes, constructors and methods aka add class elements etc. to the package, then save
 * create java files via package, select Java Designer > generate
 * switch to Eclipse, write code for existing Methods and constructors, save files
 * switch to Modelio, update, select package > Java Designer > update model from source
@@ -67,3 +66,12 @@ In Modelio there is the option to right click a package or a class then select J
 #### Hints:
 * to remove the Round Trip remarks (@objid) in the code aka the .java files, go conf > modules > java designer > general > generation > release
 * rename class only in Eclipse (otherwise old class will not be overwritten)
+
+### solve package problems Modelio vs Eclipse
+If the sync of packages is messed up like this: in Eclipse 'mypackage.mypackge' when generating .java from Modelio, try this:
+* move source of modelio to src of eclipse project
+* **worry about overwriting other eclipse files a lot! be very careful when using the generate function from modelio on packages. ideally just use it on the package you work with, never on the src folder** otherwise all .java files might get overwritten with the modelio roundtrip version!
+* delete the unwanted packages from the modelio package view to minimize the risk of overwriting all packages. 
+
+### how to set values for class attributes on initializiation
+Modelio has a field for each class attribute called value. This field can be filled with a value to represent the standard value of the attribute. If the value is of type string just enter the value with the quotation mark "MyValueWithDoubleQuotationMark". This way it will be represented the right way in the Java code.
