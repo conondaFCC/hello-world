@@ -108,18 +108,41 @@ To be clear declaring an array does not make the array!
 Only initalizing the array with **new** creates it!!! Example:
 
 ``` JAVA
-int [] firstArray; // declearing an Array
+int[] firstArray; // declearing an Array
 firstArray = new int[10]; // initalizing the Array
 ```
 
 #### Initial values of Arrays
-| type 			| initial value									|
+| type 		| initial value					|
 | :-------- | :---------------------------- |
-| int 	    | zero       										|
-|	boolean		|	false													|
-|	char			|	Unicode char with number zero*|
-| String		|	null													|
+| int 	    | zero       					|
+| boolean	|	false						|
+| char		|	Unicode char with number zero*|
+| String	|	null						|
+| object	|	null**						|
 \* Standard values of a char[3] Array: [ , , ]
+\** To acces the objects they need be initialized! See code below:
+
+''' Java
+class ObjA {
+	int a = 1;
+}
+
+public class ArrayObjects {
+
+	public static void main(String[] args) {
+		ObjA[] objAArray = new ObjA[3];
+		System.out.println(Arrays.toString(objAArray)); // [null, null, null]
+
+		objAArray[0] = new ObjA();
+		System.out.println(objAArray[0].a); // 1
+		
+		for (int i = 0; i < objAArray.length; i++) {
+			objAArray[i] = new ObjA();	}
+		System.out.println(Arrays.toString(objAArray)); // [test.ObjA@515f550a, test.ObjA@626b2d4a, test.ObjA@5e91993f]
+	}
+}
+'''
 
 ### Create a multi dimensional Arrays
 
@@ -196,11 +219,20 @@ while(iterator.hasNext()) {
 	System.out.println(element);
 }
 
-//access via new for-loop = for(int i = 0; i < myList.size(); i++)
+//access via new foreach = for(int i = 0; i < myList.size(); i++)
 for(Object object : myList) {
 	String element = (String) object;
 	System.out.println(element);
 }
+!foreach does not allow index based access! Furthermore I think it does not work with Arrays! Example: 
+Cell[] cellArray = new Cell[10]; // create cellArray with Datatype Cell with 10 empty placeholders
+for (Cell c : cellArray) { 
+	c = new Cell(); // the **foreach does not work here** in creating an instace of Cell class on every placeholder!
+	}
+
+for (int i = 0; i < cellAray.length; i++) {
+	cellAray[i] = new Cell(); // but the **normal for loop works** because as stated above foreach can't iterate over index based lists.
+	}
 
 //List size
 int listSize = myList.size();
@@ -221,11 +253,10 @@ myListStr.add("def");
 //		myListStr.add(123); // now throws error: Unresolved compilation problem
 ```
 
-
 ## Random Number
 Or how does creating a random number work?
-#### The Easy Way (Math.random())
 
+#### The Easy Way (Math.random())
 ``` JAVA
 double myrandom = Math.random();
 System.out.println(myrandom); // prints doubles in the range of < 1.0 and > 0.0
@@ -654,7 +685,16 @@ Easy **concatenation** with +.
 
 Java recommends for **further read** into string concatenation and conversion: https://docs.oracle.com/javase/specs/ see Gosling, Joy, and Steele, The Java Language Specification
 
-### String Ex. for equals
+#### Formatting String output and escape Sequences
+https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html#syntax
+Instead of 'Syso("Text\n")' better use 'Syso("Text%n")'
+
+Good Example use of 'syso("Print String here: %s")': https://docs.oracle.com/javase/tutorial/java/data/numberformat.html
+
+List of options as escape sequences
+https://docs.oracle.com/javase/tutorial/java/data/characters.html
+
+### String Examples for equals
 .equals gives true when the same sequence of characters is in both objects. Where as == gives true when the reference is the same.
 ``` JAVA
 //		compare		
@@ -725,7 +765,7 @@ public int max(int a, int b, int c) {
 }
 ```
 
-### Static Attribute or operations
+### Static Attribute or operations, what about static classes?
 Static for a variable makes sense if the variable is the same for all instances of the class. Ex. if for Students there is only one school this school would be static. Or for a counter the counter has to be the same for all instances then it should be static. NOTE: In one Example, TestgetriebeneEntwicklung, they told me to use two static variables bound to two constructor calls within the own class. These where creating two class instances and setting the class variables to different values. But the example suggested that these variables be static. Which made the 2nd Instance overwrite the first. It took me a while to figure this out.
 
 Nonstatic variable:
