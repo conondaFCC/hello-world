@@ -6,6 +6,7 @@ A java framework, to test java code. The framework is written in java. The frame
 
 ### JUnit quick references
 * One good quick summary of JUnit as a refresher with most commands and basic workflow (7 pages in German, PDF) https://homepages.thm.de/~hg11260/mat/junit.pdf
+* Another one is the offical JUnit5 user guide online: https://junit.org/junit5/docs/current/user-guide
 
 ### JUnit 5 - Junit.org
 * Junit = Java framework to write and run automatet unit tests.
@@ -137,7 +138,8 @@ Excerpts only!
 ### Annotations
 For classes:
 JUnit5 style
-@DisplayName(value="MyDisplayTextHere")
+@DisplayName(value="MyDisplayTextHere") // If DisplayName is not used JUnit will display either the class name or the test name in the test overview.
+
 ''' Java
 @DisplayName("A special test case")
 class DisplayNameDemo {
@@ -170,8 +172,90 @@ assertNull(Object object)
 assertSame(Object exp, Object act)
 assertTrue(boolean condition)
 
+## Exception Testing
+### Test throw or catch of an exception?
+The user guide just has examples to test if a class or method throws the expected exception, but it does not give examples to test if exceptions are catched.
+Why are they no catched tests? Is it because the code already catches the error once the catch code is implemented? -> Yes this is the case. Lets look at some examples below where only the exceptions are thrown but not catched.
+
+Example from Junit5 guide manual:
+´´´ Java
+...
+//init stack first
+...
+@Test
+@DisplayName("throws EmptyStackException when popped")
+void throwsExceptionWhenPopped() {
+    assertThrows(EmptyStackException.class, () -> stack.pop());
+}
+
+@Test
+void exceptionTesting() {
+    Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
+        throw new IllegalArgumentException("a message");
+    });
+    assertEquals("a message", exception.getMessage());
+}		
+´´´
+Two self made examples and tests of exeptions, that run with JUnit5 without errors:
+´´´ Java
+package test;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public class TestExceptions {
+
+	// DONE setup class with function
+	// DONE setup testcase with exception
+
+	public class ExPar{
+		public void validateParameters(Integer param ) {
+			if (param == null) {
+				throw new NullPointerException("Null parameters are not allowed");
+			}
+		}
+	}
+
+	@Test
+	void testNullPointerException() {
+		final ExPar exPar = new ExPar();
+
+		NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+			exPar.validateParameters(null);
+		});
+		assertEquals("Null parameters are not allowed", exception.getMessage());
+	}
+
+
+	public class MyNumber {
+		int myNumber;
+
+		public void setMyNumber(int myNumber) {
+			if (this.myNumber > 10) {
+				throw new IllegalArgumentException("Numbers over 10 are not allowed");
+			}
+			this.myNumber = myNumber;
+		}
+	}
+
+	@Test
+	void testMyNumberException() {
+		MyNumber myNumber = new MyNumber();
+		myNumber.setMyNumber(12);
+		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
+			myNumber.setMyNumber(12);
+		});
+	assertEquals("Numbers over 10 are not allowed", exception.getMessage());
+	}
+}
+´´´
+
+
 ## Examples of JUnit test cases
 ### Example of WohnungTest and the use of @BeforeEach|BeforeAll
+Beware when using @Nested all Before and After outside the @Nested class do not apply inside the nested class!
 ''' Java
 public class WohnungTest {
   private Mieter mieter = new Mieter ("Hugo", "Hungerbühler", "12345");
@@ -250,7 +334,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-class StandardTests {
+class StandardTests { //many of those test files can exists, packed together, see below
 
     @BeforeAll
     static void initAll() {
@@ -261,9 +345,25 @@ class StandardTests {
     }
 
     @Test
-    void succeedingTest() {
+	void succeedingTest() {
     }
+	
+	@Nested // NOTE: inside nested needs own @BeforeAll and @BeforeEach!
+	@DisplayName("class description")
+	class ClassTestName {
 
+		@Test
+		@DisplayName("Unit test description")
+		void testName() {
+			assertEquals(expection, actual);
+		}
+
+		@Test
+		@DisplayName("Unit test two description")
+		void testName() {
+			assertEquals(expection, actual);
+		}
+  
     @Test
     void failingTest() {
         fail("a failing test");
@@ -285,7 +385,7 @@ class StandardTests {
 
 }
 
-// AllTest Example
+// AllTest Example, this is another file!
 package test;
 class AllTest {} // No Method needed here! It all done in the Eclipse Menu > Run ...
 

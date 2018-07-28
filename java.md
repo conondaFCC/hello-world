@@ -144,6 +144,37 @@ public class ArrayObjects {
 }
 '''
 
+### Array.length, how to use and what to look out for
+
+Be aware of the following! Using the array.length in a loop is not the same as using it as an index!
+``` Java
+//example loop, loop goes till the end of the array like intended
+String zeile = "";
+for (int i = 0; i < spielfeld.zellenArray.length; i++) {
+	zeile = zeile+"  "+i+"  ";
+	for (int j = 0; j < spielfeld.zellenArray[i].length; j++) {
+		zeile += spielfeld.zellenArray[i][j].zeichen+"  ";
+	}
+	zeile += "\n";
+}
+return zeile;
+
+//examples reference as index, goes out of bound!!
+// but refering to the length to reference to to position in array via the .length method might not give the hoped result!
+spielfeld.zellenArray[0][spielfeld.zellenArray[0].length].setzeBombe(); //length is +1 than reference to last cell! 
+//therefore to reference to the last cell it should be .length-1!
+
+// but this works again without problems!
+for (int i = 0; i < gewuenschteBomben; i++) {
+	int randomInt = (int) (Math.random()*anzahlZellen);
+	int zeile = randomInt/spielfeld.zeilen;
+	int spalte = randomInt%spielfeld.zeilen;
+	if (spielfeld.zellenArray[zeile][spalte].bombe == false) {
+		spielfeld.zellenArray[zeile][spalte].setzeBombe();
+//				System.out.println("Bombe auf zeile, spalte:" + zeile + ", " + spalte); //Kommentar ausblenden für detailierte Ausgabe
+	}
+```
+
 ### Create a multi dimensional Arrays
 
 ``` JAVA
@@ -160,6 +191,22 @@ int days = 7;
 ...
 int[][][] threeDimArray = new int[days][locations][samples];
 
+```
+
+### more on multi dimensional Arrays
+How to count the fields in a multi dimensional Array?
+``` Java
+Cell[][] cellArray = new Cells[2][3];
+System.out.println(cellArray.length); // prints only first dimension
+
+int cells = 0;
+
+for (int i = 0; i < cellArray.length; i++) { //this loop runs through all cells
+		for (int j = 0; j < cellArray[i].length; j++) {
+			cells += 1;
+		}
+	}
+System.out.println(cells); // result = 2*3 = 6
 ```
 
 ### How to Print the whole Array Content at once (Array, List (ArrayList, etc.)
@@ -194,63 +241,107 @@ ArrayList by default stores mixed type Data (int, String, object at the same tim
 
 Example ArrayList:
 ``` JAVA
-List myList = new ArrayList();
+public class ListExamples {
 
-String b = "this is b as variable";
+	public static void main(String[] args) {
+		// 		@SuppressWarnings("rawtypes")
+		//		List myList = new ArrayList(); // was before auto cleanup with ctrl+1
+		List<Comparable> myList = new ArrayList<Comparable>(); // exchange Comparable with a class for ex.
 
-myList.add("Object 1");
-myList.add(123); //error with access via Iterator! bad idea to mix types
-myList.add(b);
-myList.add(b + " 666");
+		String b = "this is b as variable";
 
-//direct access
-int secondPosMyList = (int) myList.get(1); // 1 refers to position like with array
-System.out.println(secondPosMyList);
+		myList.add("Object 1");
+		myList.add(123); //error with access via Iterator! bad idea to mix types
+		myList.add(b);
+		myList.add(b + " 666");
 
-//remove object or index
-myList.remove("Object 1");
-//myList.remove(123); // does not work cause 123 would refert to positon not number
-myList.remove(0); // 0 refers to position like with array
+		//direct access
+		int secondPosMyList = (int) myList.get(1); // 1 refers to position like with array
+		System.out.println(secondPosMyList);
 
-//access via Iterator
-Iterator iterator = myList.iterator();
-while(iterator.hasNext()) {
-	String element = (String) iterator.next();
-	System.out.println(element);
-}
+		//remove object or index
+		myList.remove("Object 1");
+		//myList.remove(123); // does not work cause 123 would refert to positon not number
+		myList.remove(0); // 0 refers to position like with array
 
-//access via new foreach = for(int i = 0; i < myList.size(); i++)
-for(Object object : myList) {
-	String element = (String) object;
-	System.out.println(element);
-}
-!foreach does not allow index based access! Furthermore I think it does not work with Arrays! Example: 
-Cell[] cellArray = new Cell[10]; // create cellArray with Datatype Cell with 10 empty placeholders
-for (Cell c : cellArray) { 
-	c = new Cell(); // the **foreach does not work here** in creating an instace of Cell class on every placeholder!
+		//access via Iterator
+		@SuppressWarnings("rawtypes")
+		Iterator<Comparable> iterator = myList.iterator();
+		while(iterator.hasNext()) {
+			String element = (String) iterator.next();
+			System.out.println(element);
+		}
+
+		//access via new for-loop = for(int i = 0; i < myList.size(); i++)
+		for(Object object : myList) {
+			String element = (String) object;
+			System.out.println(element);
+		}
+
+		//List size
+		int listSize = myList.size();
+		System.out.println("List Size = " + listSize);
+
+		//clear List entries
+		myList.clear();
+		System.out.println("List Size = " + listSize); //interesting pointer to old value?
+		System.out.println("List Size = " + myList.size()); //actual value
+
+		System.out.println(secondPosMyList); //still works cause pointer goes to value 123
+		//		System.out.println(myList.get(1)); // creates exception IndexOutOfBoundsException:
+
+		//generic ListArray = ListArray with type bounding
+		List<String> myListStr = new ArrayList<>();
+		myListStr.add("def");
+		myListStr.add("ABC");
+		//		myListStr.add(123); // now throws error: Unresolved compilation problem
+		myListStr.set(1, "bcd"); // overwrites entry [1]
+
+		@SuppressWarnings("unused")
+		String position0 = myListStr.get(0); //this still is not smart, after sorting of myListStr
+		String position1 = myListStr.get(1); //positions will not be updated !!!
+
+		//print whole ArrayList:
+		System.out.println("Whole ArrayList as syso: " + myListStr.toString());
+		System.out.println(position1);
+
+		// ListArray bound to Class or object
+		Spielfeld sf = new Spielfeld();
+		sf.initialisiereZellenInArray();
+		
+		// Try to store object through attribute of object, this does not work!
+		List<String> zellen = new ArrayList<String>();
+		zellen.add(Spielfeld.zellenArray[0][0].zeichen);
+		System.out.println("zellenArray: "+zellen.toString());
+		for (
+				@SuppressWarnings("unused")
+				String string : zellen) {
+			string = "%";
+		}
+		System.out.println("zellenArray: "+zellen.toString());
+
+		// store object in list, then modify static attribute
+		List<Zelle> listCellObjects = new ArrayList<Zelle>();
+		listCellObjects.add(Spielfeld.zellenArray[0][1]);
+		System.out.println("listCellObjects: "+listCellObjects.toString());
+		for (Zelle localVaribleZelle : listCellObjects) {
+			localVaribleZelle.zeichen = "&";
+		}
+		System.out.println("listCellObjects: "+listCellObjects.toString());
+		System.out.println(listCellObjects.get(0).zeichen);
+		System.out.println(Spielfeld.zellenArray[0][1].zeichen);
+
+		//sort List
+		myListStr.sort(null); //.sort(null) stands for natural order
+		System.out.println("Whole ArrayList as syso: " + myListStr.toString());
+		System.out.println(position1); // is not position1 after sort!!
+		myListStr.set(1, "a new entry");
+		System.out.println(position1); // is not position1 after set [1] !!!!
+		System.out.println(myListStr.get(1)); // how to get entry [1]
+
 	}
 
-for (int i = 0; i < cellAray.length; i++) {
-	cellAray[i] = new Cell(); // but the **normal for loop works** because as stated above foreach can't iterate over index based lists.
-	}
-
-//List size
-int listSize = myList.size();
-System.out.println("List Size = " + listSize);
-
-//clear List entries
-myList.clear();
-System.out.println("List Size = " + listSize); //interesting pointer to old value?
-System.out.println("List Size = " + myList.size()); //actual value
-
-System.out.println(secondPosMyList); //still works cause pointer goes to value 123
-//		System.out.println(myList.get(1)); // creates exception IndexOutOfBoundsException:
-
-//generic ListArray = ListArray with type bounding
-List<String> myListStr = new ArrayList<>();
-myListStr.add("abc");
-myListStr.add("def");
-//		myListStr.add(123); // now throws error: Unresolved compilation problem
+}
 ```
 
 ## Random Number
@@ -275,9 +366,15 @@ myrandom*10+20|20.12.., 28.5.., 26.3.., 29.9.., etc.
 
 ## Exception Handling - try and catch and throw
 What do I know about this topic?
-*
+* How to read the stack trace aka exeption/error message? This means how to debug an error: resumee and link in sub chapter below
+* Many Standard Exceptions exist, also it is possible to write your own Exceptions or rewrite Output and Triggers for a existing Exception. Some more detail see Grundkurs Java from p. 99 or https://docs.oracle.com/javase/tutorial/essential/exceptions/definition.html, or  https://stackify.com/specify-handle-exceptions-java/
 
-Many Standard Exceptions exist, also it is possible to write your own Exceptions or rewrite Output and Triggers for a existing Exception. Some more detail see Grundkurs Java from p. 99 or https://docs.oracle.com/javase/tutorial/essential/exceptions/definition.html, or  https://stackify.com/specify-handle-exceptions-java/
+#### how to read an exeption/error message? How to find the problem causing code
+quick resumee of https://stackoverflow.com/a/3988794/7698264
+* note that the root cause is the last cause mentioned! so work the error message form bottom to top!
+* check for your code when other libraries are used, chances are your code is wrong not the lib.
+* the main cause for the error should then be the first line refering to your project, your own code, form the bottom up! click it to jump there.
+* for example code see link above
 
 #### What Is an Exception?
 An Exception is an Event that disrupts the intended flow of the program. https://docs.oracle.com/javase/tutorial/essential/exceptions/definition.html
@@ -291,14 +388,14 @@ It separates code that handles the flows of the program from code that handles o
 * checked Exceptions (for example user input not as whished)
 * unchecked exceptions (Error and runtime)
 ##### Examples:
-- checked exception, user false input, try and catch, and throws done by programmer. A good program anticipate and recovers from those
+- checked exception, false user input, try and catch, and throws done by programmer. A good program anticipates and recovers from those
 - unchecked exceptions, I/O error, cant be handled by program (might be hardware propblem, try catch not possible but throwing?) should give feedback where problem occured
 - unchecked exceptions at runtime, usually a bug, fix it when found
 * Here's the bottom line guideline: If a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception.
 #### Where is the exception cause defined aka the trigger?
-First understand there are premade Exceptions for common cases. This means the existing Exceptions should be used. How to know which Exception to use? Good question. Best answer at the moment know which one you need. See example code for Exception description.
+First, understand there are premade Exceptions for common cases. This means the existing Exceptions should be used. How to know which Exception to use? Good question. Best answer at the moment, know which one you need. See example code for Exception description.
 
-Second the trigger aka the catch is somewhat tricky to see and explain because sometimes as understood it is not needed to be written and sometimes it is.
+Second, the trigger aka the catch is somewhat tricky to see and explain because sometimes as understood it is not needed to be written and sometimes it is.
 
 Throw or Trigger example self made code, see that the triggers are defined by the do>try>if statements:
 ``` Java
@@ -330,6 +427,14 @@ Throw or Trigger example self made code, see that the triggers are defined by th
    } while (userInput < 0);
  }
 ```
+
+Multicatch example:
+´´´ Java
+do {
+try {
+} catch (exception1 | exception2 exceptionVariable) { do action if exceptions triggered}
+´´´
+Note for multicatch: all exceptions have to be of the same class hirarchy, mixing sub and parents is not allowed.
 
 Two exception source examples:
 
@@ -449,6 +554,7 @@ class KontoAusnahme extends Exception{
 
 }
 ```
+
 2. add Exception triggers to a Method or class. For an Exception to trigger if it is not a Standard trigger (like int no String | Char -> InputMissmachtException) then the triggers have to be set up manually.
 A list of Standard Exceptions :
 https://gist.github.com/7yl4r/9e3f223f2eca76104940#file-reusableexceptions-md
@@ -764,6 +870,9 @@ public int max(int a, int b, int c) {
   return max(max(a,b), c);
 }
 ```
+
+#### Method usage from outside of a class
+If you want to use a method from another class, the class needs to be initialize first! otherwise it will throw a 'java.lang.NullPointerException'.
 
 ### Static Attribute or operations, what about static classes?
 Static for a variable makes sense if the variable is the same for all instances of the class. Ex. if for Students there is only one school this school would be static. Or for a counter the counter has to be the same for all instances then it should be static. NOTE: In one Example, TestgetriebeneEntwicklung, they told me to use two static variables bound to two constructor calls within the own class. These where creating two class instances and setting the class variables to different values. But the example suggested that these variables be static. Which made the 2nd Instance overwrite the first. It took me a while to figure this out.

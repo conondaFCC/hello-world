@@ -2,6 +2,9 @@
 User manual: http://forge.modelio.org/projects/modelio3/wiki
 http://forge.modelio.org/projects/modelio3-usermanual-english-300/wiki
 
+## WARNING @objid Modelio, Eclipse and JUnit
+Modelio @objid markers on .java files is not compatible with JUnit tests! This means dont use Modelio code convertion from the JUnit Testfiles to be represented in Modelio. Once .java Testfiles have @objid in it they will not run anymore in Eclipse!
+
 ## Setup of Modelio and work chain
 ### Setup
 #### Standard views, add JDK library

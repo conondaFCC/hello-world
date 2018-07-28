@@ -22,6 +22,7 @@
 | rm folder     			| removes folders           			|
 | rm folder -force   		| rm folder (hidden and read-only files)  |
 | rni oldname newname 		| rni = rename-item, renames file or folder  |
+| ls *.txt					| lists all items *.txt in this folder	|
 
 ## How to open PowerShell in this Folder from Explorer?
 Long answer: - Write a little script to get right click option, see: https://www.addictivetips.com/windows-tips/open-powershell-in-a-specific-location/

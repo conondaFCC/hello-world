@@ -85,6 +85,7 @@ A note on commit messages: Though not required, it’s a good idea to begin the 
 $ git branch experimental // creates branch experimantal on current git project
 $ git branch // shows branches, the * one is the current
 $ git checkout experimental // change working branch to experimental, co = checkout
+$ git checkout -b experimental // combines branch and checkout command into one
 ```
 
 ## git log - show history
@@ -98,12 +99,14 @@ $ git log --stat --summary // with details
 ## git merge
 How to merge two branches? Be in master branch.
 ``` PowerShell
+$ git checkout master // checkout the master branch or the branch to merge into first!!
 $ git merge experimental // merges experimental branch into master
 $ git diff // shows details about conflicting files
 // resolve those conflicts, then do git commit -a
 $ gitk // shows a graphical result of the history
+$ git branch -d hoftix // deletes branch hotfix, only do this after successfull merge
 ```
-* more on merge follow git remote, fetch and merge below
+* more on merge follow git remote, fetch and merge below and read this very good exmaple: https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
 
 ## git delete branch
 ``` PowerShell

@@ -42,12 +42,18 @@ Ctrl+Shift++/-  |Fontsize adjust code size for presentation
 Ctrl+r          |While debugging => run to line (ingnore other breaks!)
 F8              |jump to next break, while in debugging mode
 Alt+Shift+T     |Refactor Options with according code bits selected ex. Variable to Convert Local Variable to Field or whole code bit to Extract Method from it
- .jpage         | Instead of .java .jpage for code snippets aka Scrapbook pages (to run code without main Methods)
- Ctrl+-         | Zoom in
- Ctrl+Shift+1   | Zoom out (Ctrl++)
-
+.jpage         	| Instead of .java .jpage for code snippets aka Scrapbook pages (to run code without main Methods)
+Ctrl+Shift++   	| Zoom in (Ctrl+Shift+1 is plus on DEU keyboard)
+Ctrl+Shift+-   	| Zoom out(might only work with number block on keyboard, with direct minus sign Shift is not needed! -> Crtl+Minuskey works)
+Ctrl+-			| colapse lines of this element into sinlge line
+Ctrl++			| expand lines of element to full size aka make content of element readable aka show content of element 
+Ctrl+H			| open Eclipse search tool
+ 
 ### EMACS or other Controls
 Via Windows > Preferences > General > Keys > Schema:
+
+## Eclipse Views
+See chapter 'Basic Eclipse Functionality'.
 
 ## Eclipse projects (related data)
 To understand where eclipse stores data on projects. Most of the data will be stored in the project folder in the files .classpath and .project. Also if the project is not in the default workspace some information (likely the path to the project) will be stored in 'workspace/.metadata'.
@@ -57,8 +63,16 @@ To understand where eclipse stores data on projects. Most of the data will be st
 * **Help with F1** - open it in a new window once a topic is selected with the corresponding icon.
 * **TODO handling** - default view is Resource - to see only TODO from one file > Tasks > 'Triangle' > Show > TODO's instead of show all (all open projects!). The TODO complete option only works for UI generated Tasks! **Must be in corresponding perspectives!! Aka Java perspective.**
 * **No Task View?** Open Tasks view via Windows > Show Views > Tasks
+* **Each Task View can be coustomized on what content to show! see down arrow on the top right of the current task windows, then 'configure content'. since standard should be show all aka show all defined task see below from all open projects or the current open project. this can be then filtered down via configure content for example to show onl current package or only TODO but not all tasks. again this filter will be lost if the task tab is removed!
 * **FIXME and XXX** and DONE > FIXME = bad code not working, XXX = bad code but working, DONE = change tags to when done. Needs to be added by hand via Windows > Preferences > Java -> Compiler -> Task Tags.
+* **Save your custom views!** Setup your custom views for eclipse then save them as a perspective.
 * **rename a Method in multiple files?** Use the integrated rename tool with Ctrl+1, then use rename in Workspace so Eclipse will handle all the dependencies.
+
+### Eclipse search Tool
+open search tool with Ctrl+H.
+#### find all occurencies of a method, find method
+use java search ribon, search string: method name, search for category: method, scope: enclosed projects
+or use Filesearch ribon, search string: method name, scope: workspace, also finds projects outside of workspace aka separate git folder where some git projects are handled outside of workspace, this is good news.
 
 ## Compile .java to run in cmd
 1. Export file as runnable .jar
