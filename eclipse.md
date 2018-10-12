@@ -25,7 +25,7 @@ Ctrl+I          |indent
 Ctrl+Shift+F    |cleanup code?
 Ctrl+J          |incremental search
 Ctrl+Shift+G    |create getter an setter?
-Alt+Shift+J     |add JavaDoc comment
+Alt+Shift+J     |add JavaDoc comment, works on class, variable or method
 Ctrl+7          |Line comment on/off  
 Ctrl+O          |quick outline class or twice Ctrl+O all classes in package? Note: Ctrl+O always opens the outline for the current Java editor. Press Ctrl+F3 to open the quick outline for the currently selected type.
 Shift+Alt+A     |Block selection aka multiline edit (as on Oxygen.2 Release (4.7.2) this is still not very extendet like in atom, see github stars for project on it)
@@ -33,7 +33,7 @@ Shift+Alt+S     |access Source commands like create getter and setter etc.
 toString()      |from Source get all fields toString
 Ctrl+Shift+Mouse|Ingore warning and show Javadoc anyway
 Shift+Mouseover |Shows full declaration of variable
-F3              |Jump to Method or Class
+F3              |Jump to Method or Class, also via Ctrl+LMB on method
 variable        |If declared use the camelcase abbrevation to write it. Ex.: thisVariable => tV
 variable2       |create field from variable with Ctrl+1
 variable3       |instead of writing the variable, start with writting the method if the variable is an input of this method (int a, int b), then autocreate those with Ctrl+1 => create field
@@ -75,26 +75,25 @@ use java search ribon, search string: method name, search for category: method, 
 or use Filesearch ribon, search string: method name, scope: workspace, also finds projects outside of workspace aka separate git folder where some git projects are handled outside of workspace, this is good news.
 
 ## Compile .java to run in cmd
-1. Export file as runnable .jar
-2. Next window: Runnable Jar config, from Launch configuration, select the
-Launch configuration, the one where the actual main method resides (Needs be run
-  once to be displayed!)
+1. Export file as runnable .jar, open export menu via rightclick on .java file in projectexplorer > select > export > runnablejar
+2. Runnable Jar options > Launch configuration, select the one where the to be used main method resides (Needs to be run
+  once to be displayed in Eclispe!)
 3. lunch cmd - lunch file with: java -jar runnablejar.jar (java runnable.jar didn't work?)
 
-## Compile .java to .exe
+## Compile .java to .exe making a windows .exe file
 ### with Launch4j-3.7 aka bundle .exe with JRE
-Start with install & start Launch4j-3.7
+Create .jar as explained in 'compile .java ...'.
+Install & start Launch4j-3.7, create your exe file.
+
+Options to choose in Launch4j:
+Example: 1. tabname >> explanation, tasks
+1. Basic >> define Output file: | Jar: where Outputfile is the \\myappfolder\\myapp.exe and Jar is the created .jar from myapp.java
+2. Classpath >> do nothing [OLD 2. Classpath >> Select custom classpath: | define Main class: aka locate myapp.jar with main Method]
+3. Header >> Select GUI or console app
+4. JRE >> point to JRE! this is important copy JRE into myappfolder (myappfolder\\jre1.8...) (example: E:\\minesweeper\\bin\\jre1.8.0_131) then the Bundled JRE Path is: 'bin\\jre1.8.0_131' Example from config-xml file: <path>bin\jre1.8.0_131</path>. The exe is in myapp\\myapp.exe JRE is in myapp\\bin\\jre1.8.0_131 another hint see: https://stackoverflow.com/a/7582064/7698264
+5. build and test the app on a system without JRE installed!
 
 The whole explanation is taken from this video: https://www.youtube.com/watch?v=a24PlW-acwY
-
-This describes the list underneath as 1. tabname >> explanation, tasks
-
-1. Basic >> define Output file: | Jar: where Outputfile is the \\myappfolder\\myapp.exe and Jar is the created .jar from myapp.java
-2. Classpath >> Select custom classpath: | define Main class: aka locate myapp.jar with main Method
-3. Header >> Select GUI or console app
-4. JRE >> point to JRE! this is important copy JRE into myappfolder (myappfolder\\jre1.8...) then JRE Bundle Path: jre1.8... without \\
-5. build and test the app
-
 
 \\Mermaid graph of process: https://mermaidjs.github.io/mermaid-live-editor/#/view/Z3JhcGggVEQKQVtNeUNsYXNzLmphdmFdIC0tPnx0cmFuc2Zvcm0gaW50byBqYXJ8IEIoTXlDbGFzcy5qYXIpCkIgLS0-IEN7Y2hvb3NlIG9uZX0KQyAtLT58Y3Jvc3MgY29tcGlsZXJ8IERbTGludXgsIEdDQyA-IEdDSl0KQyAtLT58cGFja2FnZXJ8IEVbRXguOiBMYXVuY2g0ai0zLjddCkQtLT5GW0J1aWxkID4gTXlDbGFzcy5leGVdCkUtLT5HW015Q2xhc3MuZXhlICsgSlJFICsgV2luZG93cyBJbnN0YWxsZXJdCkUtLT5IW015Q2xhc3MuZXhlICsgSlJFIExpbmtdCkUtLT5JW015Q2xhc3MuZXhlICsgSlJFXQ
 graph TD

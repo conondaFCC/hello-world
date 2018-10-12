@@ -312,6 +312,14 @@ public class Wohnung {
 	}
 }
 '''
+''' Java
+   @AfterEach // Example for tearDown() content
+    void tearDown() {
+		spielfeld = null;
+		Spielfeld.listeAllerZellen.clear();
+		benutzerschnittstelle = null;
+    }
+'''
 
 ### Testing multiple classes at the same time
 #### JUnit5 style

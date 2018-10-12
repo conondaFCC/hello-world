@@ -5,6 +5,9 @@ http://forge.modelio.org/projects/modelio3-usermanual-english-300/wiki
 ## WARNING @objid Modelio, Eclipse and JUnit
 Modelio @objid markers on .java files is not compatible with JUnit tests! This means dont use Modelio code convertion from the JUnit Testfiles to be represented in Modelio. Once .java Testfiles have @objid in it they will not run anymore in Eclipse!
 
+## installation and update to newer version, steps to take
+installation of a new version from 3.7 to 3.8 for example installs modelio completely fresh on windwos. Since the workspace link is handled in the '.modelio' folder, if installed allongside the 3.7 Modelio software folder, older projects are accesible in the new 3.8 version, but will be migrated to the new version when opend for the first time. This means to be sure to not lose any data, export the projects current state first in the old version, if you don't wanna lose anything.
+
 ## Setup of Modelio and work chain
 ### Setup
 #### Standard views, add JDK library

@@ -268,5 +268,5 @@ Describes what you can do with Modelio and what you should not! Most noteworthy:
 ### Three Levels in software design with Modelio
 * **analysis phase**, define requirements,  realize  use  cases,  construct design  models  and  use  all  of  UML’s  modeling capacities. Model construction and documentation generation are results of this phase.
 * **design phase** focuses on realization, building productive models that concentrate on the main  architectural themes and essential system classes.
-* **coding/detailed  design  phase**,  completes  the  general  design  model  in  roundtrip mode,  by using the features of the Eclipse/Java environment and by permanently synchronizing the model
+* **coding/detailed  design  phase**, completes  the  general  design  model  in  roundtrip mode,  by using the features of the Eclipse/Java environment and by permanently synchronizing the model
 copied from: https://www.modelio.org/download/send/5-white-papers/1-improve-your-java-development-efficiency-en.html

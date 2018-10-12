@@ -26,6 +26,9 @@ Style refers to how to write good code.
 ``` JAVA
 double principal;    // Amount of money invested.
 double interestRate; // Rate as a decimal, not percentage.
+
+//or
+//see Java scanner class as good example how variables are described with comments
 ```
 
 ## Subroutines
@@ -53,7 +56,6 @@ int x = 1, y = 2;
 System.out.printf("The product of %d and %d is %d", x, y, x*y);
 // output: The product of 1 and 2 is 2
 ```
-
 
 ## Arrays
 What is an array?
@@ -1080,3 +1082,35 @@ Java Archive, is a zipped file containing .java, .class files and all needed lib
 ### What happens when loading a .jar file or running $ java myProgram?
 This is well explained in the Java Classloader https://en.wikipedia.org/wiki/Java_Classloader
 Basically some parts or classes are loaded automatically some are not.
+
+## refactoring
+### SOLID programming principles by Robert C. Martin
+#### SRP or single-responsibility-principle
+theory and practical
+boiled down from: https://dzone.com/articles/single-responsibility-principle-done-right
+theroy key points:
+* SRP = A class should have only one reason to change.
+Therefore -> The SRP is about limiting the impact of change. https://hackernoon.com/you-dont-understand-the-single-responsibility-principle-abfdd005b137
+Example he uses: In the above example, the class Rectangle is said to have at least two responsibilities: drawing a rectangle on a GUI and calculating the area of that rectangle. Is that really bad? Well, yes. For example, this design forces the ComputationalGeometryApp class to have a dependency on the class GUI.
+
+SRP example https://8thlight.com/blog/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html by onlcebob aka Robert C. Martin:
+Now consider this bit of Java code:
+
+public class Employee {
+  public Money calculatePay();
+  public void save();
+  public String reportHours();
+}
+
+And this gets to the crux of the *Single Responsibility Principle. This principle is about people.*
+
+When you write a software module, you want to make sure that when changes are requested, those changes can only originate from a single person, or rather, a single tightly coupled group of people representing a single narrowly defined business function. You want to isolate your modules from the complexities of the organization as a whole, and design your systems such that each module is responsible (responds to) the needs of just that one business function.
+
+Why? Because we don't want to get the COO fired because we made a change requested by the CTO. Nothing terrifies our customers and managers more that discovering that a program malfunctioned in a way that was, from their point of view, completely unrelated to the changes they requested. If you change the calculatePay method, and inadvertently break the reportHours method; then the COO will start demanding that you never change the calculatePay method again.
+
+Imagine you took your car to a mechanic in order to fix a broken electric window. He calls you the next day saying it's all fixed. When you pick up your car, you find the window works fine; but the car won't start. It's not likely you will return to that mechanic because he's clearly an idiot.
+
+That's how customers and managers feel when we break things they care about that they did not ask us to change.
+
+
+
