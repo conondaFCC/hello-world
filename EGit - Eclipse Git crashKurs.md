@@ -16,5 +16,6 @@ If you know GIT CLI, you might wanna do it there instead (Git Shell > PowerShell
 * Under > Branches > Local find tree to branch then via right click option branch three (note this makes a local branch, not visible online until pushed!)
 * Merging jet to be tested
 * Check on what branch are we working? > project folder in the Java Perspective shows the branch name in ().
+
 ## Local Branch vs Remote Branch
 Eclipse shows the local and the remote branches in the git view under branches. Standard for remote branches, a clone will set its remote to the origin. The origin does not have the remote link to the clone by default. Can be added, see git.md.

@@ -1,7 +1,7 @@
 # git Manual and notes
 
 ## what is git?
-Git can track changes in files and folders, take snapshots, branch and merge different snapshots and revert to older ones. In one word a very capable version control system. Maybe the best one around.
+Git can track changes in files and folders, take snapshots, branch and merge different snapshots and revert to older ones. In one scentence: a very capable version control system. Maybe the best one around.
 A deeper look at git: https://git-scm.com/book/en/v1/Git-Internals-Plumbing-and-Porcelain
 
 ## git Tutorial and help

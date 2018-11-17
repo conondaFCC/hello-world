@@ -48,6 +48,7 @@ Ctrl+Shift+-   	| Zoom out(might only work with number block on keyboard, with d
 Ctrl+-			| colapse lines of this element into sinlge line
 Ctrl++			| expand lines of element to full size aka make content of element readable aka show content of element 
 Ctrl+H			| open Eclipse search tool
+new				| write 'new' then ctrl+space creates template for new object
  
 ### EMACS or other Controls
 Via Windows > Preferences > General > Keys > Schema:
@@ -107,6 +108,10 @@ E-->H[MyClass.exe + JRE Link]
 E-->I[MyClass.exe + JRE]
 
 ## Eclipse and Modelio, working together
+The new description can be found under modelio.md
+
+** TODO cleanup old Modelio Eclipse Setup below!!!**
+
 ### Import Modelio into Eclipse
 * Existing Modelio and Eclipse project
 * existing files in Modelio (class diagram) and generated class files (converted to class.java files in src folder of Modelio project)

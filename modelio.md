@@ -52,7 +52,7 @@ In Modelio a Java project can be imported and turned into a UML class diagram or
 8. adjust display setting of class to show attributes and operations by default (Configuration > Diagram themes > default > class > Attributes and Operations enable show)
 9. update diagram (in Model Browser window via right-click > Automatic Diagram > update automatic diagram)
 
-new workflow:
+new workflow for auto generated class diagram:
 
 1. create a new java project in Modelio
 2. create a new java packet in Modelio, under the project name standard package (this will be the packet shown under src > yourNewPacket in Eclipse)
