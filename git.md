@@ -22,7 +22,10 @@ mostly this is a recapitulation of the git tutorial with some comments.
 PDF: https://education.github.com/git-cheat-sheet-education.pdf
 
 ## git on Windows
-On windows use the Git Shell from the GitHub Client via PowerShell. Very good CLI tool for windows! Has more information when working with a git repository than the linux bash! The information is even color coded. (How to get this info in bash?)
+Guide from official Web Site: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+Install GitHub Desktop, Atom then git.
+
+OLD -> On windows use the Git Shell from the GitHub Client via PowerShell. Very good CLI tool for windows! Has more information when working with a git repository than the linux bash! The information is even color coded. (How to get this info in bash?)
 
 ``` PowerShell
 // Git Shell from GitHub Client on Windows PowerShell, has info [branch, files, changes, more..]
@@ -30,6 +33,8 @@ On windows use the Git Shell from the GitHub Client via PowerShell. Very good CL
 ~\Desktop\testGit [experimental +1 ~1 -0 ~]>
 ```
 * NOTE: File and folder Path on Windows is with backslash \ whereas inside git, for example branches it will be 'git merge bob/master' with a normal slash.
+
+Set the default git editor in Windows:  $ git config --global core.editor notepad
 
 ## Get help on a git command
 How to understand a command like 'git log --graph'?
@@ -71,10 +76,12 @@ $ git commit // commit current state, all added to index
 $ git add file1 file2 file3 // add specific files for commit, add to index!
 $ git diff --cached // Without --cached, git diff will show you any changes made but not yet added to the index.
 $ git diff // will show changes not added to index
+$ gitk // shows a graphical result of the history
 $ git commit -a // commit all modified, **but not new files**
 $ git commit -m "commit text"
 $ git commit -m "next commit" -m " " -m "more details on 3rd line" // -m " " empty line by convention
 $ git commit --amend --no-edit // add new added changes to last commit! **BEWARE** Don't do this to remote repositories while working with others!
+$ git rm --cached // remove unwanted files from git, this might be needed when gitignore file is not setup properly.
 ```
 a lot more commands are explained under: https://git-scm.com/docs/gittutorial
 
@@ -220,6 +227,9 @@ Solution: Instead of creating a new commit -m "minor changes, belong to last com
 
 ### how to display changes made
 Since this is a huge topic, a good place to start is: https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History
+
+### git stash aka temp save and go back to HEAD
+git stash is the command to save current changes to the stash and go back to HEAD state. See help on stash for examples.
 
 ## OLD NOTES, NEEDS REVISION:
 ## git create a new repository

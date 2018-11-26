@@ -19,3 +19,10 @@ If you know GIT CLI, you might wanna do it there instead (Git Shell > PowerShell
 
 ## Local Branch vs Remote Branch
 Eclipse shows the local and the remote branches in the git view under branches. Standard for remote branches, a clone will set its remote to the origin. The origin does not have the remote link to the clone by default. Can be added, see git.md.
+
+## Reload on older Eclipse Project from a git Project
+### Single Eclipse project, single git
+Just reload the Project with the Eclipse Project wizard.
+### Multi Eclipse, multi git Project
+Reload the root git project, all the sub gits should be found correctly.
+Also see post with same question: https://www.eclipse.org/forums/index.php/t/1078765/

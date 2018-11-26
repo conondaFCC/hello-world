@@ -12,6 +12,8 @@ The syntax of JavaDoc can best be seen in the subchapter 'Example of JavaDoc com
 
 ### What should be documented as JavaDoc comment and how?
 **General rule, every class and public method should have a JavaDoc comment.** Exeptions: trivial classes, getter and setters, simple constructors. A class or method comment, describes briefly what the task is, what is does. To get the a good class description it migth be good to start with the methods first to get a grasp for what the class does, then describe the class.
+Information on JavaDoc for packages see examples on: https://www.intertech.com/Blog/whats-package-info-java-for/
+**Note: Package Annotations can affect all classes, @deprecated will set all class to deprecated.**
 
 #### For methods
 Return values should be explained, like what does the return stand for, what is its goal or purpose.
@@ -56,7 +58,7 @@ It describes the class function in one sentence. Then goes into more details how
  * }</pre></blockquote>
  * ...
  */
- 
+
   /**
    * Fields and methods to match bytes, shorts, ints, and longs
    */
@@ -65,7 +67,7 @@ It describes the class function in one sentence. Then goes into more details how
     private String non0Digit = "[\\p{javaDigit}&&[^0]]";
     private int SIMPLE_GROUP_INDEX = 5;
     private String buildIntegerPatternString() {...}   
-´´´ 
+´´´
 
 ### Example of JavaDoc comment in the class Validator
 ´´´ Java
@@ -128,4 +130,3 @@ public class Validator {
   }
 }
 ´´´
-

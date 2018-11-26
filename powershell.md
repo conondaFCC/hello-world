@@ -9,6 +9,7 @@
 ## PowerShell commands
 | key           			| Detail         |
 | :-------------------------| :------------- |
+| $                 | access built in variables '$PsVersionTable' |
 | Ctrl+C 	    			| abort command (Ctrl+c UNIX bash)   	|
 | Q							| exit a List (git diff for example)	|
 | fc filename   			| create file (UNIX touch filename) 	|
@@ -23,6 +24,7 @@
 | rm folder -force   		| rm folder (hidden and read-only files)  |
 | rni oldname newname 		| rni = rename-item, renames file or folder  |
 | ls *.txt					| lists all items *.txt in this folder	|
+| Get-command get-* | lists all commands that have the get command first |
 
 ## How to open PowerShell in this Folder from Explorer?
 Long answer: - Write a little script to get right click option, see: https://www.addictivetips.com/windows-tips/open-powershell-in-a-specific-location/
@@ -32,3 +34,7 @@ Short answer: - Navigate to folder in Explorer then type powershell in path and 
 $echo %PATH%
 ### Where is this file under Windows?
 Find it via Windows-key 'Environment variables' under the tab advanced, find 'Environment variables'
+
+## PowerShell scripting
+**Note: to run scripts you need special privileges like 'powershell.exe -ExecutionPolicy Unrestricted' or others.**
+See @'About Execution Policies'on Windows PowerShell help.
