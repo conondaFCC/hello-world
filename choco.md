@@ -1,5 +1,7 @@
 # Chocolatey aka choco - package manager for windows like apt-get
-This page fraps up what I learned about chocholatey and my most used features.
+This page wraps up what I learned about chocholatey and my most used features.
+
+**Note as of 29.1.2019 I quit using chocho since it installed an old JRE of JAVA which is no longer supported by Oracle without hinting that all new JRE use should use JDK instead!**
 
 ## Installing Chocolatey
 see their webpage for cmd or powershell installing Guide.

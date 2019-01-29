@@ -6,6 +6,7 @@ Command         |Action
 ----------------|------
 Ctrl+Shift+L    |Show shortcuts
 Ctrl+D          |delete row
+Ctrl+Shift+UpAr.|duplicate row; or Ctrl+Shift+DownArrow
 Alt+up/down     |move row accordingly
 Alt+left/right  |move to last (object edited, aka jump to previous method)
 move method     |via Outline view drag&drop it (deselect ABC sorting)
@@ -45,11 +46,13 @@ Alt+Shift+T     |Refactor Options with according code bits selected ex. Variable
 .jpage         	| Instead of .java .jpage for code snippets aka Scrapbook pages (to run code without main Methods)
 Ctrl+Shift++   	| Zoom in (Ctrl+Shift+1 is plus on DEU keyboard)
 Ctrl+Shift+-   	| Zoom out(might only work with number block on keyboard, with direct minus sign Shift is not needed! -> Crtl+Minuskey works)
-Ctrl+-			| colapse lines of this element into sinlge line
-Ctrl++			| expand lines of element to full size aka make content of element readable aka show content of element 
-Ctrl+H			| open Eclipse search tool
-new				| write 'new' then ctrl+space creates template for new object
- 
+Ctrl+-          | colapse lines of this element into sinlge line
+Ctrl++          | expand lines of element to full size aka make content of element readable aka show content of element
+Ctrl+H          | open Eclipse search tool
+new				      | write 'new' then ctrl+space creates template for new object
+ClassName       | write only the ClassName on a new line, then Autocomplete to get a constructor for the ClassName
+public          | write 'public' then Autocomplete creates template for new public method
+
 ### EMACS or other Controls
 Via Windows > Preferences > General > Keys > Schema:
 
@@ -68,7 +71,8 @@ To understand where eclipse stores data on projects. Most of the data will be st
 * **FIXME and XXX** and DONE > FIXME = bad code not working, XXX = bad code but working, DONE = change tags to when done. Needs to be added by hand via Windows > Preferences > Java -> Compiler -> Task Tags.
 * **Save your custom views!** Setup your custom views for eclipse then save them as a perspective.
 * **rename a Method in multiple files?** Use the integrated rename tool with Ctrl+1, then use rename in Workspace so Eclipse will handle all the dependencies.
-
+* **generate Constructor using fields** Use class attributes to generate a constructor, rightclick the attribute of a class choose > Source > Generate Constructor using fields > select fields needed for constructor. Note: insert will be on cursor position!
+* **generate code, insert on cursor** Most of auto generated code, like Getter and Setters, constructor etc. can be set to an insert location just be having the cursor where you want the code to be generated.
 ### Eclipse search Tool
 open search tool with Ctrl+H.
 #### find all occurencies of a method, find method
