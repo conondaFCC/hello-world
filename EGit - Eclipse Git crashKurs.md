@@ -8,6 +8,20 @@
 ## Understand Git, creating a git Repository
 see git.md for this.
 
+## Reload/add on older Eclipse Project from a git repository
+### a git repository contains one or more Eclipse Projects
+git pre work:
+* have your repository up to date aka the version you want do use/restore.
+
+Steps in Eclipse:
+* 'Open Perspective' git
+* add the git repo via add git repo button (if this is the first git repo to add, git view will tell you this and give the option to add one).
+* In git view right click on Working Tree for the option 'Import Projects'. Follow on screen directions.
+ 
+### Multi Eclipse Projects in one or more git repositories
+Reload the root git project, all the sub gits should be found correctly.
+Also see post with same question: https://www.eclipse.org/forums/index.php/t/1078765/
+
 ## Create a GIT branch inside Eclipse
 If you know GIT CLI, you might wanna do it there instead (Git Shell > PowerShell on Windows).
 
@@ -19,10 +33,3 @@ If you know GIT CLI, you might wanna do it there instead (Git Shell > PowerShell
 
 ## Local Branch vs Remote Branch
 Eclipse shows the local and the remote branches in the git view under branches. Standard for remote branches, a clone will set its remote to the origin. The origin does not have the remote link to the clone by default. Can be added, see git.md.
-
-## Reload on older Eclipse Project from a git Project
-### Single Eclipse project, single git
-Just reload the Project with the Eclipse Project wizard.
-### Multi Eclipse, multi git Project
-Reload the root git project, all the sub gits should be found correctly.
-Also see post with same question: https://www.eclipse.org/forums/index.php/t/1078765/
