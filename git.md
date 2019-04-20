@@ -4,6 +4,12 @@
 Git can track changes in files and folders, take snapshots, branch and merge different snapshots and revert to older ones. In one scentence: a very capable version control system. Maybe the best one around.
 A deeper look at git: https://git-scm.com/book/en/v1/Git-Internals-Plumbing-and-Porcelain
 
+## content of this document
+mostly this is a recapitulation of the git tutorial with some comments.
+
+## git cheat sheet
+PDF: https://education.github.com/git-cheat-sheet-education.pdf
+
 ## git Tutorial and help
 To understand git, go throuhg these 3 links:
 * Don't just read it, **do the examples in it, then you know how to use git!**
@@ -12,14 +18,32 @@ To understand git, go throuhg these 3 links:
 * do the git daily: https://git-scm.com/docs/giteveryday
 * at the very least do some of git tutorial and fly over git daily and read this paragraph https://git-scm.com/docs/gitworkflows#_separate_changes!
 
-## **switching from a branch to another, implications**
-Be aware that switching from a branch to another branch, inside a git project, will change the files and folders to it's current state. It will physically alter files according to the branch's state. This might sound normal and logical or not, but it is true and important to know.
+## switching from a branch to another, implications
+Be aware that switching from a branch to another branch, inside a git project, will change the files and folders to it's corresponding commit state. It will physically alter files according to the branch's state. This might sound normal and logical or not, but it is true and important to know.
 
-## content of this document
-mostly this is a recapitulation of the git tutorial with some comments.
+Local files only change if the two branches have a different last commit.
 
-## git cheatcheat
-PDF: https://education.github.com/git-cheat-sheet-education.pdf
+If only local changes have been made, but both branches share the same last commit no files will be altered by changing the branch even with the checkout (switch branch) command.
+
+### creating a new branch while having local modified files
+Scenario: made some changes to master, realized it might be better to work on a new branch.
+Solution: Just create an new branch and switch to it and continue the work, only when you commit on the new branch, all the changes will be applied to the **new branch** and master will remain like it was on the last commit.
+
+More info: https://stackoverflow.com/questions/2569459/git-create-a-branch-from-unstaged-uncommitted-changes-on-master
+
+### modified files but you need some code overwritten by the changes made from one file
+Scenario: modified files, then realize some code you modified does not work, you need to retrieve this old code
+Solution: There might be other solutions to this!
+One way to get back quickly to your last commit without losing to made changes is to stash the current work.
+$ git stash // will do git stash push command, aka saves your current staged?? changes away and reverts back to the last commit state
+now copy the part of the single file you need
+$ git stash apply // this will revert the commit to you last stashed state
+
+Some observations made:
+* after the stash command all modified files will turn to the commit stat even when open in eclipse, you will get the data on the screen from the old commit
+* a newly created file, that was not staged or tracked will not be deleted when you stash, even if it does not belong the the current commit the file will still be there (in Eclipse and windows file explorer), this might also apply to staged new files???
+* a quick way to stash and stash apply in eclipse is use the 'shown in > terminal' option on the folder in question directly from Eclipse via right click option, then type your git commands 
+* it might be wise at some point to delete old stashes
 
 ## git on Windows
 Guide from official Web Site: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git

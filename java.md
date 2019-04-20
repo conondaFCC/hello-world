@@ -1,15 +1,17 @@
-# JAVA tips
+# JAVA, my notes and tips for Java
 
-## Do not create existing Classes
+## Code snippet's and common Problems
+### Do not create existing Classes
 Do not create a class that is already existing in Java Source code (JDK | JRE). Example if you create a class List, this will "break" the existing class List from native Java and unexpected things might happen!
 
-## make large numbers easy to read
+### make large numbers easy to read
 In Java long numbers can be made more readable with underscores. Exmaple:
 ``` JAVA
 int longNumber = 7_000_000; // the underscores will be ingored by the Compiler
 int binaryLongNumber = 0b1010_1001_0001;
 ```
-## Operators, how not to use them
+
+###  Operators, how not to use them
 Imagine the + operator used in variable. It does not work like this!
 
 ```JAVA
@@ -20,18 +22,16 @@ System.out.println(0 + '+'); // = 43, '+' = 43!!!
 ```
 The char '+' gets converted to an int number, it does not keep its function as an + operator!!!
 
-## Code Style aka good programming
+### Code Style aka good programming
 Style refers to how to write good code.
-- comment each variable for readability and information
+* comment each variable for readability and information
+* see Java Scanner class as a good example how variables are described with comments by the pro's.
 ``` JAVA
 double principal;    // Amount of money invested.
 double interestRate; // Rate as a decimal, not percentage.
-
-//or
-//see Java scanner class as good example how variables are described with comments
 ```
 
-## Subroutines
+### Subroutines
 What is a subroutine? Every bunch of code that can be called by a name and then will be executed is a subroutine. In Java every method is subroutine.
 ``` JAVA
 // calling the class System and any subroutine
@@ -41,9 +41,28 @@ Math.PI;
 Math.E;
 ```
 
-## Code snippets
 ### Math
 Watch out some Math subroutines have a given return type others adjust to the input data type!
+
+### Random Number, The Easy Way (Math.random())
+Or how does creating a random number work?
+
+``` JAVA
+double myrandom = Math.random();
+System.out.println(myrandom); // prints doubles in the range of < 1.0 and > 0.0
+
+int randomInt = (int) (Math.random()*99+1) // = numbers 1-99 as random
+```
+
+|Input         | Output
+|--------------|-------
+myrandom      |0.012.., 0.85.., 0.63.., 0.99.., etc.
+myrandom*10   |0.12.., 8.5.., 6.3.., 9.9.., etc.
+myrandom*10+1 |1.12.., 9.5.., 7.3.., 10.9.., etc.
+downcast myrandom*10+1 <br> with (int) myrandom  | 1, 9, 7, 10
+myrandom*20   |0.24.., 17.xx, 12.6.., 19.8.., etc.
+myrandom*20+1 |1.23.., 18.xx, 13.6.., 20.8.., etc.
+myrandom*10+20|20.12.., 28.5.., 26.3.., 29.9.., etc.
 
 ### The == vs equal problem
 The == operator for reference types tests for reference *equality* (i.e. the *same object*). Therefore, in the first example int1_1 == int2_1 is true because the references are the same. In the second example int2_1 == int2_2 is false because the *references* are different.
@@ -91,7 +110,10 @@ System.out.println(myArrayList2.size()); // Output: 0!!!
 ```
 
 ### Vector vs ArrayList
-Vector is synchronised, ArrayList is not. (Not clear yet what this means...)
+* see those two pages for more details: 
+* https://www.javaworld.com/article/2077425/vector-or-arraylist-which-is-better.html
+* https://howtodoinjava.com/java/collections/arraylist/arraylist-vs-vector/
+* Vector is synchronized, ArrayList is not. This only applies when application has to be thread save. Since I did not touch threads in Java yet, this is not very useful to me.
 
 ### Normal Arrays
 Normal Arrays can be created in two ways and contain two types of data either
@@ -149,6 +171,7 @@ public class ArrayObjects {
 ### Array.length, how to use and what to look out for
 
 Be aware of the following! Using the array.length in a loop is not the same as using it as an index!
+
 ``` Java
 //example loop, loop goes till the end of the array like intended
 String zeile = "";
@@ -197,6 +220,7 @@ int[][][] threeDimArray = new int[days][locations][samples];
 
 ### more on multi dimensional Arrays
 How to count the fields in a multi dimensional Array?
+
 ``` Java
 Cell[][] cellArray = new Cells[2][3];
 System.out.println(cellArray.length); // prints only first dimension
@@ -346,30 +370,45 @@ public class ListExamples {
 }
 ```
 
-## Random Number
-Or how does creating a random number work?
-
-#### The Easy Way (Math.random())
-``` JAVA
-double myrandom = Math.random();
-System.out.println(myrandom); // prints doubles in the range of < 1.0 and > 0.0
-
-int randomInt = (int) (Math.random()*99+1) // = numbers 1-99 as random
-```
-Input         | Output
---------------|-------
-myrandom      |0.012.., 0.85.., 0.63.., 0.99.., etc.
-myrandom*10   |0.12.., 8.5.., 6.3.., 9.9.., etc.
-myrandom*10+1 |1.12.., 9.5.., 7.3.., 10.9.., etc.
-downcast myrandom*10+1 <br> with (int) myrandom  | 1, 9, 7, 10
-myrandom*20   |0.24.., 17.xx, 12.6.., 19.8.., etc.
-myrandom*20+1 |1.23.., 18.xx, 13.6.., 20.8.., etc.
-myrandom*10+20|20.12.., 28.5.., 26.3.., 29.9.., etc.
-
 ## Exception Handling - try and catch and throw
 What do I know about this topic?
-* How to read the stack trace aka exeption/error message? This means how to debug an error: resumee and link in sub chapter below
-* Many Standard Exceptions exist, also it is possible to write your own Exceptions or rewrite Output and Triggers for a existing Exception. Some more detail see Grundkurs Java from p. 99 or https://docs.oracle.com/javase/tutorial/essential/exceptions/definition.html, or  https://stackify.com/specify-handle-exceptions-java/
+* How to read the stack trace aka exception/error message? This means how to debug an error: resume and link in sub chapter below
+* Many Standard Exceptions exist, also it is possible to write your own Exceptions or rewrite Output and Triggers for a existing Exception. Some more detail see 'Grundkurs Java' from p. 99 or https://docs.oracle.com/javase/tutorial/essential/exceptions/definition.html, or  https://stackify.com/specify-handle-exceptions-java/
+
+#### Exception types - The Three Kinds of Exceptions
+Three types of exceptions can be identified:
+1. checked Exceptions (for example user input not as wished for)
+2. unchecked exceptions (Error)
+3. unchecked exceptions (runtime)
+
+NOTE: Here's the bottom line guideline: If a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception.
+
+Exception types and actions for the programmer in more detail:
+- **checked exception**, false user input, try and catch, and throws done by programmer. A good program anticipates and recovers from those
+- **unchecked exceptions, I/O error**, can't be handled by program (might be hardware problem, try catch possible for some cases) gives feedback where problem occurred
+- **unchecked exceptions at runtime**, usually a bug, fix it when found
+
+##### Exception code example
+``` Java
+// Multiple catch example
+// example one
+try {
+	@SuppressWarnings({ "resource", "unused" })
+	Formatter f = new Formatter("C:\\test.txt");
+} catch (SecurityException e) {
+	e.printStackTrace();
+} catch (FileNotFoundException e) {
+	e.printStackTrace();
+} 
+
+// example two
+try {
+	// do something
+} catch (exception1 | exception2 exceptionVariable) {
+	do action if exceptions triggered}
+```
+
+NOTE: for multiple catch: all exceptions have to be of the same class hierarchy, mixing sub and parents is not allowed.
 
 #### how to read an exeption/error message? How to find the problem causing code
 quick resumee of https://stackoverflow.com/a/3988794/7698264
@@ -386,20 +425,13 @@ This can be user Input not as expected, I/O error or others.
 #### Why Exceptions exist?
 It separates code that handles the flows of the program from code that handles only the errors, if this doesn't make sense see this good example: https://docs.oracle.com/javase/tutorial/essential/exceptions/advantages.html
 
-#### Exception types - The Three Kinds of Exceptions
-* checked Exceptions (for example user input not as whished)
-* unchecked exceptions (Error and runtime)
-##### Examples:
-- checked exception, false user input, try and catch, and throws done by programmer. A good program anticipates and recovers from those
-- unchecked exceptions, I/O error, cant be handled by program (might be hardware propblem, try catch not possible but throwing?) should give feedback where problem occured
-- unchecked exceptions at runtime, usually a bug, fix it when found
-* Here's the bottom line guideline: If a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception.
 #### Where is the exception cause defined aka the trigger?
-First, understand there are premade Exceptions for common cases. This means the existing Exceptions should be used. How to know which Exception to use? Good question. Best answer at the moment, know which one you need. See example code for Exception description.
+First, understand there are existing Exceptions for all common cases. This means the existing Exceptions should be used. How to know which Exception to use? Good question. Best answer at the moment, know which one you need. See example code for Exception description.
 
 Second, the trigger aka the catch is somewhat tricky to see and explain because sometimes as understood it is not needed to be written and sometimes it is.
 
 Throw or Trigger example self made code, see that the triggers are defined by the do>try>if statements:
+
 ``` Java
  /**
   * Check User Input via Exception
@@ -429,14 +461,6 @@ Throw or Trigger example self made code, see that the triggers are defined by th
    } while (userInput < 0);
  }
 ```
-
-Multicatch example:
-´´´ Java
-do {
-try {
-} catch (exception1 | exception2 exceptionVariable) { do action if exceptions triggered}
-´´´
-Note for multicatch: all exceptions have to be of the same class hirarchy, mixing sub and parents is not allowed.
 
 Two exception source examples:
 
@@ -598,7 +622,7 @@ class Test2 {
 
 4. the finally block - after the last catch block a finally block can be used for things that have to be done regardless of if a catch matches or not. Even when break, continue or return happens.
 
-## Java classes
+## About Class / Classes and Methods
 ### How to design classes
 1. Structure
   What information needs to be saved within the class? These are the **variables of the instance/class**.
@@ -629,12 +653,104 @@ This continues the guide from above:
 8. then write them down and think about what paramter they might have.
 9. model them in modelio or paper.
  
-Voilà classes or attributes found and named.
+Voil� classes or attributes found and named.
 
 What are good classes? //FIXME: Insert from: 'Was gute Klassen sind, wird am Ende des Arbeitsblattes zum Projekt Minesweeper (AB226A_09-1)!'
 
 
+### Modifiers on class, method and attribute
+Java has modifiers for each element (class, method & attribute) some work over all of those elements some do not. Most modifiers can be combined some can not.
+
+NOTE: All modifiers are set in the Class 'java.lang.reflect.Modifier'.
+
+Excerpt of 'java.lang.reflect.Modifier':
+ 
+```` Java
+ /**
+     * The Java source modifiers that can be applied to a class.
+     * @jls 8.1.1 Class Modifiers
+     */
+    private static final int CLASS_MODIFIERS =
+        Modifier.PUBLIC         | Modifier.PROTECTED    | Modifier.PRIVATE |
+        Modifier.ABSTRACT       | Modifier.STATIC       | Modifier.FINAL   |
+        Modifier.STRICT;
+
+    /**
+     * The Java source modifiers that can be applied to an interface.
+     * @jls 9.1.1 Interface Modifiers
+     */
+    private static final int INTERFACE_MODIFIERS =
+        Modifier.PUBLIC         | Modifier.PROTECTED    | Modifier.PRIVATE |
+        Modifier.ABSTRACT       | Modifier.STATIC       | Modifier.STRICT;
+
+
+    /**
+     * The Java source modifiers that can be applied to a constructor.
+     * @jls 8.8.3 Constructor Modifiers
+     */
+    private static final int CONSTRUCTOR_MODIFIERS =
+        Modifier.PUBLIC         | Modifier.PROTECTED    | Modifier.PRIVATE;
+
+    /**
+     * The Java source modifiers that can be applied to a method.
+     * @jls8.4.3  Method Modifiers
+     */
+    private static final int METHOD_MODIFIERS =
+        Modifier.PUBLIC         | Modifier.PROTECTED    | Modifier.PRIVATE |
+        Modifier.ABSTRACT       | Modifier.STATIC       | Modifier.FINAL   |
+        Modifier.SYNCHRONIZED   | Modifier.NATIVE       | Modifier.STRICT;
+
+    /**
+     * The Java source modifiers that can be applied to a field.
+     * @jls 8.3.1  Field Modifiers
+     */
+    private static final int FIELD_MODIFIERS =
+        Modifier.PUBLIC         | Modifier.PROTECTED    | Modifier.PRIVATE |
+        Modifier.STATIC         | Modifier.FINAL        | Modifier.TRANSIENT |
+        Modifier.VOLATILE;
+
+    /**
+     * The Java source modifiers that can be applied to a method or constructor parameter.
+     * @jls 8.4.1 Formal Parameters
+     */
+    private static final int PARAMETER_MODIFIERS =
+        Modifier.FINAL;
+
+    /**
+     *
+     */
+    static final int ACCESS_MODIFIERS =
+        Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE;
+````
+
+#### Table of modifiers
+
+Modifier		Class	Attribute	Method	Constructor
+public			x		x			x		x
+protected				x			x		x
+private					x			x		x
+static					x			x
+final			x		x			x
+abstract		x					x
+native								x
+synchronized								x
+transient				x
+volativle				x
+
+[]Table copied from 'Grundkurs Java'
+
+#### public, protected, private
+* public: Classes with public can be used across packages. As for the other elements TODO try then write about them. 
+* protected: Not for classes! For the rest those are visible inside the current package. (Exception: children in another package have access too)
+* private: Not for classes! Restricts usage inside this class.
+
+NOTE: While 'overriding' methods in children you can open up access to it, but not reduce it. public can only be public, private can be private, protected or public.
+NOTE: Prevent creation of objects? Make one parameterless constructor with private.
+
+
+
 ### Class description
+
 ``` JAVA
 // Standard Class:
 Modifiers returntype methodName (list ofParameters) [throws nameOfExceptions] {
@@ -643,8 +759,10 @@ Modifiers returntype methodName (list ofParameters) [throws nameOfExceptions] {
   Methods
   }
 ```
+
 #### Class Account (bank account) example:
 ##### private/public
+
 ``` Java
 class Account {
   private double balance; // balance and interestRate are Instance variables
@@ -660,26 +778,26 @@ public void deposit (double amount) {
 ```
 
 ### Class Constructors
-If any own Constructors are written the standard constructor disapears and needs to be added manually!!! See ex. below.
+If any own Constructors are written the standard constructor disappears and needs to be added manually!!! See ex. below.
 
 ``` JAVA
 // standard constructor
 public Account() {};
 
-// constructor with parameter accountnumber
-// sets accountnumber to given number while building object
-public Account(int accountnumber){
-  this.accountnumber = accountnumber;
+// constructor with parameter accountNumber
+// sets accountNumber to given number while building object
+public Account(int accountNumber){
+  this.accountNumber = accountNumber;
 }
 
-public Account(int accountnumber, int balance) {
-  this.accountnumber = accountnumber;
+public Account(int accountNumber, int balance) {
+  this.accountNumber = accountNumber;
   this.balance = balance;
 }
 
 // copy-Constructor copies object with account nr. a
 public Account(Account a) {
-  accountnumber = a.accountnumber;
+  accountNumber = a.accountNumber;
   balance = a.balance;
 }
 ```
@@ -694,7 +812,7 @@ myAccount = new Account; // creates object and reference from variable to object
 // or simply in one go...
 Account myAccount = new Account;
 
-// or with a constructor (accountnumber, balance)
+// or with a constructor (accountNumber, balance)
 Account myAccount = new Account(1000001, 1000);
 ```
 
@@ -845,14 +963,14 @@ Parameters can be called by value or by reference.
 #### Methods local variables
 Variables are local in a Method when created, used and discarded within one method. While in the Method variables outside the method or block with the same are hidden!
 
-Final local variable = constant; initialized with value then can not be reasigned within the method.
+Final local variable = constant; initialized with value then can not be reassigned within the method.
 
 #### Methods this reference
-this means the actual object. The this is used to distinguish the one class attriute with the same name form the method attribute or parameter with the same name. Ex.
+this means the actual object. The this is used to distinguish the one class attribute with the same name form the method attribute or parameter with the same name. Ex.
 
 ``` JAVA
-pubic void setAccountnumber (int Accountnumber) {
-  this.Accountnumber = Accountnumber;
+public void setAccountNumber (int accountNumber) {
+  this.accountNumber = accountNumber;
 }
 ```
 
@@ -877,9 +995,11 @@ public int max(int a, int b, int c) {
 If you want to use a method from another class, the class needs to be initialize first! otherwise it will throw a 'java.lang.NullPointerException'.
 
 ### Static Attribute or operations, what about static classes?
-Static for a variable makes sense if the variable is the same for all instances of the class. Ex. if for Students there is only one school this school would be static. Or for a counter the counter has to be the same for all instances then it should be static. NOTE: In one Example, TestgetriebeneEntwicklung, they told me to use two static variables bound to two constructor calls within the own class. These where creating two class instances and setting the class variables to different values. But the example suggested that these variables be static. Which made the 2nd Instance overwrite the first. It took me a while to figure this out.
+Static for a variable makes sense if the variable is the same for all instances of the class. Ex. if for Students there is only one school this school would be static. Or for a counter the counter has to be the same for all instances then it should be static.
+NOTE: In one Example, TestgetriebeneEntwicklung, they told me to use two static variables bound to two constructor calls within the own class. These where creating two class instances and setting the class variables to different values. But the example suggested that these variables be static. Which made the 2nd Instance overwrite the first. It took me a while to figure this out.
 
 Nonstatic variable:
+
 ``` JAVA
 int count=0;//will get memory when instance is created  
 
@@ -895,6 +1015,7 @@ public static void main(String[] args) {
 ```
 
 Static variable:
+
 ``` JAVA
 static int count=0;//will get memory only once and retain its value  
 
@@ -908,12 +1029,46 @@ public static void main(String[] args) {
   Counter c2 = new Counter(); // Output will be 2
 }
 ```
+
 #### Static Methods
 If you apply static keyword with any method, it is known as static method.
 
-- A static method belongs to the class rather than object of a class.
+- A static method belongs to the class and not to the instance of a class.
 - A static method can be invoked without the need for creating an instance of a class. (Ex. Main Method, instead of creating instance it is invoked directly...)
 - static method can access static data member and can change the value of it.
+
+Example Math class:
+
+```` Java
+System.out.println(Math.PI); // OUT: 3.14...
+System.out.println(Math.sqrt(9)); // OUT: 3.0
+````
+
+NOTE: for the Math class the class is set to final only the attributes and methods are set to static.
+
+Other Examples of static methods:
+
+```` Java
+public class Vehicle {
+  public static String carName = "myCar";
+  public static void horn() {
+    System.out.println("Beep");
+  }
+}
+
+public class MyClass {
+  public static void main(String[ ] args) {
+    System.out.println(Vehicle.carName); // myCar
+    Vehicle.horn(); // Beep
+  }
+}
+````
+
+**NOTE: Only the method is set to static. In the main method there is no need to create an instance of 'Vehicle' to access its horn() method!!**
+**NOTE: The same applies to attributes. If only the attribute is set to static it as well can be accessed without creating an instance of its class.**
+
+Another example of static methods:
+* sort() from the Collection class to sort a list of string myList like so: 'Collections.sort(myList);'
 
 ### enum class
 Enumeration class is used to create a list of constant objects with the same custom type.
@@ -940,12 +1095,13 @@ By convention, enum values are given names that are made up of upper case letter
 
 Note that the enum constants of type Season are considered to be "contained in" Season, which means -- following the convention that compound identifiers are used for things that are contained in other things -- the names that you actually use in your program to refer to them are Season.SPRING, Season.SUMMER, Season.FALL, and Season.WINTER.
 
-Enum contants can be used in switch statements as triggers.
-
-Enum would be great for the pins in Mastermind.
+* Enum contants can be used in switch statements as triggers.
+* Enum would be great for the pins in Mastermind.
 
 ### JAVA switch statement
 https://docs.oracle.com/javase/tutorial/java/nutsandbolts/switch.html. Instead of doing a lot of if and else there is the switch statement for a multi option fork. Example input can be 1-5, each input leads to another operation -> use switch statement.
+
+NOTE: It's even better to use polymorphism instead of Switch. Altough polymorphism is  a more advanced technique.
 
 ``` Java
 public class SwitchDemo {
@@ -1016,12 +1172,125 @@ private static int calc(int operand1, int operand2, int operator) {
 ```
 Side Note: instead of break you could use return as far I tried it worked #recheckit
 
-## Java Input and Output or I/O
-This is to capture some of the knowledge gained using I/O in own programs, since this topic is pretty complex.
+## Input Output or I/O and File, Path plus Stream
+This chapter covers my knowledge of handling Files, Paths and Streams.
+Most of it comes from the docs.oracle.com Tutorials.
 
-Some base classes are provided in java.io check them out. In my attemps so far I mostly used the Scanner which is java.util based. So keep in mind there are diffrent ways to get the user input from console.The interessting part is that the 3 methods to get user input are very different and have pros and cons and evolved along the Java versions. You might wanna see 3 examples from: http://www.codejava.net/java-se/file-io/3-ways-for-reading-input-from-the-user-in-the-console
+**NOTE:** Those Tutorials cover many details not mentioned here!
+
+### I/O Documentation online
+Reading these old notes and knowing about the good ORACLE Documentation by now, I highly recommend going to the ORACLE Docs first for any I/O or File related knowledge!
+* For File and Path go to the old Tutorials (Java SE 7-8): https://docs.oracle.com/javase/tutorial/essential/io/index.html
+* For how to save and load Objects (Java SE 11): https://docs.oracle.com/en/java/javase/11/docs/specs/serialization/serial-arch.html
+
+### java.io vs java.nio
+Assuming nio stands for new Input/Output, even in the example for Java SE 11 some parts of java.io are used along with the Files and Paths from java.nio.
+
+**No
+
+### Object I/O aka save and load Objects
+To save and load objects via Streams read the chapters 1.2 and 1.3 Writing and Reading to/from an Object Stream from Java SE 11: https://docs.oracle.com/en/java/javase/11/docs/specs/serialization/serial-arch.html#reading-from-an-object-stream
+
+### Path and File
+#### File Class
+The File Class has methods for reading, writing, and manipulating files and directories. They use Path elements to define the location/path.
+
+Taken from: https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html
+
+##### Creating Files
+Using the java.nio package to create a file.
+
+**NOTE:** There are different ways to make a file. I took this one because it can use the relative path to the current location (at least in the IDE and the current system I was testing it). The current location being where your project resides. How this translates to an build application on an other system has to be tested!
+
+``` java
+Files.createFile(Paths.get("src/save_and_load/test.txt"));
+```
+
+##### Catching Exceptions
+This chapter is a copy from Catching Exceptions in: https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html
+
+All methods that access the file system can throw an IOException. It is best practice to catch these exceptions by embedding these methods into a try-with-resources statement, introduced in the Java SE 7 release. The try-with-resources statement has the advantage that the **compiler automatically generates the code to close the resource(s) when no longer required.** The following code shows how this might look:
+``` Java
+Charset charset = Charset.forName("US-ASCII");
+String s = ...;
+try (BufferedWriter writer = Files.newBufferedWriter(file, charset)) {
+    writer.write(s, 0, s.length());
+} catch (IOException x) {
+    System.err.format("IOException: %s%n", x);
+}
+```
+For more information, see The try-with-resources Statement. (try-with-resources Statement would be a link, see this chapters start for source)
+
+##### Releasing System Resources
+When not needed anymore, close the used resources with the close method. (Many of the resources described here will implement the  java.io.Closeable interface, that will let you use the close method.)
+
+**Note:** see next chapter for auto closing resources!
+
+##### Reading and Writing 
+https://docs.oracle.com/javase/tutorial/essential/io/file.html
+
+Or use your IDE build in jump to Class to read the actual comments written by class maker.
+
+TODO **describe writing to a file > or refer to object save content**
+
+##### Deleting Files
+There are different ways to delete files. This list might not contain all ways. Some depend of certain code prior to be present like how was the file created (nio or io, etc.)
+
+* **Files.delete(myFile);** - most standard way
+* **Files.deleteIfExists(myFile);** - I use it with if Files.exists(myFile) 
+* deleteOnExit() - a method of File class instances, **deletes on JVM Exit**, works with File.createTempFile a.o.
+* DELETE_ON_CLOSE - when working with **streams & Files.newInputStream** 'InputStream in = Files.newInputStream(manFileT3, StandardOpenOption.DELETE_ON_CLOSE);', deletes ON JVM Exit or when Stream is closed().
+
+All above examples have been tested in the save_and_load package in JAV-ZF > JAV-MOD226B.
+
+#### Path Class
+The Path Class is used to examine, locate, and manipulate files. @see java.nio.file.Path
+
+**NOTE:** A Path is not system independent! (aka Unix/Linux/Mac vs Windows)
+
+##### Java Path sub chapters
+According to: https://docs.oracle.com/javase/tutorial/essential/io/pathOps.html
+
+##### Creating a Path
+A Path might consist of just a **single directory** or **file name**. You can easily create a Path object by using one of the following get methods from the Paths (note the plural) helper class:
+
+NOTE: Path can take a String variable with Paths.get. 'Path myPath = Paths.get(myStringVar);'
+
+``` Java
+Path p1 = Paths.get("/tmp/foo");
+Path p2 = Paths.get(args[0]);
+Path p3 = Paths.get(URI.create("file:///Users/joe/FileTest.java"));
+
+// The Paths.get method is shorthand for the following code:
+Path p4 = FileSystems.getDefault().getPath("/users/sally");
+// The following example creates /u/joe/logs/foo.log if home is /u/joe, or C:\joe\logs\foo.log on Windows.
+Path p5 = Paths.get(System.getProperty("user.home"),"logs", "foo.log");
+```
+
+##### Retrieving Information about a Path Element
+NOTE: Even if the file/folder does not exist these methods work!
+
+```` Java
+// Microsoft Windows syntax
+Path path = Paths.get("C:\\home\\joe\\foo");
+
+// Solaris syntax
+Path path = Paths.get("/home/joe/foo");
+
+System.out.format("toString: %s%n", path.toString());
+System.out.format("getFileName: %s%n", path.getFileName());
+System.out.format("getName(0): %s%n", path.getName(0));
+System.out.format("getNameCount: %d%n", path.getNameCount());
+System.out.format("subpath(0,2): %s%n", path.subpath(0,2));
+System.out.format("getParent: %s%n", path.getParent());
+System.out.format("getRoot: %s%n", path.getRoot());
+````
 
 ### Reading Input from Console
+This is to capture some of the knowledge gained using I/O in own programs, since this topic is pretty complex.
+
+Some base classes are provided in java.io check them out. In my attempts so far I mostly used the Scanner which is java.util based. So keep in mind there are different ways to get the user input from console. The interesting part is that the 3 methods to get user input are very different and have pros and cons and evolved along the Java versions. You might want to see 3 examples from: http://www.codejava.net/java-se/file-io/3-ways-for-reading-input-from-the-user-in-the-console
+
 #### Other way to be documented
 #### Using Console Class
 Read userInput with 'System.Console.readLine()'. Note the example below is written as a JUnit test since Console class does not work live in an IDE console representation. To get a live input via console the System.console.readLine() method code needs a real CLI open, like CMD in Windows or terminal in Unix. Otherwise it will default to NullPointerExecption since it expects to find a active console.
@@ -1054,12 +1323,12 @@ void testUseSystemConsoleOLD() {
 '''
 
 ## JavaDoc
-Insert know from chapter 12 ASAP!
+Insert knowledge?? from chapter 12 ASAP!
 
 ## Java, compile and run, in CLI mode and on what happens when loading a Java file
 ### Compile a Java file to binary
 $javac myJavaFile.java
-Results in myJavaFile.class generated where the .java file is. Thi implies you need to be in the folder of the .java file. See help section of JVM for other destination.
+Results in myJavaFile.class generated where the .java file is. This implies you need to be in the folder of the .java file. See help section of JVM for other destination.
 
 ### Run a binary file aka class file
 $java myJavaBinary

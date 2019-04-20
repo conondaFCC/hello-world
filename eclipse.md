@@ -1,4 +1,9 @@
-# Ecslipse Crashkurs
+# Eclipse Crashkurs
+
+## maven
+Wenn ich mal maven ausprobieren sollte, diese Links helfen evlt.
+* https://funthomas424242.wordpress.com/
+
 ## Basic shortcuts
 Good read on more shortcuts and shortcut-Card to print: http://javarevisited.blogspot.ch/2010/10/eclipse-tutorial-most-useful-eclipse.html
 
@@ -9,17 +14,19 @@ Ctrl+D          |delete row
 Ctrl+Shift+UpAr.|duplicate row; or Ctrl+Shift+DownArrow
 Alt+up/down     |move row accordingly
 Alt+left/right  |move to last (object edited, aka jump to previous method)
-move method     |via Outline view drag&drop it (deselect ABC sorting)
+move method     |via Outline view drag&drop it (undo ABC sorting)
 Ctrl+Shift+o    |import
-Ctrl+1          |quickfix
+Ctrl+1          |quick fix
 Ctrl+J          |Search in File (incremental)
 Ctrl+Shift+T    |search extended
+Ctrl+F			|find and replace (only inside current file :( )
+Ctrl+H          |Eclipse search; find & replace multiple files > file search
 Ctrl+E          |list open files (to skim trough)
 Ctrl+F6         |jump between to open files
 Ctrl+F7         |jump between views
 Ctrl+F8         |jump between perspectives (java, git)
 Ctrl+K          |jump to?
-Ctrl+F11        |run app
+Ctrl+F11        |run app, F11 works if app was run before
 Ctrl+N          |new wizard
 Ctrl+M          |min. max. tab
 Ctrl+I          |indent
@@ -39,19 +46,19 @@ variable        |If declared use the camelcase abbrevation to write it. Ex.: thi
 variable2       |create field from variable with Ctrl+1
 variable3       |instead of writing the variable, start with writting the method if the variable is an input of this method (int a, int b), then autocreate those with Ctrl+1 => create field
 Ctrl+Space      |Autocomplete for ex.: ThisMethod => creates method
-Ctrl+Shift++/-  |Fontsize adjust code size for presentation
 Ctrl+r          |While debugging => run to line (ingnore other breaks!)
 F8              |jump to next break, while in debugging mode
 Alt+Shift+T     |Refactor Options with according code bits selected ex. Variable to Convert Local Variable to Field or whole code bit to Extract Method from it
 .jpage         	| Instead of .java .jpage for code snippets aka Scrapbook pages (to run code without main Methods)
 Ctrl+Shift++   	| Zoom in (Ctrl+Shift+1 is plus on DEU keyboard)
 Ctrl+Shift+-   	| Zoom out(might only work with number block on keyboard, with direct minus sign Shift is not needed! -> Crtl+Minuskey works)
+Alt+Shift+Y		| toggle word wrap (also as button on menubar)
 Ctrl+-          | colapse lines of this element into sinlge line
 Ctrl++          | expand lines of element to full size aka make content of element readable aka show content of element
-Ctrl+H          | open Eclipse search tool
-new				      | write 'new' then ctrl+space creates template for new object
+new				| write 'new' then ctrl+space creates template for new object
 ClassName       | write only the ClassName on a new line, then Autocomplete to get a constructor for the ClassName
 public          | write 'public' then Autocomplete creates template for new public method
+Alt+Shift+Right	| Select all what belongs to current cursor position, like whole method code or whole comment
 
 ### EMACS or other Controls
 Via Windows > Preferences > General > Keys > Schema:
@@ -73,16 +80,19 @@ To understand where eclipse stores data on projects. Most of the data will be st
 * **rename a Method in multiple files?** Use the integrated rename tool with Ctrl+1, then use rename in Workspace so Eclipse will handle all the dependencies.
 * **generate Constructor using fields** Use class attributes to generate a constructor, rightclick the attribute of a class choose > Source > Generate Constructor using fields > select fields needed for constructor. Note: insert will be on cursor position!
 * **generate code, insert on cursor** Most of auto generated code, like Getter and Setters, constructor etc. can be set to an insert location just be having the cursor where you want the code to be generated.
+* **asign files to format** aka tell Eclipse how to represent/preview my .md files -> *Note: does not have the full markdown preview as for markdown github in it. (2019)* see: https://help.eclipse.org/luna/topic/org.eclipse.mylyn.wikitext.help.ui/help/Getting-Started.html?cp=41_1_1_2#SwitchingMarkupLanguages 
+
 ### Eclipse search Tool
 open search tool with Ctrl+H.
-#### find all occurencies of a method, find method
-use java search ribon, search string: method name, search for category: method, scope: enclosed projects
-or use Filesearch ribon, search string: method name, scope: workspace, also finds projects outside of workspace aka separate git folder where some git projects are handled outside of workspace, this is good news.
+
+#### find all occurrences of a method, find method
+use java search ribbon, search string: method name, search for category: method, scope: enclosed projects
+or use Filesearch ribbon, search string: method name, scope: workspace, also finds projects outside of workspace aka separate git folder where some git projects are handled outside of workspace, this is good news.
 
 ## Compile .java to run in cmd
 1. Export file as runnable .jar, open export menu via rightclick on .java file in projectexplorer > select > export > runnablejar
 2. Runnable Jar options > Launch configuration, select the one where the to be used main method resides (Needs to be run
-  once to be displayed in Eclispe!)
+  once to be displayed in Eclipse!)
 3. lunch cmd - lunch file with: java -jar runnablejar.jar (java runnable.jar didn't work?)
 
 ## Compile .java to .exe making a windows .exe file
@@ -135,5 +145,5 @@ Fix add JavaDesinger.jar to Eclipse project Java Build path > add external jar >
 
 ## Glossary
 ### IDE = EBD
-IDE = Integrated development enviroment
+IDE = Integrated development environment
 EBD = editor, builder, debugger

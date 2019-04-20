@@ -57,7 +57,7 @@ password:String = "pw1234"
 - class variables are class attribute or static attribute and as such defined only once per class for all instances. Ex. counter of how many instances made, constants, etc.
 
 ##### underlined attributes
-to be explained (equivalent of static or final in) Java)
+to be explained equivalent of static or final in Java
 
 ### Visibility legend
 
